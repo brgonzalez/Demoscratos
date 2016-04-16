@@ -74,9 +74,16 @@ Agregar nuevas opciones a las parte de selección
     margin-bottom:20px;
 }
 
-#new-input-options{
-    text-align: center;
-    width: 60%;
+#input-options{
+    width: 48%;
     float: left;
     margin: 2%;
+
+}
+
+#remove, #add{
+    margin-top: 2%;
+    margin-bottom: 2%;
+
+
 }
