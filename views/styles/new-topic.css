@@ -53,12 +53,22 @@
 }
 
 
-.column{
-    height: 80px;
-    background-color: blue;
+.raw{
+    height: auto;
     margin: 1%;
-    width: 30%;
+    width: 100%;
     float: left;
+}
+
+.column{
+
+    width: 25%;
+    float: left;
+}
+
+.column h5{
+    padding: 6%;
+    font-weight: bold;
 }
 
 
@@ -86,4 +96,14 @@ Agregar nuevas opciones a las parte de selección
     margin-bottom: 2%;
 
 
+}
+
+.container-options-topic{
+    width: 100%;
+    background-color: blue;
+}
+
+.space-question{
+    margin-top: 19%;
+    width: 100%;
 }

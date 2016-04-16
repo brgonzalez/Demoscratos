@@ -11,7 +11,59 @@ $(document).ready(function() {
         fieldWrapper.append(removeButton);
         $("#question").append(fieldWrapper);
     });
+
+    
+
+    $("#myonoffswitch").click( function(){
+        if( $(this).is(':checked') ){
+            $('#container-options-topic').find('.column').show();
+
+
+        }
+    });
+
+    $("#myonoffswitch").click( function(){
+        if( !$(this).is(':checked') ){
+            $('#container-options-topic').find('.column').hide();
+            $('#space-new-topic').find('.space-question').hide();
+
+
+        }
+    });
+
+    $("#options-multi-selection").click( function(){
+        if( $(this).is(':checked') ){
+            $('#space-new-topic').find('.space-question').show();
+
+        }
+    });
+
+    $("#options-multi-selection").click( function(){
+        if( ! $(this).is(':checked') ){
+            $('#space-new-topic').find('.space-question').hide();
+
+        }
+    });
+
+    $("#options-selection").click( function(){
+        if( $(this).is(':checked') ){
+            $('#space-new-topic').find('.space-question').show();
+
+        }
+    });
+
+    $("#options-selection").click( function(){
+        if( ! $(this).is(':checked') ){
+            $('#space-new-topic').find('.space-question').hide();
+
+        }
+    });
+
+    
 });
+
+
+
 /*
 
 <div class="fieldwrapper" id="field1">
