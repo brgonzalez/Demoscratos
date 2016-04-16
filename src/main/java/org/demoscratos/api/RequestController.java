@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import org.demoscratos.models.Api;
 import org.demoscratos.models.Forum;
+import org.demoscratos.models.FullTopic;
+import org.demoscratos.models.Topic;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,9 +19,15 @@ public final class RequestController {
 	private ApacheHttpClient client; 
 	private ObjectMapper mapper;
 
-	public RequestController() {
+	public RequestController(String email, String password) {
 		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
+		signIn(email, password);
 		setMapper(new ObjectMapper()); }
+	
+	private void signIn(String email, String password) {
+		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
+		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
+		client.setToken(); }
 	
 	public Api getApi() {
 		client.getHttpRequest(Resource.API.getUrl()); Api api = null;
@@ -38,6 +46,29 @@ public final class RequestController {
 			json = array.getJSONObject(index);
 			forums.add(new Forum(json)); }
 		return forums; }
+	
+	public ArrayList<Topic> getTopics(String forum) {
+		ArrayList<Topic> topics = new ArrayList<Topic>();
+		client.getHttpRequest(Resource.TOPICS.getUrl() + forum);
+		JSONArray array = new JSONArray(client.getOutput());
+		JSONObject json;
+		for (short index = 0; index < array.length(); index++) {
+			json = array.getJSONObject(index);
+			topics.add(new Topic(json)); }
+		return topics; }
+	
+	public FullTopic getFullTopic(String topic) {
+		client.getHttpRequest(Resource.TOPIC.getUrl() + topic);
+		JSONObject json = new JSONObject(client.getOutput());
+		FullTopic fullTopic = new FullTopic(json);
+		return fullTopic; }
+	
+	public void deleteForum(String forum) {
+		client.deleteHttpRequest(Resource.FORUM.getUrl() + forum); }
+	
+	public void postForum(String name, String title, String summary) {
+		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
+		client.postHttpRequest(Resource.FORUM.getUrl(), json); }
 	
 	public ApacheHttpClient getClient() {
 		return client; }
