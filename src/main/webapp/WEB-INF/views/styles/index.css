@@ -1,0 +1,22 @@
+.forum{
+	background-color: #088A85;
+
+}
+
+
+
+.forum * , .container-forums {
+	color: white;
+	text-align: center;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+.container-forums ul li a{
+	text-decoration: none;
+}
+.container-forums{
+	text-align: center;
+}
