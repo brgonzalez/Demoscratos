@@ -35,10 +35,27 @@ public class SettingsController {
 	@RequestMapping(value = "/settings-profile", method = RequestMethod.GET)
 	public String settingsProfile(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
+		boolean exist = true;
+		String none = "none";
+		String block ="block";
+		if(exist){
+			model.addAttribute("displayButton", none );
+			model.addAttribute("displayButton", block );
+		}
+		else{
+			model.addAttribute("displayButton", block );
+			model.addAttribute("displayButton", none );
+		}
+		
+		
+		Object o = new Object();
+		model.addAttribute("users", o);
 		
 
 		return "settings-profile";
 	}
+	
+	
 	
 	@RequestMapping(value = "/settings-password", method = RequestMethod.GET)
 	public String settingsPassword(Locale locale, Model model) {
