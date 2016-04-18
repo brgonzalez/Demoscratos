@@ -23,7 +23,7 @@ public class TopicController {
 
 	
 	private RequestController request = new RequestController("brarigoch@gmail.com","12345678");
-	@RequestMapping(value = "/forum/topics", method = RequestMethod.GET)
+	@RequestMapping(value = "/topics", method = RequestMethod.GET)
 	public String topics(Locale locale, Model model) {
 		/*
 		String id ="57092bb2b732ab3e1f533d4a";
