@@ -41,7 +41,6 @@ public class LoginController {
 		logger.info("Se esta intentando hacer login.", locale);
 		logger.info(email, locale);
 
-		request.signIn(email, password);
 		
 		if(request.isLogIn()){
 			return "home";
