@@ -51,9 +51,9 @@ public final class RequestController {
 			forums.add(new Forum(json)); }
 		return forums; }
 	
-	public ArrayList<Topic> getTopics(String forum) {
+	public ArrayList<Topic> getTopics(String idForum) {
 		ArrayList<Topic> topics = new ArrayList<Topic>();
-		client.getHttpRequest(Resource.TOPICS.getUrl() + forum);
+		client.getHttpRequest(Resource.TOPICS.getUrl() + idForum);
 		JSONArray array = new JSONArray(client.getOutput());
 		JSONObject json;
 		for (short index = 0; index < array.length(); index++) {

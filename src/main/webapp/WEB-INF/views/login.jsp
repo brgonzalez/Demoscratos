@@ -1,5 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>    
+
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<title>Demoscratos</title>
@@ -38,7 +42,7 @@
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
       					</button>
-      					<a href="/index" id="name-app"class="navbar-brand">Demoscratos</a>
+      					<a href="/home" id="name-app"class="navbar-brand">Demoscratos</a>
    					</div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -49,8 +53,8 @@
 	      				<ul class="nav navbar-nav navbar-right">
 	        				<li class="dropdown"><a href="#" id ="user-header" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario <span class="caret"></span></a>
 	          					<ul class="dropdown-menu">
-						            <li><a href="/settings-profile">Configuraci�n</a></li>
-						            <li><a href="/login">Cerrar sesi�n</a></li>
+						            <li><a href="/settings-profile">Configuración</a></li>
+						            <li><a href="/login">Cerrar sesión</a></li>
 
 	          					</ul>
 	        				</li>
@@ -69,18 +73,18 @@
             <div class="panel panel-info" >
                     <div class="panel-heading" id="panel-login-register">
                         <div class="panel-title">Ingresar</div>
-                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Olvido su contraseña?</a></div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Olvido su contraseÃ±a?</a></div>
                     </div>     
 
                     <div style="padding-top:30px" class="panel-body" >
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
-                        <form id="loginform" class="form-horizontal" role="form">
+                        <form:form id="loginform" class="form-horizontal" action="login" method="post">
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Correo">                                        
+                                        <input id="login-username" type="text" class="form-control" name="email" value="" placeholder="Correo">                                        
                                     </div>
                                 
                             <div style="margin-bottom: 25px" class="input-group">
@@ -103,7 +107,7 @@
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <a id="btn-login" href="./index.html" class="btn btn-success">Ingresar  </a>
+                                      <input type ="submit" id="btn-login" class="btn btn-success" value="Ingresar"  />
                                       <!--<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>-->
 
                                     </div>
@@ -115,12 +119,12 @@
                                         <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                             No tine una cuenta! 
                                         <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-                                            Registrarse aqu��
+                                            Registrarse aquí­
                                         </a>
                                         </div>
                                     </div>
                                 </div>    
-                            </form>     
+                            </form:form>     
 
 
 
@@ -163,9 +167,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="col-md-3 control-label">Contraseña</label>
+                                    <label for="password" class="col-md-3 control-label">ContraseÃ±a</label>
                                     <div class="col-md-9">
-                                        <input type="password" class="form-control" name="passwd" placeholder="Contraseña">
+                                        <input type="password" class="form-control" name="passwd" placeholder="ContraseÃ±a">
                                     </div>
                                 </div>
                                     

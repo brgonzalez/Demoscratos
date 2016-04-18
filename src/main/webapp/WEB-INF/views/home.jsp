@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<!DOCTYPE html>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ <!DOCTYPE html>
 <html>
 
 	<head>
@@ -37,7 +38,7 @@
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
       					</button>
-      					<a href="/" id="name-app"class="navbar-brand">Demoscratos</a>
+      					<a href="home" id="name-app"class="navbar-brand">Demoscratos</a>
    					</div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -67,21 +68,21 @@
 			</div>
 
 			<div id ="container-forums" class ="container-forums col-xs-10 col-sm-10 col-md-8 col-lg-6">
-
 				<ul>
-
-					<li>
-						<a href="./topics.html">
-							
-							<div id = "" class = "forum">
-
-								<h4>Nombre de democracia</h4>
-								<hr>
-								<p>Resumen de democracia</p>
-
-							</div>
-						</a>
-					</li>
+					<c:forEach var="forum" items="${forums}">
+						<li>
+							<a href="forum/topics">
+								
+								<div class = "forum">
+	
+									<h4>${forum.title}</h4>
+									<hr>
+									<p>${forum.summary}</p>
+	
+								</div>
+							</a>
+						</li>
+					</c:forEach>	
 				</ul>
 
 				

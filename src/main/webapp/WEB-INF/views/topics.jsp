@@ -1,4 +1,6 @@
-resources/<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 
 	<head>
@@ -42,8 +44,8 @@ resources/<!DOCTYPE html>
 	      				<ul class="nav navbar-nav navbar-right">
 	        				<li class="dropdown"><a href="" id ="user-header" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario <span class="caret"></span></a>
 	          					<ul class="dropdown-menu">
-						            <li><a href="/settings-profile">Configuración</a></li>
-						            <li><a href="/login">Cerrar sesión</a></li>
+						            <li><a href="/settings-profile">ConfiguraciÃ³n</a></li>
+						            <li><a href="/login">Cerrar sesiÃ³n</a></li>
 
 	          					</ul>
 	        				</li>
@@ -73,19 +75,16 @@ resources/<!DOCTYPE html>
 				</div>
 
 
-
-				<div class ="topics-list">
-					<div class= "topic">
-						<h4>Tema 1</h4>
-						<h6>Cierra en 10 días</h6>
-
+				<c:forEach var="topic" items="${topics}">
+				
+					<div class ="topics-list">
+						<div class= "topic">
+							<h4>${topic.title}</h4>
+							<h6>${topic.closingAt}</h6>
+	
+						</div>
 					</div>
-					<div class= "topic">
-						<h4>Tema 2</h4>
-						<h6>Cierra en 10 días</h6>
-
-					</div>
-				</div>
+				</c:forEach>	
 
 			</div>
 
@@ -95,17 +94,17 @@ resources/<!DOCTYPE html>
 				
 					<h5><span class = "glyphicon glyphicon-time"></span> Fecha de cierrre </h5>
 					<h1 class ="name-topic">Nombre del tema</h2>
-					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
+					<h4 class = "modality-topic">Modalidad: SemipÃºblico</h4>
 					<h3 class = "tag-topic">Etiqueta</h4>
 					<h4 class = "vote-topic">Voto</h5>
 					<div class ="space-options-votes">
 						<button type="" id = "btn-afirmative" class = "btn btn-options"> <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>
 						<button type="" id = "btn-negative" class = "btn btn-options" ><span class = "glyphicon glyphicon-thumbs-down"></span> Negativo </button>
-						<button type="" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> Abstención</button>
+						<button type="" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> AbstenciÃ³n</button>
 					</div>
 
 					<div class ="multi-vote">
-						<h4 class = "description-multi-vote">Esta es la descripción para multi</h5>
+						<h4 class = "description-multi-vote">Esta es la descripciÃ³n para multi</h5>
 
 						<div class="checkbox">
 						 	<label><input type="checkbox" value="">Option 1</label>
