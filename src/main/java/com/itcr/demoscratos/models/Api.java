@@ -26,5 +26,4 @@ public final class Api {
 
 	@Override
 	public String toString() {
-		return "Api [app=" + app + ", version=" + version + ", apiUrl=" + apiUrl + "]"; }
-}
+		return "Api [app=" + app + ", version=" + version + ", apiUrl=" + apiUrl + "]"; } }

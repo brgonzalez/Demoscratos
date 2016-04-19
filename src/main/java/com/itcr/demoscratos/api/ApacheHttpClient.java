@@ -17,7 +17,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-public final class ApacheHttpClient {
+final class ApacheHttpClient {
 	
 	// Atributos:
 	private HttpClient client;
@@ -30,44 +30,37 @@ public final class ApacheHttpClient {
 	private BufferedReader br;
 	private StringBuffer output;
 	
-	public ApacheHttpClient(String path) {
+	protected ApacheHttpClient(String path) {
 		setPath(path); token = ""; }
 		
-	public void getHttpRequest(String resource) {
+	protected StatusLine getHttpRequest(String resource) {
 		setClient();
 		setGetRequest(resource);
 		setResponse(getRequest);
-		setBr(); setOutput(); }
+		setBr(); setOutput();
+		return response.getStatusLine(); }
 	
-	public void deleteHttpRequest(String resource) {
+	protected StatusLine deleteHttpRequest(String resource) {
 		setClient();
 		setDeleteRequest(resource);
 		setResponse(deleteRequest);
-		setBr(); setOutput(); }
+		setBr(); setOutput();
+		return response.getStatusLine(); }
 	
-	public StatusLine postHttpRequest(String resource, String json) {
+	protected StatusLine postHttpRequest(String resource, String json) {
 		setClient();
 		setPostRequest(resource, json);
 		setResponse(postRequest);
 		setBr(); setOutput();
 		return response.getStatusLine(); }
 	
-	public HttpClient getClient() {
-		return client; }
-	
 	private void setClient() {
 		client = HttpClientBuilder.create().build(); }
-	
-	public HttpGet getGetRequest() {
-		return getRequest; }
-	
+		
 	private void setGetRequest(String resource) {
 		getRequest =  new HttpGet(path + resource);
 		getRequest.addHeader("Accept", "application/json");
 		getRequest.addHeader("X-Access-Token", token); }
-	
-	public HttpPost getPostRequest() {
-		return postRequest; }
 	
 	private void setPostRequest(String resource, String json) {
 		postRequest = new HttpPost(path + resource);
@@ -78,17 +71,11 @@ public final class ApacheHttpClient {
 		postRequest.setEntity(input);
 		postRequest.addHeader("X-Access-Token", token); }
 	
-	public HttpDelete getDeleteRequest() {
-		return deleteRequest; }
-	
 	private void setDeleteRequest(String resource) {
 		deleteRequest = new HttpDelete(path + resource);
 		deleteRequest.addHeader("Accept", "application/json");
 		deleteRequest.addHeader("X-Access-Token", token); }
-	
-	public HttpResponse getResponse() {
-		return response; }
-	
+		
 	private void setResponse(HttpGet getRequest) {
 		try { response = client.execute(this.getRequest); }
 		catch (ClientProtocolException e) {	e.printStackTrace(); }
@@ -103,29 +90,26 @@ public final class ApacheHttpClient {
 		try { response = client.execute(this.deleteRequest); }
 		catch (ClientProtocolException e) {	e.printStackTrace(); }
 		catch (IOException e) {	e.printStackTrace(); } }
-	
-	public String getPath() {
-		return path; }
-	
+		
 	private void setPath(String path) {
 		this.path = path; }
 	
-	public String getToken() {
-		return token; }
+	protected void removeToken() {
+		token = ""; }
 	
-	public void setToken() {
+	protected boolean tokenExists() {
+		return !token.isEmpty(); }
+	
+	protected void setToken() {
 		token = response.getAllHeaders()[1].getValue().split(";")[0].replace("token=", "");
 		if (token.equals("application/json")) { token = ""; } }
-
-	public BufferedReader getBr() {
-		return br; }
 	
 	private void setBr() {
 		try { br = new BufferedReader(new InputStreamReader((response.getEntity().getContent()))); }
 		catch (UnsupportedOperationException e) { e.printStackTrace(); }
 		catch (IOException e) {	e.printStackTrace(); } }
 	
-	public String getOutput() {
+	protected String getOutput() {
 		return output.toString(); }
 	
 	private void setOutput() {
