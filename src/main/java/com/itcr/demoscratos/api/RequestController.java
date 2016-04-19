@@ -10,34 +10,28 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itcr.demoscratos.db.DataBaseController;
 import com.itcr.demoscratos.models.Api;
 import com.itcr.demoscratos.models.Forum;
 import com.itcr.demoscratos.models.FullTopic;
 import com.itcr.demoscratos.models.Topic;
-import com.itcr.demoscratos.models.User;
 
 public final class RequestController {
 	
 	private ApacheHttpClient client; 
 	private ObjectMapper mapper;
-	private DataBaseController database;
 
 	public RequestController(String email, String password) {
 		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
 		signIn(email, password);
 		setMapper(new ObjectMapper()); }
 	
-	public void signIn(String email, String password) {
+	private void signIn(String email, String password) {
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
-		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
+		client.postHttpRequest(Resource.SINGIN.getUrl(), json).getStatusCode();
 		client.setToken(); }
 	
-	public void signOut() {
-		client.removeToken(); } 
-	
 	public boolean isLoggedIn() {
-		return client.tokenExists(); }
+		return !client.getToken().isEmpty(); }
 	
 	public Api getApi() {
 		client.getHttpRequest(Resource.API.getUrl()); Api api = null;
@@ -67,49 +61,27 @@ public final class RequestController {
 			topics.add(new Topic(json)); }
 		return topics; }
 	
-	public FullTopic getFullTopic(String idTopic) {
-		client.getHttpRequest(Resource.TOPIC.getUrl() + idTopic);
+	public FullTopic getFullTopic(String topic) {
+		client.getHttpRequest(Resource.TOPIC.getUrl() + topic);
 		JSONObject json = new JSONObject(client.getOutput());
 		FullTopic fullTopic = new FullTopic(json);
 		return fullTopic; }
 	
-	public User getUserByEmail(String email) {
-		client.getHttpRequest(Resource.SEARCH_USER.getUrl() + email);
-		JSONArray array = new JSONArray(client.getOutput());
-		User user = null;
-		if (array.length() == 1) { user = new User(array.getJSONObject(0), email); }
-		return user; }
-		
-	public void postRing(String idUser, String email1, String email2, String email3) {
-		if (!email1.equals(email2) && !email1.equals(email3) && !email2.equals(email3)) {
-			User member1 = getUserByEmail(email1);
-			User member2 = getUserByEmail(email2);
-			User member3 = getUserByEmail(email3);
-			if (member1 != null && member2 != null && member3 != null) {
-				database.insertRing(idUser, member1.getId(), member2.getId(), member3.getId()); } }
-		}
+	public void deleteForum(String forum) {
+		client.deleteHttpRequest(Resource.FORUM.getUrl() + forum); }
 	
 	public void postForum(String name, String title, String summary) {
 		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
 		client.postHttpRequest(Resource.FORUM.getUrl(), json); }
 	
-	public void deleteForum(String idForum) {
-		client.deleteHttpRequest(Resource.FORUM.getUrl() + idForum); }
-	
-	public void deleteRing(String idUser) {
-		database.deleteRing(idUser); }
-	
-	public void updateRing(String idUser, String email1, String email2, String email3) {
-		if (!email1.equals(email2) && !email1.equals(email3) && !email2.equals(email3)) {
-			User member1 = getUserByEmail(email1);
-			User member2 = getUserByEmail(email2);
-			User member3 = getUserByEmail(email3);
-			if (member1 != null && member2 != null && member3 != null) {
-				database.updateRing(idUser, member1.getId(), member2.getId(), member3.getId()); } }
-		}
+	public ApacheHttpClient getClient() {
+		return client; }
 
 	private void setClient(ApacheHttpClient client) {
 		this.client = client; }
+
+	public ObjectMapper getMapper() {
+		return mapper; }
 
 	private void setMapper(ObjectMapper mapper) {
 		this.mapper = mapper; } }

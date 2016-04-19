@@ -31,7 +31,7 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Locale locale, Model model) {
+	public String logedIn(Locale locale, Model model) {
 
 		return "login";
 	}
@@ -42,7 +42,7 @@ public class LoginController {
 		logger.info(email, locale);
 
 		
-		if(request.isLogIn()){
+		if(request.isLoggedIn()){
 			return "home";
 		}
 		

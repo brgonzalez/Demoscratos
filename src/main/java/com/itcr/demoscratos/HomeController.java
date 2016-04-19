@@ -36,7 +36,7 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		if(request.isLogIn()){
+		if(request.isLoggedIn()){
 			ArrayList<Forum> forums = request.getForums();
 			model.addAttribute("forums", forums );
 			logger.info("El usuario está activo. \n forums:"+request.getForums().toString(), locale);
