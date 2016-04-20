@@ -32,7 +32,7 @@ public class HomeController {
 	 */
 	
 	private RequestController request = new RequestController("brarigoch@gmail.com","12345678");
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/home" , method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
