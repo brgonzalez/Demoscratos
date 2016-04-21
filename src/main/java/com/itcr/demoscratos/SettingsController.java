@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itcr.demoscratos.api.RequestController;
@@ -34,22 +35,7 @@ public class SettingsController {
 	private RequestController request = new RequestController("brarigoch@gmail.com","12345678");
 	@RequestMapping(value = "/settings-profile", method = RequestMethod.GET)
 	public String settingsProfile(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		boolean exist = true;
-		String none = "none";
-		String block ="block";
-		if(exist){
-			model.addAttribute("displayButton", none );
-			model.addAttribute("displayButton", block );
-		}
-		else{
-			model.addAttribute("displayButton", block );
-			model.addAttribute("displayButton", none );
-		}
 		
-		
-		Object o = new Object();
-		model.addAttribute("users", o);
 		
 
 		return "settings-profile";
@@ -74,6 +60,41 @@ public class SettingsController {
 	@RequestMapping(value = "/settings-ring", method = RequestMethod.GET)
 	public String settingsPerfil(Locale locale, Model model) {
 		
+		logger.info("Obteniendo settings-ring.", locale);
+		boolean exist = true;
+		String none = "none";
+		String block ="block";
+		
+		
+		if(false){
+			System.out.println("Entra");
+			model.addAttribute("displayButton", "none" );
+			model.addAttribute("displayShow-ring", "none" );
+			
+			
+		}
+		else{
+			model.addAttribute("displayButton", block );
+			model.addAttribute("displayShow-ring", none );
+			
+			
+		}
+		
+		Object o = new Object();
+		model.addAttribute("users", o);
+		
+
+		return "settings-ring";
+	}
+	
+	@RequestMapping(value = "/settings-ring", method = RequestMethod.POST)
+	public String modifyRing(Locale locale,
+			@RequestParam("emailMember1") String emailMember1 ,
+			@RequestParam("emailMember2") String emailMember2,
+			@RequestParam("emailMember3") String emailMember3) {
+		logger.info("Petición de modificación de anillo", locale);
+
+		request.postRing(emailMember1, emailMember2, emailMember3);
 
 		return "settings-ring";
 	}

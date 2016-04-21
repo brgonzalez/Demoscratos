@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ 
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>  
 
 <!DOCTYPE html>
 <html>
@@ -54,42 +58,70 @@
 				<div id ="create-ring">
 					<button style="display=${displayButton}" type="submit" class="btn btn-primary">Crear</button>
 				</div>
-				<div style="display=${displayShow-ring}" id= "show-ring">
+				<div style="display:$'{displayShow-ring}';" id= "show-ring">
 					<h3>Amigo 1 </h3>
-					<c:forEach var="user" items="${users}">
 					
-						<div id="info-m1">
-		 					<label>${user.userName} </label>
-		 					<label>${user.email}</label>
-		  				</div>
+					<div id="info-m1">
+		 				<label>${user.userName} </label>
+		 				<label>${user.email}</label>
+		  			</div>
+		  			<h3>Amigo 3 </h3>
+					
+					<div id="info-m1">
+		 				<label>${user.userName} </label>
+		 				<label>${user.email}</label>
+		  			</div>
+		  			<h3>Amigo 3 </h3>
+					
+					<div id="info-m1">
+		 				<label>${user.userName} </label>
+		 				<label>${user.email}</label>
+		  			</div>
 						
-					</c:forEach>	
 					
 
 	  				<button onclick="$('#show-ring').hide(); $('#modify-ring').show()" type="submit" class="btn btn-primary">Modificar</button>
 
 	  			</div>
 
-				<form id = "modify-ring" style="display:none;">
-					<c:forEach var="user" items="${users}">
+				<form:form id = "modify-ring" style="display:none;" action="settings-ring" method="post">
 					
 						<h3>Amigo 1 </h3>
 						<div>
-		  					<fieldset class="form-group" id ="column-ring-input">
+		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input type="email" class="form-control" id="inputEmail" placeholder="Email" value="${user.email}">
+		    					<input name ="emailMember1"type="email" class="form-control" id="inputEmail" placeholder="Email" value="${user.email}">
 		  					</fieldset>
 		  				</div>
 	
 	  					<HR width=50% align="center">
-	  				</c:forEach>	
+	  					
+	  					<h3>Amigo 2 </h3>
+						<div>
+		  					<fieldset class="form-group" >
+		    					<label for="m1-inputEmail">Correo</label>
+		    					<input name ="emailMember2" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${user.email}">
+		  					</fieldset>
+		  				</div>
+	
+	  					<HR width=50% align="center">
+	  					
+	  					<h3>Amigo 3 </h3>
+						<div>
+		  					<fieldset class="form-group" >
+		    					<label for="m1-inputEmail">Correo</label>
+		    					<input  name ="emailMember3" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${user.email}">
+		  					</fieldset>
+		  				</div>
+	
+	  					<HR width=50% align="center">
 	  				
 
 	  				<button onclick="$('#modify-ring').hide(); $('#show-ring').show()" type="submit" class="btn btn-primary">Guardar</button>
 
 
   					
-				</form>
+				</form:form>
 
 
 			<div>	
