@@ -66,7 +66,7 @@ final class ConnectionDB {
 		this.password = password; }
 
 	protected ResultSet executeQuery(String query) {
-		try { setResult(statement.executeQuery(query)); result.next(); }
+		try { setResult(statement.executeQuery(query)); }
 		catch (SQLException e) { e.printStackTrace(); }
 		return result; }
 	
