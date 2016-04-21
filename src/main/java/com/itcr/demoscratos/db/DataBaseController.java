@@ -22,12 +22,13 @@ public final class DataBaseController {
 		ResultSet result = connection.executeQuery(query);
 		String member1, member2, member3; Ring ring = null;
 		try {
-			member1 = result.getString("member1");
-			member2 = result.getString("member2");
-			member3 = result.getString("member3");
-			connection.disconnect();
-			ring = new Ring(userId, member1, member2, member3);	}
-		catch (SQLException e) { e.printStackTrace(); }
+			if (result.next()) {
+				member1 = result.getString("member1");
+				member2 = result.getString("member2");
+				member3 = result.getString("member3");
+				connection.disconnect();
+				ring = new Ring(userId, member1, member2, member3);	} }
+		catch (SQLException e) { e.printStackTrace(); } 
 		return ring; }
 	
 	public void deleteRing(String userId) {
@@ -36,7 +37,7 @@ public final class DataBaseController {
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	
-	public void insertRing(String userId, String member1, String member2, String member3) {
+	private void insertRing(String userId, String member1, String member2, String member3) {
 		connection.connect();
 		String query = "INSERT INTO rings(id, member1, member2, member3) VALUES('"+userId+"', '"+member1+"', '"+member2+"', '"+member3+"')";
 		connection.executeUpdate(query);

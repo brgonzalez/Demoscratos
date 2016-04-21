@@ -29,9 +29,10 @@ public final class RequestController {
 		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
 		signIn(email, password);
 		setMapper(new ObjectMapper());
+		setDataBase(new DataBaseController());
 		if (isLoggedIn()) { currentUser = getUserByEmail(email); } }
 	
-	public void signIn(String email, String password) {
+	private void signIn(String email, String password) {
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
 		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
 		client.setToken(); }
@@ -82,23 +83,25 @@ public final class RequestController {
 		User user = null;
 		if (array.length() == 1) { user = new User(array.getJSONObject(0), email); }
 		return user; }
-	
-	public Ring getRing() {
-		Ring ring = null;
-		ring = database.selectRing(currentUser.getId());
-		return ring; }
+			
+	public ArrayList<User> getRing() {
+		ArrayList<User> users = new ArrayList<User>(); 
+		Ring ring = database.selectRing(currentUser.getId());
+		if (ring != null) {	
+			User member1 = getUserByEmail(ring.getMember1());
+			User member2 = getUserByEmail(ring.getMember2());
+			User member3 = getUserByEmail(ring.getMember3());
+			users.add(member1); users.add(member2); users.add(member3);	}
+		else {
+			System.err.println("El usuario actual aún no ha definido un anillo de confianza.");	}
+		return users; }
 		
 	public void postRing(String email1, String email2, String email3) {
-		if (!email1.equals(email2) && !email1.equals(email3) && !email2.equals(email3)) {
-			User member1 = getUserByEmail(email1);
-			User member2 = getUserByEmail(email2);
-			User member3 = getUserByEmail(email3);
-			if (member1 != null && member2 != null && member3 != null) {
-				database.insertRing(currentUser.getId(), member1.getId(), member2.getId(), member3.getId()); }
-			else {
-				System.err.println("Alguno de los correos ingresados no existe"); }	}
-		else {
-			System.err.println("Todos los correos deben ser distintos"); } }
+		User member1 = getUserByEmail(email1);
+		User member2 = getUserByEmail(email2);
+		User member3 = getUserByEmail(email3);
+		if (checkRing(member1, member2, member3)) {
+			database.updateRing(currentUser.getId(), member1.getEmail(), member2.getEmail(), member3.getEmail()); } }
 	
 	public void postForum(String name, String title, String summary) {
 		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
@@ -109,21 +112,27 @@ public final class RequestController {
 	
 	public void deleteRing() {
 		database.deleteRing(currentUser.getId()); }
-	
-	public void updateRing(String email1, String email2, String email3) {
-		if (!email1.equals(email2) && !email1.equals(email3) && !email2.equals(email3)) {
-			User member1 = getUserByEmail(email1);
-			User member2 = getUserByEmail(email2);
-			User member3 = getUserByEmail(email3);
-			if (member1 != null && member2 != null && member3 != null) {
-				database.updateRing(currentUser.getId(), member1.getId(), member2.getId(), member3.getId()); }
+		
+	private boolean checkRing(User member1, User member2, User member3) {
+		if (member1 != null && member2 != null && member3 != null) {
+			if (!member1.equals(member2) && !member1.equals(member3) && !member2.equals(member3)) {
+				if (!currentUser.equals(member1) && !currentUser.equals(member2) && !currentUser.equals(member3)) {
+					return true; }
+				else {
+					System.err.println("No es posible agregarse a usted mismo al anillo de confianza");
+					return false; }	}	
 			else {
-				System.err.println("Alguno de los correos ingresados no existe"); }	}
+				System.err.println("Todos los correos deben ser distintos");
+				return false; } }
 		else {
-			System.err.println("Todos los correos deben ser distintos"); } }
-
+			System.err.println("Alguno de los correos ingresados no existe");
+			return false; } }
+	
 	private void setClient(ApacheHttpClient client) {
 		this.client = client; }
 
 	private void setMapper(ObjectMapper mapper) {
-		this.mapper = mapper; } }
+		this.mapper = mapper; }
+
+	private void setDataBase(DataBaseController database) {
+		this.database = database; } }
