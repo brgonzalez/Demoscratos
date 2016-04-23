@@ -22,7 +22,7 @@ public class LoginController {
 	
 	private RequestController request = new RequestController("brarigoch@gmail.com","12345678");
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
 
 	
 	
@@ -41,7 +41,7 @@ public class LoginController {
 
 		
 		if(request.isLoggedIn()){
-			return "home";
+			return "forums";
 		}
 		
 		return "login";

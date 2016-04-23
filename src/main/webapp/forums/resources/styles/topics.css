@@ -1,0 +1,84 @@
+.topics-list {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
+     text-align:center;
+
+}
+
+#btn-open-closed{
+	width: 40%;
+}
+
+.topic{
+	margin: 5%;
+	background-color: #424242;
+	height: 80px;
+	padding: 5%;
+	color: white;
+
+}
+.topic p{
+	line-height: 10px;
+	text-align: center
+}
+
+.btn-options{
+
+	width: 30%;
+	margin: 1%;
+}
+
+#btn-abstentionism{
+
+	background-color: #424242;
+}
+
+#btn-negative{
+	background-color: #B40404;
+
+}
+
+#btn-afirmative{
+	background-color: #0B610B;
+}
+
+
+#selected-topics{
+	text-align: center;
+	margin-left: 10%;
+	margin-right: 10%;
+	color: red;
+}
+
+#selected-topics li a{
+	color:#3B0B39;
+}
+
+
+/*
+Parte de la vista del tema
+*/
+
+.view-topic{
+	text-align: center;
+}
+
+.modality-topic{
+	margin-bottom: 5%;
+}
+
+.tag-topic{
+	margin-bottom: 10%;
+}
+.space-options-votes{
+	margin-bottom: 6%;
+	color: white;
+}
+
+.own-argument{
+	margin-bottom: 6%;
+}
+.multi-vote{
+	margin-bottom: 6%;
+}

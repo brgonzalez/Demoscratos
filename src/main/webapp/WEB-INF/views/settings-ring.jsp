@@ -60,25 +60,24 @@
 				</div>
 				<div style="display:$'{displayShow-ring}';" id= "show-ring">
 					<h3>Amigo 1 </h3>
-					
 					<div id="info-m1">
-		 				<label>${user.userName} </label>
-		 				<label>${user.email}</label>
+						<label>Nombre</label>
+		 				<label>${member1.displayName} </label>
+		 				<label>${member1.email}</label>
+		  			</div>
+		  			<h3>Amigo 2 </h3>
+					<div id="info-m1">
+						<label>Nombre</label>
+		 				<label>${member2.displayName} </label>
+		 				<label>${member2.email}</label>
 		  			</div>
 		  			<h3>Amigo 3 </h3>
-					
 					<div id="info-m1">
-		 				<label>${user.userName} </label>
-		 				<label>${user.email}</label>
-		  			</div>
-		  			<h3>Amigo 3 </h3>
-					
-					<div id="info-m1">
-		 				<label>${user.userName} </label>
-		 				<label>${user.email}</label>
+						<label>Nombre</label>
+		 				<label>${member3.displayName} </label>
+		 				<label>${member3.email}</label>
 		  			</div>
 						
-					
 
 	  				<button onclick="$('#show-ring').hide(); $('#modify-ring').show()" type="submit" class="btn btn-primary">Modificar</button>
 

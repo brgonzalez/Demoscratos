@@ -7,13 +7,13 @@ public class Topic {
 	private String id;
 	private String title;
 	private boolean closed;
-	private String closingAt;
+	private Object closingAt;
 
 	public Topic(JSONObject json) {
 		setId(json.getString("id"));
 		setTitle(json.getString("mediaTitle"));
 		setClosed(json.getBoolean("closed"));
-		setClosingAt(json.getString("closingAt")); }
+		setClosingAt(json.get("closingAt")); }
 
 	public String getId() {
 		return id; }
@@ -33,10 +33,10 @@ public class Topic {
 	public void setClosed(boolean closed) {
 		this.closed = closed; }
 
-	public String getClosingAt() {
+	public Object getClosingAt() {
 		return closingAt; }
 
-	public void setClosingAt(String closingAt) {
+	public void setClosingAt(Object closingAt) {
 		this.closingAt = closingAt; }
 
 	@Override
