@@ -14,16 +14,17 @@
 
 
 
-		<link rel="stylesheet" type="text/css" href="resources/semantic/dist/semantic.min.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
 		<script src="resources/semantic/dist/semantic.min.js"></script>
 		
-		<link rel="stylesheet" type="text/css" href="resources/styles/header.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/general.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">
 
-		<link rel="stylesheet" type="text/css" href="resources/styles/settings.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/settings.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/settings-ring.css">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
 
 
 
@@ -60,23 +61,32 @@
 				</div>
 				<div style="display:$'{displayShow-ring}';" id= "show-ring">
 					<h3>Amigo 1 </h3>
-					<div id="info-m1">
+					<div class = "data">
 						<label>Nombre</label>
+						<label>Correo</label>
 		 				<label>${member1.displayName} </label>
 		 				<label>${member1.email}</label>
 		  			</div>
+		  			
+		  			<hr>
+		  			
 		  			<h3>Amigo 2 </h3>
-					<div id="info-m1">
+					<div class = "data">
 						<label>Nombre</label>
+						<label>Correo</label>			
 		 				<label>${member2.displayName} </label>
 		 				<label>${member2.email}</label>
 		  			</div>
+		  			<hr>
 		  			<h3>Amigo 3 </h3>
-					<div id="info-m1">
+					<div class = "data">
 						<label>Nombre</label>
+						<label>Correo</label>
 		 				<label>${member3.displayName} </label>
 		 				<label>${member3.email}</label>
 		  			</div>
+		  			
+		  			<hr>
 						
 
 	  				<button onclick="$('#show-ring').hide(); $('#modify-ring').show()" type="submit" class="btn btn-primary">Modificar</button>
@@ -89,7 +99,7 @@
 						<div>
 		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input name ="emailMember1"type="email" class="form-control" id="inputEmail" placeholder="Email" value="${user.email}">
+		    					<input name ="emailMember1"type="email" class="form-control" id="inputEmail" placeholder="Email" value="${member1.email}">
 		  					</fieldset>
 		  				</div>
 	
@@ -99,7 +109,7 @@
 						<div>
 		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input name ="emailMember2" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${user.email}">
+		    					<input name ="emailMember2" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${member2.email}">
 		  					</fieldset>
 		  				</div>
 	
@@ -109,7 +119,7 @@
 						<div>
 		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input  name ="emailMember3" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${user.email}">
+		    					<input  name ="emailMember3" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${member3.email}">
 		  					</fieldset>
 		  				</div>
 	
@@ -135,7 +145,7 @@
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
-	    <script src="resources/js/bootstrap.min.js"></script>
+	    <script src="/demoscratos/resources/js/bootstrap.min.js"></script>
 			
  	</body>
 

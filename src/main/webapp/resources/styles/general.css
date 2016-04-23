@@ -2,6 +2,12 @@ body{
 	background-color: #E6E6E6;
 }
 
+.topics-column{
+	
+	float: none;	
+	margin: 0 auto;
+}
+
 #button-save, #button-new {
 
 	float: right;

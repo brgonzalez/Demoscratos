@@ -41,9 +41,12 @@ public class LoginController {
 
 		
 		if(request.isLoggedIn()){
+			logger.info("Usuario se encuentra logueado", locale);
+
 			return "forums";
 		}
-		
+		logger.info("Usuario no se encuentra logueado", locale);
+
 		return "login";
 	}
 

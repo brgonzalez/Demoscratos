@@ -7,17 +7,20 @@
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
 
-		<link rel="stylesheet" type="text/css" href="resources/semantic/dist/semantic.min.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
 		<script src="resources/semantic/dist/semantic.min.js"></script>
 		
-		<link rel="stylesheet" type="text/css" href="resources/styles/header.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/topics.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/general.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/topics.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">
 
 
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
+		
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
+        <script type="text/javascript"></script>
 
 	</head>
 
@@ -29,13 +32,13 @@
 		<div class = "container">
 
 
-			<div class ="space-topic col-xs-12 col-sm-12 col-md-7 col-lg-7">
+			<div class ="space-topic col-xs-12 col-sm-12 col-md-6 col-lg-6 col-lg-offset-3 col-md-offset-3">
 
 				<div class ="view-topic">
 				
 					<h5><span class = "glyphicon glyphicon-time"></span> Fecha de cierrre </h5>
 					<h1 class ="name-topic">Nombre del tema</h2>
-					<h4 class = "modality-topic">Modalidad: SemipÃºblico</h4>
+					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
 					<h3 class = "tag-topic">Etiqueta</h4>
 					<h4 class = "vote-topic">Voto</h5>
 					<div class ="space-options-votes">
@@ -45,7 +48,7 @@
 					</div>
 
 					<div class ="multi-vote">
-						<h4 class = "description-multi-vote">Esta es la descripciÃ³n para multi</h5>
+						<h4 class = "description-multi-vote">Esta es la descripciónn para multi</h5>
 
 						<div class="checkbox">
 						 	<label><input type="checkbox" value="">Option 1</label>
@@ -91,7 +94,7 @@
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
-	    <script src="resources/js/bootstrap.min.js"></script>
+	    <script src="/demoscratos/resources/js/bootstrap.min.js"></script>
 			
  	</body>
 

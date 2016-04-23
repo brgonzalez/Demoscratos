@@ -44,9 +44,7 @@ public class RingController {
 		String block ="block";
 		
 		ArrayList<User> members = request.getRing();
-		System.out.println(members);
 		if(members.size() > 0){
-			System.out.println("Entra");
 			model.addAttribute("member1", members.get(0));
 			model.addAttribute("member2",  members.get(1) );
 			model.addAttribute("member3",  members.get(2) );

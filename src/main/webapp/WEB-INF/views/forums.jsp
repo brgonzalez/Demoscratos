@@ -7,18 +7,18 @@
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
 
-		<link rel="stylesheet" type="text/css" href="resources/semantic/dist/semantic.min.css">
-		<script src="resources/semantic/dist/semantic.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
+		<script src="/demoscratos/resources/semantic/dist/semantic.min.js"></script>
 		
-		<link rel="stylesheet" type="text/css" href="resources/styles/forums.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/header.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/home.css">	
-		<link rel="stylesheet" type="text/css" href="resources/styles/general.css">		
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/forums.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/home.css">	
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">		
 			
 		
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
 
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
         <script type="text/javascript"></script> 
@@ -70,7 +70,7 @@
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
-	    <script src="resources/js/bootstrap.min.js"></script>
+	    <script src="/demoscratos/resources/js/bootstrap.min.js"></script>
 			
  	</body>
 

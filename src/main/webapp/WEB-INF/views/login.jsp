@@ -9,24 +9,24 @@
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
 
-		<link rel="stylesheet" type="text/css" href="resources/semantic/dist/semantic.min.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
 		<script src="resources/semantic/dist/semantic.min.js"></script>
 		
-		<link rel="stylesheet" type="text/css" href="resources/styles/login.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/header.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/home.css">	
-		<link rel="stylesheet" type="text/css" href="resources/styles/general.css">	
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/login.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/home.css">	
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">	
 
-		<link rel="stylesheet" type="text/css" href="styles/general.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/styles/general.css">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
 
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
         <script type="text/javascript"></script> 
 
 
-		<script src="resources/javascript/login.js"></script>
+		<script src="/demoscratos/resources/javascript/login.js"></script>
 
 	</head>
 
@@ -49,7 +49,7 @@
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
-                        <form:form id="loginform" class="form-horizontal" action="login" method="post">
+                        <form:form id="loginform" class="form-horizontal" action="forums" href="forums" method="post">
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -76,7 +76,7 @@
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <input type ="submit" id="btn-login" class="btn btn-success" value="Ingresar"  />
+                                      <input href="/demoscratos/forums" type ="submit" id="btn-login" class="btn btn-success" value="Ingresar"  />
                                       <!--<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>-->
 
                                     </div>

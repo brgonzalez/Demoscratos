@@ -4,51 +4,20 @@ resources/<!DOCTYPE html>
 	<head>
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="resources/semantic/dist/semantic.min.css">
-		<script src="resources/semantic/dist/semantic.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
+		<script src="/demoscratos/resources/semantic/dist/semantic.min.js"></script>
 		
-		<link rel="stylesheet" type="text/css" href="resources/styles/header.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/general.css">
-		<link rel="stylesheet" type="text/css" href="resources/styles/settings.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/settings.css">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
 
 	</head>
 
 	<body>
-		<div class = "header">
-			<nav  id = "header"class="navbar navbar-default">
-  				<div class="container-fluid">
-    			<!-- Brand and toggle get grouped for better mobile display -->
-    				<div class="navbar-header">
-      					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					        <span class="sr-only">Toggle navigation</span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-      					</button>
-      					<a href="/" id="name-app"class="navbar-brand">Demoscratos</a>
-   					</div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-	    			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      				<ul class="nav navbar-nav">
-					    </ul>
-	      
-	      				<ul class="nav navbar-nav navbar-right">
-	        				<li class="dropdown"><a href="#" id ="user-header" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario <span class="caret"></span></a>
-	          					<ul class="dropdown-menu">
-						            <li><a href="/settings-profile">Configuración</a></li>
-						            <li><a href="/login">Cerrar sesión</a></li>
-
-	          					</ul>
-	        				</li>
-	      				</ul>
-	   				 </div><!-- /.navbar-collapse -->
-	  			</div><!-- /.container-fluid -->
-			</nav>
-		</div>
+		<jsp:include page="includes/header.jsp" />
 
 
 		<div class = "container">
@@ -112,7 +81,7 @@ resources/<!DOCTYPE html>
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <!-- Include all compiled plugins (below), or include individual files as needed -->
-	    <script src="resources/js/bootstrap.min.js"></script>
+	    <script src="/demoscratos/resources/js/bootstrap.min.js"></script>
 			
  	</body>
 

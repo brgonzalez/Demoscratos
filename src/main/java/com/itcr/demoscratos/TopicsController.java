@@ -49,7 +49,7 @@ public class TopicsController {
 	}
 	
 	@RequestMapping(value = "forums/{key}" , method = RequestMethod.GET)
-	public String displayForum(Locale locale, Model model,@PathVariable(value="key") String key) {
+	public String displayTopiscForum(Locale locale, Model model,@PathVariable(value="key") String key) {
 		logger.info("El key es topic "+ key, locale);
 		
 		ArrayList<Topic> topics = request.getTopics(key);
@@ -62,6 +62,16 @@ public class TopicsController {
 		//model.addAttribute("topics", topics);
 		
 		return "topics";
+	}
+	
+	@RequestMapping(value = "forums/topic/{key}" , method = RequestMethod.GET)
+	public String showTopic(Locale locale, Model model,@PathVariable(value="key") String key) {
+		logger.info("Show topic "+ key, locale);
+
+		
+		//model.addAttribute("topics", topics);
+		
+		return "showTopic";
 	}
 
 }

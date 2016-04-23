@@ -42,10 +42,28 @@ public class ForumsController {
 			
 			model.addAttribute("forums", forums );
 			logger.info("El usuario está activo. \n forums:"+request.getForums().toString(), locale);
+			return "forums";
+			
 
 		}
 
-		return "forums";
+		return "login";
+	}
+	
+	@RequestMapping(value = "/forums" , method = RequestMethod.POST)
+	public String forumsPost(Locale locale, Model model) {
+		logger.info("Obteniedo forums", locale);
+		
+		if(request.isLoggedIn()){
+			ArrayList<Forum> forums = request.getForums();
+			
+			model.addAttribute("forums", forums );
+			logger.info("El usuario está activo. \n forums:"+request.getForums().toString(), locale);
+			return "forums";
+
+		}
+
+		return "login";
 	}
 	
 
