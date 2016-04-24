@@ -45,10 +45,10 @@
 
 				<div class = "side-bar">
 					<ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-			    		<li><a href="./settings-profile.html">Perfil</a></li>
-			    		<li><a href="./settings-password.html">Contraseña</a></li>
-			    		<li><a href="./settings-notification.html">Notificaciones</a></li>
-			    		<li class= "active"><a id ="settings-active" href="./settings-ring.html">Anillo de Confianza</a></li>
+			    		<li><a href="settings-profile">Perfil</a></li>
+			    		<li><a href="">Contraseña</a></li>
+			    		<li><a href="">Notificaciones</a></li>
+			    		<li class= "active"><a id ="settings-active" href="settings-ring">Anillo de Confianza</a></li>
 		  			</ul>
 				</div>
 

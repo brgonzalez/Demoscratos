@@ -60,13 +60,25 @@ public class RingController {
 	}
 	
 	@RequestMapping(value = "/settings-ring", method = RequestMethod.POST)
-	public String modifyRing(Locale locale,
+	public String modifyRing(Locale locale,Model model,
 			@RequestParam("emailMember1") String emailMember1 ,
 			@RequestParam("emailMember2") String emailMember2,
 			@RequestParam("emailMember3") String emailMember3) {
 		logger.info("Petición de modificación de anillo", locale);
+		
+		
 
 		request.postRing(emailMember1, emailMember2, emailMember3);
+		
+		ArrayList<User> members = request.getRing();
+		if(members.size() > 0){
+			model.addAttribute("member1", members.get(0));
+			model.addAttribute("member2",  members.get(1) );
+			model.addAttribute("member3",  members.get(2) );
+			/*
+			model.addAttribute("displayButton", "none" );
+			model.addAttribute("displayShow-ring", "none" );*/
+		}
 		
 		logger.info("Se ha modificado el anido", locale);
 
