@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itcr.democtratos.test.SingletonDemo;
 import com.itcr.demoscratos.db.DataBaseController;
 import com.itcr.demoscratos.models.Api;
 import com.itcr.demoscratos.models.Forum;
@@ -20,10 +21,13 @@ import com.itcr.demoscratos.models.User;
 
 public final class RequestController {
 	
+	private static RequestController instance = null;
+	
 	private ApacheHttpClient client; 
 	private ObjectMapper mapper;
 	private DataBaseController database;
 	private User currentUser;
+	
 	
 	public RequestController(String email, String password) {
 		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
@@ -31,6 +35,16 @@ public final class RequestController {
 		setMapper(new ObjectMapper());
 		setDataBase(new DataBaseController());
 		if (isLoggedIn()) { currentUser = getUserByEmail(email); } }
+	
+	private RequestController() { }
+
+    public static synchronized RequestController getInstance() {
+        if (instance == null) {
+            instance = new RequestController();
+        }
+
+        return instance;
+    }
 	
 	private void signIn(String email, String password) {
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
