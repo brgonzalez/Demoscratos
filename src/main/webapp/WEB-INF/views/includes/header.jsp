@@ -16,12 +16,13 @@
 	    			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      				<ul class="nav navbar-nav">
 					    </ul>
-	      
+	      				<h4></h4>
 	      				<ul class="nav navbar-nav navbar-right">
-	        				<li class="dropdown"><a href="" id ="user-header" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario <span class="caret"></span></a>
+	      					<li ><a href="about" method ="GET" id ="user-header">Acerca de</a></li>
+	        				<li class="dropdown"><a href="" id ="user-header" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#{User}<span class="caret"></span></a>
 	          					<ul class="dropdown-menu">
 						            <li><a href="/demoscratos/settings-profile">Configuración</a></li>
-						            <li><a href="/demoscratos/login">Cerrar sesión</a></li>
+						            <li><a  href="signOut">Cerrar sesión</a></li>
 
 	          					</ul>
 	        				</li>

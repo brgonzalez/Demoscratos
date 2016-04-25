@@ -40,3 +40,8 @@ body{
 #user-header:focus{
 	background-color: #3B0B39;
 }
+
+#none{
+	display:none;
+}
+}

@@ -57,9 +57,9 @@
 			<div class = "space-setting col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
 				<div id ="create-ring">
-					<button style="display=${displayButton}" type="submit" class="btn btn-primary">Crear</button>
+					<button id ="${displayButton}"style="display:${displayButton};" type="submit" class="btn btn-primary">Crear</button>
 				</div>
-				<div style="display:$'{displayShow-ring}';" id= "show-ring">
+				<div style="display:${displayShow-ring};" id= "show-ring">
 					<h3>Amigo 1 </h3>
 					<div class = "data">
 						<label>Nombre</label>

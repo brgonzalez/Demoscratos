@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itcr.democtratos.test.SingletonDemo;
 import com.itcr.demoscratos.db.DataBaseController;
 import com.itcr.demoscratos.models.Api;
 import com.itcr.demoscratos.models.Forum;
@@ -29,27 +28,30 @@ public final class RequestController {
 	private User currentUser;
 	
 	
-	public RequestController(String email, String password) {
+	public RequestController() {
 		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
-		signIn(email, password);
 		setMapper(new ObjectMapper());
-		setDataBase(new DataBaseController());
-		if (isLoggedIn()) { currentUser = getUserByEmail(email); } }
+		setDataBase(new DataBaseController()); } 
 	
-	private RequestController() { }
 
     public static synchronized RequestController getInstance() {
-        if (instance == null) {
+        if (instance ==null) {
             instance = new RequestController();
         }
-
         return instance;
     }
 	
-	private void signIn(String email, String password) {
-		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
-		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
-		client.setToken(); }
+	public void signIn(String email, String password) {
+		if (isLoggedIn()) { 
+			currentUser = getUserByEmail(email);
+		}
+		else{
+			String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
+			client.postHttpRequest(Resource.SINGIN.getUrl(), json);
+			client.setToken(); 
+			currentUser = getUserByEmail(email);
+		}
+	}
 	
 	public void signOut() {
 		client.removeToken(); } 

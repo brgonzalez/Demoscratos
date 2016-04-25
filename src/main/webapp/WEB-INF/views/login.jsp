@@ -49,7 +49,7 @@
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
-                        <form:form id="loginform" class="form-horizontal" action="forums" href="forums" method="post">
+                        <form:form id="loginform" class="form-horizontal" action="login" href="" method="post">
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

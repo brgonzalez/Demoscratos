@@ -1,4 +1,10 @@
-resources/<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" %>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ 
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>  
+<!DOCTYPE html>
 <html>
 
 	<head>
@@ -30,48 +36,46 @@ resources/<!DOCTYPE html>
 
 				<div class = "side-bar">
 					<ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-			    		<li class= "active" ><a id ="settings-active" href="./">Perfil</a></li>
-			    		<li><a href="./settings-password.html">Contraseña</a></li>
-			    		<li><a href="./setting-notification.html">Notificaciones</a></li>
-			    		<li><a  href="./settings-ring.html">Anillo de Confianza</a></li>
+			    		<li class= "active" ><a id ="settings-active" href="">Perfil</a></li>
+			    		<li><a href="settings-password">Contraseña</a></li>
+			    		<li><a href="setting-notification">Notificaciones</a></li>
+			    		<li><a  href="settings-ring">Anillo de Confianza</a></li>
 		  			</ul>
 				</div>
 
 			</div>
 
-			<div class = "space-setting col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<div class = "settings col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
-				<form>
+				<form:form action="settings-profile" method="POST">
 					<h3>Perfil </h3>
 
   					<fieldset class="form-group">
-					    <label for="profile-inputName">Nombre</label>
-					    <input type="text" class="form-control" id="m1-InputName" placeholder="Nombre">
+					    <label>Nombre</label>
+					    <input name ="name" type="text" class="form-control" value="${user.displayName}">
   					</fieldset>
+
+  					<HR width=50% align="center">
 
   					<fieldset class="form-group">
-					    <label for="profile-inputLastName">Apellido</label>
-					    <input type="text" class="form-control" id="m1-InputName" placeholder="Apellido">
+					    <label >Apellido</label>
+					    <input name ="lastName" type="text" class="form-control"  value="${user.displayName}">
   					</fieldset>
+
+  					<HR width=50% align="center">
 
   					<fieldset class="form-group">
-    					<label for="profile-inputEmail">Correo</label>
-    					<input type="email" class="form-control" id="inputEmail" placeholder="Email">
+    					<label>Correo</label>
+    					<input name ="email"type="email" class="form-control" value="${user.email}" disabled>
   					</fieldset>
-
 
   					<HR width=50% align="center">
 
   					<button type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
+  				</form:form>
 
-  					
-
-  					
-				</form>
-
-
-			<div>	
-
+			</div>
+			
 			<div class = "settings col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			</div>
 
