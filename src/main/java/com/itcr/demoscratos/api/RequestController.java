@@ -25,14 +25,22 @@ public final class RequestController {
 	private DataBaseController database;
 	private User currentUser;
 	
-	public RequestController(String email, String password) {
-		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
-		signIn(email, password);
-		setMapper(new ObjectMapper());
-		setDataBase(new DataBaseController());
-		if (isLoggedIn()) { setCurrentUser(getUserByEmail(email)); } }
+	private static RequestController instance = null;
 	
-	private void signIn(String email, String password) {
+	public RequestController() {
+		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
+		setMapper(new ObjectMapper());
+		setDataBase(new DataBaseController());}
+	 
+	public static synchronized RequestController getInstance() {
+		if (instance == null) {
+			instance = new RequestController();
+	    }
+		return instance;
+	}
+	
+	public void signIn(String email, String password) {
+		if (isLoggedIn()) { setCurrentUser(getUserByEmail(email)); } 
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
 		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
 		client.setToken(); }

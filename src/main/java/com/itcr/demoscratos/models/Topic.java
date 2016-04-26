@@ -13,7 +13,7 @@ public class Topic {
 		setId(json.getString("id"));
 		setTitle(json.getString("mediaTitle"));
 		setClosed(json.getBoolean("closed"));
-		setClosingAt(json.getString("closingAt")); }
+		setClosingAt(json.get("closingAt")); }
 
 	public String getId() {
 		return id; }

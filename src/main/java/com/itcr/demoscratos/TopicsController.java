@@ -34,20 +34,20 @@ public class TopicsController {
 			model.addAttribute("topics",topics);
 		}
 		//model.addAttribute("topics", topics);
-		return "privateTopic";
+		return "topics";
 	}
 	
 	@RequestMapping(value = "forums/topic/{key}" , method = RequestMethod.GET)
 	public String showTopic(Locale locale, Model model,@PathVariable(value="key") String key) {
 		logger.info("Show topic "+ key, locale);
 		//model.addAttribute("topics", topics);
-		return "showTopic";
+		return "privateTopic";
 	}
 	
 	@RequestMapping(value = "forums/topic/new}" , method = RequestMethod.GET)
 	public String newTopic(Locale locale, Model model,@PathVariable(value="key") String key) {
 		logger.info("Show topic "+ key, locale);
 		//model.addAttribute("topics", topics);
-		return "showTopic";
+		return "privateTopic";
 	}
 }
