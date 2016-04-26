@@ -13,7 +13,7 @@ public class Topic {
 		setId(json.getString("id"));
 		setTitle(json.getString("mediaTitle"));
 		setClosed(json.getBoolean("closed"));
-		setClosingAt(json.get("closingAt")); }
+		setClosingAt(json.getString("closingAt")); }
 
 	public String getId() {
 		return id; }
@@ -41,4 +41,4 @@ public class Topic {
 
 	@Override
 	public String toString() {
-		return "Topic [id=" + id + ", title=" + title + ", closed=" + closed + ", closingAt=" + closingAt + "]"; } }
+		return "Topic [id=" + id + ", title=" + title + ", closed=" + closed + ", closingAt=" + closingAt.toString() + "]"; } }

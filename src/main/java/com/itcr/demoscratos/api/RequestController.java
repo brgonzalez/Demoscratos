@@ -20,41 +20,30 @@ import com.itcr.demoscratos.models.User;
 
 public final class RequestController {
 	
-	private static RequestController instance = null;
-	
 	private ApacheHttpClient client; 
 	private ObjectMapper mapper;
 	private DataBaseController database;
 	private User currentUser;
 	
-	
-	public RequestController() {
+	public RequestController(String email, String password) {
 		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
+		signIn(email, password);
 		setMapper(new ObjectMapper());
-		setDataBase(new DataBaseController()); } 
+		setDataBase(new DataBaseController());
+		if (isLoggedIn()) { setCurrentUser(getUserByEmail(email)); } }
 	
-
-    public static synchronized RequestController getInstance() {
-        if (instance ==null) {
-            instance = new RequestController();
-        }
-        return instance;
-    }
+	private void signIn(String email, String password) {
+		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
+		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
+		client.setToken(); }
 	
-	public void signIn(String email, String password) {
-		if (isLoggedIn()) { 
-			currentUser = getUserByEmail(email);
-		}
-		else{
-			String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
-			client.postHttpRequest(Resource.SINGIN.getUrl(), json);
-			client.setToken(); 
-			currentUser = getUserByEmail(email);
-		}
-	}
+	public void signUp(String email, String firstName, String lastName, String password) {
+		String json = "{ \"email\": \""+email+"\", \"firstName\":\""+firstName+"\", \"lastName\":\""+lastName+"\", \"password\":\""+password+"\", \"re_password\":\""+password+"\" }";
+		client.postHttpRequest(Resource.SINGUP.getUrl(), json); }
 	
 	public void signOut() {
-		client.removeToken(); } 
+		client.removeToken();
+		setCurrentUser(null); } 
 	
 	public boolean isLoggedIn() {
 		return client.tokenExists(); }
@@ -119,12 +108,31 @@ public final class RequestController {
 		if (checkRing(member1, member2, member3)) {
 			database.updateRing(currentUser.getId(), member1.getEmail(), member2.getEmail(), member3.getEmail()); } }
 	
+	public void postTopic(String idForum, String title, String tag, String closingAt, boolean votable, String source, String content) {
+		String json = "{ \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
+		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json); }
+	
 	public void postForum(String name, String title, String summary) {
 		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
 		client.postHttpRequest(Resource.FORUM.getUrl(), json); }
 	
+	public void postPassword(String currentPassword, String newPassword) {
+		String json = "{ \"current_password\":\""+currentPassword+"\", \"password\":\""+newPassword+"\" }";
+		client.postHttpRequest(Resource.PASSWORD.getUrl(), json); }
+	
+	public void postProfile(String firstName, String lastName, String pictureUrl) {
+		String json = "{ \"firstName\":\""+firstName+"\", \"lastName\":\""+lastName+"\", \"profilePictureUrl\":\""+pictureUrl+"\" }";
+		client.postHttpRequest(Resource.PROFILE.getUrl(), json); }
+	
+	public void postNotifications(boolean replies, boolean newTopic) {
+		String json = "{ \"replies\": "+replies+", \"new-topic\": "+newTopic+" }";
+		client.postHttpRequest(Resource.PASSWORD.getUrl(), json); }
+	
 	public void deleteForum(String idForum) {
 		client.deleteHttpRequest(Resource.FORUM.getUrl() + idForum); }
+	
+	public void deleteTopic(String idTopic) {
+		client.deleteHttpRequest(Resource.TOPIC.getUrl() + idTopic); }
 	
 	public void deleteRing() {
 		database.deleteRing(currentUser.getId()); }
@@ -151,4 +159,7 @@ public final class RequestController {
 		this.mapper = mapper; }
 
 	private void setDataBase(DataBaseController database) {
-		this.database = database; } }
+		this.database = database; }
+	
+	private void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser; } }
