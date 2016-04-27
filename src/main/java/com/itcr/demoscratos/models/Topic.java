@@ -8,6 +8,8 @@ public class Topic {
 	private String title;
 	private boolean closed;
 	private Object closingAt;
+	
+	
 
 	public Topic(JSONObject json) {
 		setId(json.getString("id"));

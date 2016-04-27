@@ -1,6 +1,7 @@
 package com.itcr.demoscratos;
 
 import com.itcr.demoscratos.api.RequestController;
+import com.itcr.demoscratos.models.User;
 
 public abstract class Main {
 
@@ -8,8 +9,9 @@ public abstract class Main {
 
 	public static void main(String[] args) {
 		RequestController request = new RequestController();
-		System.out.println(request.getUserByEmail("brarigoch@gmail.com"));
-		
+		request.signIn("brarigoch@gmail.com", "12345678");
+		User u = request.getUserByEmail("brarigoch@gmail.com");
+		System.out.println(u);
 		
 	} 
 }

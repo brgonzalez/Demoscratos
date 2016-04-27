@@ -19,7 +19,7 @@
 	      				<h4></h4>
 	      				<ul class="nav navbar-nav navbar-right">
 	      					<li ><a href="about" method ="GET" id ="user-header">Acerca de</a></li>
-	        				<li class="dropdown"><a href="" id ="user-header" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${User}<span class="caret"></span></a>
+	        				<li class="dropdown"><a href="" id ="user-header" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${User.displayName}<span class="caret"></span></a>
 	          					<ul class="dropdown-menu">
 						            <li><a href="/demoscratos/settings-profile">Configuración</a></li>
 						            <li><a  href="signOut">Cerrar sesión</a></li>
