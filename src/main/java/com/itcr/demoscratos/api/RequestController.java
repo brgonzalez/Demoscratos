@@ -39,11 +39,15 @@ public final class RequestController {
 		return instance;
 	}
 	
+	public User getCurrentUser(){
+		return currentUser;
+	}
+	
 	public void signIn(String email, String password) {
-		if (isLoggedIn()) { setCurrentUser(getUserByEmail(email)); } 
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
 		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
-		client.setToken(); }
+		client.setToken();
+		if (isLoggedIn()) { setCurrentUser(getUserByEmail(email)); } }
 	
 	public void signUp(String email, String firstName, String lastName, String password) {
 		String json = "{ \"email\": \""+email+"\", \"firstName\":\""+firstName+"\", \"lastName\":\""+lastName+"\", \"password\":\""+password+"\", \"re_password\":\""+password+"\" }";
