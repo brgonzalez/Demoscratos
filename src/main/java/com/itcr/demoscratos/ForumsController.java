@@ -27,7 +27,6 @@ public class ForumsController {
 		if(request.isLoggedIn()){
 			
 			User user = request.getCurrentUser();
-			System.out.println(request.getUserByEmail("brarigoch@gmail.com"));
 			model.addAttribute("user", user );
 			
 			ArrayList<Forum> forums = request.getForums();
@@ -45,10 +44,11 @@ public class ForumsController {
 		logger.info("Página princial", locale);
 		
 		if(request.isLoggedIn()){
+
 			
 			User user = request.getCurrentUser();
 			System.out.println(request.getUserByEmail("brarigoch@gmail.com"));
-			model.addAttribute("user", user );
+			model.addAttribute("User", user );
 			
 			ArrayList<Forum> forums = request.getForums();
 			
