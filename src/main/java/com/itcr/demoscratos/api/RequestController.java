@@ -132,9 +132,10 @@ public final class RequestController {
 		String json = "{ \"current_password\":\""+currentPassword+"\", \"password\":\""+newPassword+"\" }";
 		client.postHttpRequest(Resource.PASSWORD.getUrl(), json); }
 	
-	public void postProfile(String firstName, String lastName, String pictureUrl) {
+	public void postProfile(String firstName, String lastName, String email, String pictureUrl) {
 		String json = "{ \"firstName\":\""+firstName+"\", \"lastName\":\""+lastName+"\", \"profilePictureUrl\":\""+pictureUrl+"\" }";
-		client.postHttpRequest(Resource.PROFILE.getUrl(), json); }
+		client.postHttpRequest(Resource.PROFILE.getUrl(), json);
+		currentUser = getUserByEmail(email);}
 	
 	public void postNotifications(boolean replies, boolean newTopic) {
 		String json = "{ \"replies\": "+replies+", \"new-topic\": "+newTopic+" }";

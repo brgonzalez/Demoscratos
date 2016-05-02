@@ -23,7 +23,7 @@ public class ProfileController {
 	@RequestMapping(value = "/settings-profile", method = RequestMethod.GET)
 	public String getProfile(Locale locale, Model model) {
 		logger.info("Obteniendo profile.", locale);
-		User user = request.getUserByEmail("brarigoch@gmail.com");
+		User user = request.getCurrentUser();
 		model.addAttribute("user", user);
 		return "settings-profile";
 	}
@@ -32,9 +32,12 @@ public class ProfileController {
 	public String modifyProfile(Locale locale,
 			@RequestParam("name") String name ,
 			@RequestParam("lastName") String lastName,
-			@RequestParam("email") String email) {
+			@RequestParam("email") String email, Model model) {
 		logger.info("Petición de modificación de perfil", locale);
-		logger.info("Se ha modificado el anido", locale);
-		return "settings-ring";
+		request.postProfile(name, lastName, email,"");
+
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user);
+		return "settings-profile";
 	}
 }

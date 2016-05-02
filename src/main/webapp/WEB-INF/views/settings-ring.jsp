@@ -64,7 +64,7 @@
 					<div class = "data">
 						<label>Nombre</label>
 						<label>Correo</label>
-		 				<label>${member1.displayName} </label>
+		 				<label>${member1.name} </label>
 		 				<label>${member1.email}</label>
 		  			</div>
 		  			
@@ -74,7 +74,7 @@
 					<div class = "data">
 						<label>Nombre</label>
 						<label>Correo</label>			
-		 				<label>${member2.displayName} </label>
+		 				<label>${member2.name} </label>
 		 				<label>${member2.email}</label>
 		  			</div>
 		  			<hr>
@@ -82,7 +82,7 @@
 					<div class = "data">
 						<label>Nombre</label>
 						<label>Correo</label>
-		 				<label>${member3.displayName} </label>
+		 				<label>${member3.name} </label>
 		 				<label>${member3.email}</label>
 		  			</div>
 		  			
@@ -99,7 +99,7 @@
 						<div>
 		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input name ="emailMember1"type="email" class="form-control" id="inputEmail" placeholder="Email" value="${member1.email}">
+		    					<input name ="emailMember1"type="text" class="form-control" id="inputEmail" placeholder="Email" value="${member1.email}">
 		  					</fieldset>
 		  				</div>
 	
@@ -109,7 +109,7 @@
 						<div>
 		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input name ="emailMember2" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${member2.email}">
+		    					<input name ="emailMember2" type="text" class="form-control" id="inputEmail" placeholder="Email" value="${member2.email}">
 		  					</fieldset>
 		  				</div>
 	

@@ -47,26 +47,26 @@
 
 			<div class = "settings col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
-				<form:form action="settings-profile" method="POST">
+				<form:form action="settings-profile" method="post">
 					<h3>Perfil </h3>
 
   					<fieldset class="form-group">
 					    <label>Nombre</label>
-					    <input name ="name" type="text" class="form-control" value="${user.displayName}">
+		    				<input name ="name"type="text" class="form-control"  placeholder="nombre" value="${user.name}">
   					</fieldset>
 
   					<HR width=50% align="center">
 
   					<fieldset class="form-group">
 					    <label >Apellido</label>
-					    <input name ="lastName" type="text" class="form-control"  value="${user.displayName}">
+		    				<input name ="lastName"type="text" class="form-control"  placeholder="apellido" value="${user.lastName}">
   					</fieldset>
 
   					<HR width=50% align="center">
 
   					<fieldset class="form-group">
     					<label>Correo</label>
-    					<input name ="email"type="email" class="form-control" value="${user.email}" disabled>
+		    				<input name ="email"type="text" class="form-control"  placeholder="correo" value="${user.email}">
   					</fieldset>
 
   					<HR width=50% align="center">

@@ -48,7 +48,7 @@ public class ForumsController {
 			
 			User user = request.getCurrentUser();
 			System.out.println(request.getUserByEmail("brarigoch@gmail.com"));
-			model.addAttribute("User", user );
+			model.addAttribute("user", user );
 			
 			ArrayList<Forum> forums = request.getForums();
 			

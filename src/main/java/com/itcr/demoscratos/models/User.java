@@ -6,13 +6,16 @@ public final class User {
 	
 	private String id;
 	private String email;
-	private String displayName;
+	private String name;
+	private String lastName;
 	private String avatar;
 
 	public User(JSONObject json, String email) {
 		setId(json.getString("id"));
 		setEmail(email);
-		setDisplayName(json.getString("displayName"));
+		String[] fullName = json.getString("displayName").split(" ");
+		setName(fullName[0]);
+		setLastName(fullName[1]);
 		setAvatar(json.getString("avatar")); }
 
 	public String getId() {
@@ -27,11 +30,17 @@ public final class User {
 	public void setEmail(String email) {
 		this.email = email; }
 
-	public String getDisplayName() {
-		return displayName; }
+	public String getName() {
+		return name; }
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName; }
+	public void setName(String name) {
+		this.name = name; }
+	
+	public String getLastName() {
+		return lastName; }
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName; }
 
 	public String getAvatar() {
 		return avatar; }
@@ -41,7 +50,7 @@ public final class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", displayName=" + displayName + ", avatar=" + avatar + "]"; }
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", lastName=" + lastName + ", avatar=" + avatar + "]"; }
 
 	@Override
 	public int hashCode() {
