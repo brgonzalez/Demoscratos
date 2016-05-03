@@ -13,7 +13,7 @@ public final class User {
 	public User(JSONObject json, String email) {
 		setId(json.getString("id"));
 		setEmail(email);
-		String[] fullName = json.getString("displayName").split(" ");
+		String[] fullName = json.getString("displayName").split("delimitador");
 		setName(fullName[0]);
 		setLastName(fullName[1]);
 		setAvatar(json.getString("avatar")); }

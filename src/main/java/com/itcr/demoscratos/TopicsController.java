@@ -13,29 +13,45 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Topic;
+import com.itcr.demoscratos.models.User;
 
 @Controller
 public class TopicsController {
 		
+	private Messages messages = new Messages();
 	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
 	private RequestController request = RequestController.getInstance();
 
-	@RequestMapping(value = "/topics", method = RequestMethod.GET)
-	public String topics(Locale locale, Model model) {		
-		logger.info("Obteniendo temas de una democracia.", locale);
-		return "topics";
-	}
 	
 	@RequestMapping(value = "forums/{key}" , method = RequestMethod.GET)
 	public String displayTopiscForum(Locale locale, Model model,@PathVariable(value="key") String key) {
-		logger.info("El key es topic "+ key, locale);
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
 		ArrayList<Topic> topics = request.getTopics(key);
 		if(topics.size() > 0){
 			model.addAttribute("topics",topics);
 		}
-		//model.addAttribute("topics", topics);
+		logger.info(messages.getForum(key), locale);
 		return "topics";
 	}
+	
+	@RequestMapping(value = "/topics", method = RequestMethod.GET)
+	public String topics(Locale locale, Model model) {
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
+		logger.info(messages.getTopics(), locale);
+		return "topics";
+	}
+	
+
 	
 	@RequestMapping(value = "forums/topic/{key}" , method = RequestMethod.GET)
 	public String showTopic(Locale locale, Model model,@PathVariable(value="key") String key) {

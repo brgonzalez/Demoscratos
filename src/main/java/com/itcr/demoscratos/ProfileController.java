@@ -17,14 +17,19 @@ import com.itcr.demoscratos.models.User;
 @Controller
 public class ProfileController {
 	
+	private Messages messages = new Messages();
 	private RequestController request =  RequestController.getInstance();
 	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
 
 	@RequestMapping(value = "/settings-profile", method = RequestMethod.GET)
 	public String getProfile(Locale locale, Model model) {
-		logger.info("Obteniendo profile.", locale);
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user);
+		logger.info(messages.getProfile(), locale);
 		return "settings-profile";
 	}
 	
@@ -33,11 +38,16 @@ public class ProfileController {
 			@RequestParam("name") String name ,
 			@RequestParam("lastName") String lastName,
 			@RequestParam("email") String email, Model model) {
-		logger.info("Petición de modificación de perfil", locale);
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
 		request.postProfile(name, lastName, email,"");
-
+		
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user);
+		
+		logger.info(messages.updatedProfile(), locale);
 		return "settings-profile";
 	}
 }

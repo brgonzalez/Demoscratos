@@ -16,38 +16,38 @@ import com.itcr.demoscratos.api.RequestController;
 @Controller
 public class LoginController {
 	
+	private Messages messages = new Messages();
 	private RequestController request = RequestController.getInstance();
 	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String logedIn(Locale locale, Model model) {
 		if(request.isLoggedIn()){
-			logger.info("Usuario se encuentra logueado", locale);
+			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/forums";
 		}
-		logger.info("Usuario no se encuentra logueado", locale);
+		logger.info(messages.getLogin(), locale);
 		return "login";
 	}
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signUp(Locale locale, Model model) {
 		if(request.isLoggedIn()){
-			logger.info("Usuario se encuentra logueado", locale);
+			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/forums";
 		}
-		logger.info("Proceso de registro", locale);
+		logger.info(messages.getSignUp(), locale);
 		return "signup";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String doLogin(Locale locale,@RequestParam("email") String email,@RequestParam("password") String password) {
-		logger.info("Se esta intentando hacer login.", locale);
 		request.signIn(email, password);
 		if(request.isLoggedIn()){
-			logger.info("El usuario se ha logueado", locale);
+			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/forums";
 		}
-		logger.info("El usuario no se ha podido autentificar", locale);
+		logger.info(messages.errorAuth(), locale);
 		return "login";
 	}
 	
@@ -57,10 +57,9 @@ public class LoginController {
 			@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName,
 			@RequestParam("password") String password) {
-		logger.info("Se esta intentando hacer signUp.", locale);
 		request.signIn(email, password);
 		request.signUp(email, firstName, lastName, password);
-		logger.info("Se ha registrado", locale);
+		logger.info(messages.userRegistered(), locale);
 		return "login";
 	}
 	@RequestMapping(value = "/signOut", method = RequestMethod.GET)

@@ -18,12 +18,18 @@ import com.itcr.demoscratos.models.User;
 @Controller
 public class RingController {
 	
+	private Messages messages = new Messages();
 	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
 	private RequestController request =  RequestController.getInstance();
 
 	@RequestMapping(value = "/settings-ring", method = RequestMethod.GET)
-	public String settingsPerfil(Locale locale, Model model) {		
-		logger.info("Obteniendo settings-ring.", locale);
+	public String settingsPerfil(Locale locale, Model model) {
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
 		ArrayList<User> members = request.getRing();
 		if(members.size() > 0){
 			model.addAttribute("member1", members.get(0));
@@ -36,6 +42,7 @@ public class RingController {
 			model.addAttribute("displayButton", "block" );
 			model.addAttribute("displayShow-ring", "none" );
 		}
+		logger.info(messages.getRing(), locale);
 		return "settings-ring";
 	}
 	
@@ -44,7 +51,12 @@ public class RingController {
 			@RequestParam("emailMember1") String emailMember1 ,
 			@RequestParam("emailMember2") String emailMember2,
 			@RequestParam("emailMember3") String emailMember3) {
-		logger.info("Petición de modificación de anillo", locale);
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
 		request.postRing(emailMember1, emailMember2, emailMember3);
 		ArrayList<User> members = request.getRing();
 		if(members.size() > 0){
@@ -53,7 +65,7 @@ public class RingController {
 			model.addAttribute("member2",  members.get(1) );
 			model.addAttribute("member3",  members.get(2) );
 		}
-		logger.info("Se ha modificado el anido", locale);
+		logger.info(messages.updatedRing(), locale);
 		return "settings-ring";
 	}
 }
