@@ -40,7 +40,7 @@ public class RingController {
 		}
 		else{
 			model.addAttribute("displayButton", "block" );
-			model.addAttribute("displayShow-ring", "none" );
+			model.addAttribute("sring", "none" );
 		}
 		logger.info(messages.getRing(), locale);
 		return "settings-ring";

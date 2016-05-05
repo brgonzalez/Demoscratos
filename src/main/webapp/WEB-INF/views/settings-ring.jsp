@@ -46,7 +46,7 @@
 				<div class = "side-bar">
 					<ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
 			    		<li><a href="settings-profile">Perfil</a></li>
-			    		<li><a href="">Contraseña</a></li>
+			    		<li><a href="settings-password">Contraseña</a></li>
 			    		<li><a href="">Notificaciones</a></li>
 			    		<li class= "active"><a id ="settings-active" href="settings-ring">Anillo de Confianza</a></li>
 		  			</ul>
@@ -57,9 +57,9 @@
 			<div class = "space-setting col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
 				<div id ="create-ring">
-					<button id ="${displayButton}"style="display:${displayButton};" type="submit" class="btn btn-primary">Crear</button>
+					<button onclick="$('#create-ring').hide(); $('#modify-ring').show()" id ="button-save"style="display:${displayButton};" type="submit" class="btn btn-primary button-save">Crear</button>
 				</div>
-				<div style="display:${displayShow-ring};" id= "show-ring">
+				<div style="display:${sring};" id= "show-ring">
 					<h3>Amigo 1 </h3>
 					<div class = "data">
 						<label>Nombre</label>
@@ -82,14 +82,14 @@
 					<div class = "data">
 						<label>Nombre</label>
 						<label>Correo</label>
-		 				<label>${member3.name} </label>
+		 				<label>${member3.name}</label>
 		 				<label>${member3.email}</label>
 		  			</div>
 		  			
 		  			<hr>
 						
 
-	  				<button onclick="$('#show-ring').hide(); $('#modify-ring').show()" type="submit" class="btn btn-primary">Modificar</button>
+	  				<button onclick="$('#show-ring').hide(); $('#modify-ring').show()" type="submit" id ="button-save"class="btn btn-primary">Modificar</button>
 
 	  			</div>
 
@@ -99,7 +99,7 @@
 						<div>
 		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input name ="emailMember1"type="text" class="form-control" id="inputEmail" placeholder="Email" value="${member1.email}">
+		    					<input name ="emailMember1"type="text" class="form-control" id="inputEmail" placeholder="Email" value="${member1.email}" required>
 		  					</fieldset>
 		  				</div>
 	
@@ -109,7 +109,7 @@
 						<div>
 		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input name ="emailMember2" type="text" class="form-control" id="inputEmail" placeholder="Email" value="${member2.email}">
+		    					<input name ="emailMember2" type="text" class="form-control" id="inputEmail" placeholder="Email" value="${member2.email}" required>
 		  					</fieldset>
 		  				</div>
 	
@@ -119,14 +119,14 @@
 						<div>
 		  					<fieldset class="form-group" >
 		    					<label for="m1-inputEmail">Correo</label>
-		    					<input  name ="emailMember3" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${member3.email}">
+		    					<input  name ="emailMember3" type="email" class="form-control" id="inputEmail" placeholder="Email" value="${member3.email}"required >
 		  					</fieldset>
 		  				</div>
 	
 	  					<HR width=50% align="center">
 	  				
 
-	  				<button onclick="$('#modify-ring').hide(); $('#show-ring').show()" type="submit" class="btn btn-primary">Guardar</button>
+	  				<input  id ="button-save"type="submit" class="btn btn-primary" value="Guardar"/>
 
 
   					
