@@ -10,4 +10,8 @@ public final class SingletonDemo {
 
         return instance;
     }
+    
+    public void x (){
+    	
+    }
 }
