@@ -9,11 +9,15 @@ public final class FullTopic extends Topic {
 	
 	private boolean votable;
 	private String source;
+	private String type;
 	private StringBuffer clauses;
 	private ArrayList<String> participants = new ArrayList<String>();
 	private ArrayList<String> upvotes = new ArrayList<String>();
 	private ArrayList<String> downvotes = new ArrayList<String>();
 	private ArrayList<String> abstentions = new ArrayList<String>();
+	private ArrayList<String> options = new ArrayList<String>();
+	//private ArrayList<String> votes = new ArrayList<String>();
+	
 
 	public FullTopic(JSONObject json) {
 		super(json);
@@ -36,6 +40,12 @@ public final class FullTopic extends Topic {
 
 	public void setSource(String source) {
 		this.source = source; }
+	
+	public String getType() {
+		return type; }
+
+	public void setType(String type) {
+		this.type = type; }
 	
 	public String getClauses() {
 		return clauses.toString(); }
@@ -77,9 +87,16 @@ public final class FullTopic extends Topic {
 		this.abstentions.clear();
 		for (int index = 0; index < abstentions.length(); index ++) {
 			this.abstentions.add(abstentions.get(index).toString()); } }
+	
+	public ArrayList<String> getOptions() {
+		return options;	}
+
+	public void setOptions(ArrayList<String> options) {
+		this.options = options;	}
 
 	@Override
 	public String toString() {
-		return "FullTopic [votable=" + votable + ", source=" + source + ", clauses=" + clauses + ", participants="
-				+ participants + ", upvotes=" + upvotes + ", downvotes=" + downvotes + ", abstentions=" + abstentions
-				+ "]"; } }
+		return super.toString()
+				+ "\nFullTopic [votable=" + votable + ", source=" + source + ", type=" + type + ", clauses=" + clauses
+				+ ", participants=" + participants + ", upvotes=" + upvotes + ", downvotes=" + downvotes
+				+ ", abstentions=" + abstentions + ", options=" + options + "]"; } }

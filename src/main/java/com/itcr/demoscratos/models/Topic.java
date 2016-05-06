@@ -8,14 +8,12 @@ public class Topic {
 	private String title;
 	private boolean closed;
 	private Object closingAt;
-	
-	
 
 	public Topic(JSONObject json) {
 		setId(json.getString("id"));
 		setTitle(json.getString("mediaTitle"));
 		setClosed(json.getBoolean("closed"));
-		setClosingAt(json.get("closingAt")); }
+		setClosingAt(json.getString("closingAt")); }
 
 	public String getId() {
 		return id; }
