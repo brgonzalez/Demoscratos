@@ -30,18 +30,17 @@ public final class RequestController {
 	public RequestController() {
 		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
 		setMapper(new ObjectMapper());
-		setDataBase(new DataBaseController());}
-	 
+		setDataBase(new DataBaseController()); }
+	
 	public static synchronized RequestController getInstance() {
 		if (instance == null) {
-			instance = new RequestController();
-	    }
-		return instance;
+			instance = new RequestController(); 
+		}
+		return instance;	
 	}
 	
 	public User getCurrentUser(){
-		return currentUser;
-	}
+		return currentUser; }
 	
 	public void signIn(String email, String password) {
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
@@ -92,6 +91,9 @@ public final class RequestController {
 		client.getHttpRequest(Resource.TOPIC.getUrl() + idTopic);
 		JSONObject json = new JSONObject(client.getOutput());
 		FullTopic fullTopic = new FullTopic(json);
+		fullTopic.setType(database.selectTopicType(idTopic));
+		if (!fullTopic.getType().equals("simple")) {
+			fullTopic.setOptions(database.selectOptions(idTopic)); }
 		return fullTopic; }
 	
 	public User getUserByEmail(String email) {
@@ -120,9 +122,30 @@ public final class RequestController {
 		if (checkRing(member1, member2, member3)) {
 			database.updateRing(currentUser.getId(), member1.getEmail(), member2.getEmail(), member3.getEmail()); } }
 	
-	public void postTopic(String idForum, String title, String tag, String closingAt, boolean votable, String source, String content) {
-		String json = "{ \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
-		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json); }
+	public String postTopicSimple(String idForum, String title, String tag, String closingAt, boolean votable, String source, String content) {
+		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
+		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
+		JSONObject object = new JSONObject(client.getOutput());
+		FullTopic fullTopic = new FullTopic(object);
+		database.insertTopic(fullTopic.getId(), "simple");
+		return fullTopic.getId(); }
+	
+	public String postTopicPersonalizedVote(String idForum, String title, String tag, String closingAt, String source, String content, boolean multiple, ArrayList<String> options) {
+		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+true+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
+		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
+		JSONObject object = new JSONObject(client.getOutput());
+		FullTopic fullTopic = new FullTopic(object);
+		String idTopic = fullTopic.getId();
+		String type = (multiple) ? "multiple":"unique";
+		database.insertTopic(idTopic, type);
+		for (String option: options) { database.insertOption(idTopic, option); }
+		return idTopic; }
+			
+	public void postMultipleVote(String idTopic, int idOption) {
+		database.insertMultipleVote(idTopic, idOption, currentUser.getEmail()); }
+	
+	public void postUniqueVote(String idTopic, int idOption) {
+		database.insertUniqueVote(idTopic, idOption, currentUser.getEmail()); }
 	
 	public void postForum(String name, String title, String summary) {
 		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
@@ -132,10 +155,9 @@ public final class RequestController {
 		String json = "{ \"current_password\":\""+currentPassword+"\", \"password\":\""+newPassword+"\" }";
 		client.postHttpRequest(Resource.PASSWORD.getUrl(), json); }
 	
-	public void postProfile(String firstName, String lastName, String email, String pictureUrl) {
+	public void postProfile(String firstName, String lastName, String pictureUrl) {
 		String json = "{ \"firstName\":\""+firstName+"\", \"lastName\":\""+lastName+"\", \"profilePictureUrl\":\""+pictureUrl+"\" }";
-		client.postHttpRequest(Resource.PROFILE.getUrl(), json);
-		currentUser = getUserByEmail(email);}
+		client.postHttpRequest(Resource.PROFILE.getUrl(), json); }
 	
 	public void postNotifications(boolean replies, boolean newTopic) {
 		String json = "{ \"replies\": "+replies+", \"new-topic\": "+newTopic+" }";
@@ -145,7 +167,8 @@ public final class RequestController {
 		client.deleteHttpRequest(Resource.FORUM.getUrl() + idForum); }
 	
 	public void deleteTopic(String idTopic) {
-		client.deleteHttpRequest(Resource.TOPIC.getUrl() + idTopic); }
+		client.deleteHttpRequest(Resource.TOPIC.getUrl() + idTopic);
+		database.deleteTopic(idTopic); }
 	
 	public void deleteRing() {
 		database.deleteRing(currentUser.getId()); }

@@ -60,7 +60,8 @@ final class ApacheHttpClient {
 	private void setGetRequest(String resource) {
 		getRequest =  new HttpGet(path + resource);
 		getRequest.addHeader("Accept", "application/json");
-		getRequest.addHeader("X-Access-Token", token); }
+		getRequest.addHeader("Accept-Language", "es-419,es;q=0.8");
+		getRequest.addHeader("Cookie", "token="+token); }
 	
 	private void setPostRequest(String resource, String json) {
 		postRequest = new HttpPost(path + resource);
@@ -69,12 +70,15 @@ final class ApacheHttpClient {
 		catch (UnsupportedEncodingException e) { e.printStackTrace(); } 
 		input.setContentType("application/json");
 		postRequest.setEntity(input);
-		postRequest.addHeader("X-Access-Token", token); }
+		postRequest.addHeader("Accept", "application/json");
+		postRequest.addHeader("Accept-Language", "es-419,es;q=0.8");
+		postRequest.addHeader("Cookie", "token="+token); }
 	
 	private void setDeleteRequest(String resource) {
 		deleteRequest = new HttpDelete(path + resource);
-		deleteRequest.addHeader("Accept", "application/json");
-		deleteRequest.addHeader("X-Access-Token", token); }
+		//deleteRequest.addHeader("Accept", "application/json");
+		deleteRequest.addHeader("Accept-Language", "es-419,es;q=0.8");
+		deleteRequest.addHeader("Cookie", "token="+token); }
 		
 	private void setResponse(HttpGet getRequest) {
 		try { response = client.execute(this.getRequest); }
