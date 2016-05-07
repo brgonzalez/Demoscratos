@@ -133,6 +133,7 @@ public final class RequestController {
 	public String postTopicPersonalizedVote(String idForum, String title, String tag, String closingAt, String source, String content, boolean multiple, ArrayList<String> options) {
 		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+true+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
 		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
+		System.out.println(client.getOutput());
 		JSONObject object = new JSONObject(client.getOutput());
 		FullTopic fullTopic = new FullTopic(object);
 		String idTopic = fullTopic.getId();
@@ -198,4 +199,4 @@ public final class RequestController {
 		this.database = database; }
 	
 	private void setCurrentUser(User currentUser) {
-		this.currentUser = currentUser; } }
+		this.currentUser = currentUser; }}

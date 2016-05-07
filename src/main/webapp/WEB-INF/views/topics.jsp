@@ -7,7 +7,7 @@
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
-		<script src="resources/semantic/dist/semantic.min.js"></script>
+		<script src="/demoscratos/resources/semantic/dist/semantic.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/topics.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">
@@ -18,7 +18,7 @@
 		<jsp:include page="includes/header.jsp" />
 		<div class = "container" id= "container">
 			<div class = "topics-column col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-				<button onclick="location.href='./new-topic.html'" type="" class="btn btn-primary" >Crear nuevo</button>
+				<input onclick="location.href='/demoscratos/forum/${idForum}/topic/new';" type="submit" class="btn btn-primary" value ="Crear nuevo tema"/>
 				<!--<div id = "selected-topics">
 					<ul class="nav nav-tabs">
 						  <li><a href="#">Abiertos</a></li>
@@ -27,10 +27,10 @@
 				<</div>-->
 				<div>
 					<div class ="topics-list">
-						<ul>			
+						<ul style ="list-style:none">			
 						<c:forEach var="topic" items="${topics}">
 							<li>
-								<a action = "showTopic" href="topic/${topic.id}" method ="POST">
+								<a  href="/demoscratos/forum/${idForum}/topic/${topic.id}" method ="POST">
 									<div class= "topic">
 										<h4>${topic.title}</h4>
 										<h6>${topic.closingAt}</h6>

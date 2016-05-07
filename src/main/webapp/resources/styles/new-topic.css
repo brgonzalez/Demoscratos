@@ -96,3 +96,18 @@ Agregar nuevas opciones a las parte de selección
 
 
 }
+
+.container-options-topic{
+	width:100%;
+}
+
+#short-input{
+	width:80%;
+}
+
+#icon{
+	float:right;
+}
+
+
+

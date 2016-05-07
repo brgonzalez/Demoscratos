@@ -23,7 +23,7 @@ public class TopicsController {
 	private RequestController request = RequestController.getInstance();
 
 	
-	@RequestMapping(value = "forums/{key}" , method = RequestMethod.GET)
+	@RequestMapping(value = "forum/{key} " , method = RequestMethod.GET)
 	public String displayTopiscForum(Locale locale, Model model,@PathVariable(value="key") String key) {
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
@@ -34,7 +34,10 @@ public class TopicsController {
 		ArrayList<Topic> topics = request.getTopics(key);
 		if(topics.size() > 0){
 			model.addAttribute("topics",topics);
+			model.addAttribute("idForum",key);
 		}
+		System.out.println(topics.get(0));
+
 		logger.info(messages.getForum(key), locale);
 		return "topics";
 	}
@@ -53,17 +56,40 @@ public class TopicsController {
 	
 
 	
-	@RequestMapping(value = "forums/topic/{key}" , method = RequestMethod.GET)
-	public String showTopic(Locale locale, Model model,@PathVariable(value="key") String key) {
-		logger.info("Show topic "+ key, locale);
-		//model.addAttribute("topics", topics);
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}" , method = RequestMethod.GET)
+	public String showTopic(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@PathVariable(value="idTopic") String idTopic) {
+		logger.info("forum = "+ idForum +", topic = " + idTopic, locale);
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
+		Topic topic = request.getFullTopic(idTopic);
+		model.addAttribute("topic", topic);
+
+		if(true){
+			model.addAttribute("simpleVote", "block");
+			model.addAttribute("multiVote", "none");
+
+		}
+		else{
+
+		}
+		return "privateTopic";
+	}
+	@RequestMapping(value = "/votePositive" , method = RequestMethod.GET)
+	public String votePositive(Locale locale, Model model){
+		logger.info("voto",locale);
 		return "privateTopic";
 	}
 	
-	@RequestMapping(value = "forums/topic/new}" , method = RequestMethod.GET)
-	public String newTopic(Locale locale, Model model,@PathVariable(value="key") String key) {
-		logger.info("Show topic "+ key, locale);
+	@RequestMapping(value = "forum/{idForum}/topic/new" , method = RequestMethod.GET)
+	public String newTopic(Locale locale, Model model,@PathVariable(value="idForum") String idForum) {
 		//model.addAttribute("topics", topics);
-		return "privateTopic";
+		return "new-topic";
 	}
 }

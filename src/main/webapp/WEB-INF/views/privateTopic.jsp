@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ 
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>  
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +12,7 @@
 		<meta charset="UTF-8">
 
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
-		<script src="resources/semantic/dist/semantic.min.js"></script>
+		<script src="/demoscratos/resources/semantic/dist/semantic.min.js"></script>
 		
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/topics.css">
@@ -36,30 +40,34 @@
 
 				<div class ="view-topic">
 				
-					<h5><span class = "glyphicon glyphicon-time"></span> Fecha de cierrre </h5>
-					<h1 class ="name-topic">Nombre del tema</h2>
+					<h5><span class = "glyphicon glyphicon-time"></span> ${topic.closingAt}</h5>
+					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
 					<h3 class = "tag-topic">Etiqueta</h4>
-					<h4 class = "vote-topic">Voto</h5>
-					<div class ="space-options-votes">
-						<button type="" id = "btn-afirmative" class = "btn btn-options"> <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>
+					<h4 class = "vote-topic">Voto</h4>
+					<div style="display:${simpleVote};" class ="space-options-votes">
+						<button action="votePositive" method="POST" type="" id = "btn-afirmative" class = "btn btn-options"> <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>
 						<button type="" id = "btn-negative" class = "btn btn-options" ><span class = "glyphicon glyphicon-thumbs-down"></span> Negativo </button>
-						<button type="" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> AbstenciÃ³n</button>
+						<button type="" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> Abstención</button>
 					</div>
 
-					<div class ="multi-vote">
-						<h4 class = "description-multi-vote">Esta es la descripciónn para multi</h5>
-
-						<div class="checkbox">
-						 	<label><input type="checkbox" value="">Option 1</label>
-						</div>
-						<div class="checkbox">
-						 	<label><input type="checkbox" value="">Option 2</label>
-						</div>
-						<div class="checkbox disabled">
-							<label><input type="checkbox" value="" >Option 3</label>
-						</div>
+					<div class ="multi-vote" style="display:${multiVote};">
+						<form:form>
+							<h4 class = "description-multi-vote">Esta es la descripciónn para el voto</h4>
+	
+							<div class="checkbox">
+							 	<label><input type="checkbox" value="">Option 1</label>
+							</div>
+							<div class="checkbox">
+							 	<label><input type="checkbox" value="">Option 2</label>
+							</div>
+							<div class="checkbox disabled">
+								<label><input type="checkbox" value="" >Option 3</label>
+							</div>
 							
+							<input type="submit" id="button-save" class="btn btn-primary button-save">
+							
+						</form:form>
 					</div>
 
 				

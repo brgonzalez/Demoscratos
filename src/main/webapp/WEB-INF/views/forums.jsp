@@ -40,7 +40,7 @@
 				<ul>
 					<c:forEach var="forum" items="${forums}">
 						<li>
-							<a action = "forums" href="forums/${forum.id}" method ="POST">
+							<a action = "forum" href="forum/${forum.id}" method ="POST">
 								
 								<div class = "forum" key="${forum.id}">
 	

@@ -28,4 +28,9 @@ public class ConnectionMongo {
         collection.update(query, update);
         mongo.close();	
 	}
+	
+	public static void main(String[] args){
+		ConnectionMongo c = new ConnectionMongo();
+		c.updateTopic("572d0b302e8d21d21239b351", "57092bb2b732ab3e1f533d4a");
+	}
 }
