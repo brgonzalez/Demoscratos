@@ -6,7 +6,6 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.WriteResult;
 
 public class ConnectionMongo {
 	
@@ -27,10 +26,5 @@ public class ConnectionMongo {
         update.put("$set", new BasicDBObject("forum",new ObjectId(newIdForum)));
         collection.update(query, update);
         mongo.close();	
-	}
-	
-	public static void main(String[] args){
-		ConnectionMongo c = new ConnectionMongo();
-		c.updateTopic("572d0b302e8d21d21239b351", "57092bb2b732ab3e1f533d4a");
 	}
 }

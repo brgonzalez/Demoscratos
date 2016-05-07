@@ -21,6 +21,9 @@ enum Resource {
 	
 	Resource(String url) {
 		this.url = url; }
+	
+	String publish(String id) {
+		return url + id + "/publish"; }
 
 	String getUrl() {
 		return url; } }

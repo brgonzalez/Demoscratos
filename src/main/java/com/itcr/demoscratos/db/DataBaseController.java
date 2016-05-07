@@ -17,14 +17,14 @@ public final class DataBaseController {
 		String password = Settings.PASSWORD.getValue();
 		setConnection(new ConnectionDB(driver, url, username, password)); }
 	
-	public String selectTopicType(String topicId) {
+	public String selectTopicAttr(String topicId, String column) {
 		connection.connect();
-		String query = "SELECT type FROM topics WHERE id='"+ topicId +"'";
+		String query = "SELECT "+column+" FROM topics WHERE id='"+ topicId +"'";
 		ResultSet result = connection.executeQuery(query);
 		String type = "";
 		try {
 			if (result.next()) {
-				type = result.getString("type"); }
+				type = result.getString(column); }
 			connection.disconnect(); }
 		catch (SQLException e) { e.printStackTrace(); } 
 		return type; }
@@ -78,9 +78,15 @@ public final class DataBaseController {
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	
-	public void insertTopic(String topicId, String type) {
+	public void insertTopic(String topicId, String secret, String type) {
 		connection.connect();
-		String query = "INSERT INTO topics(id, type) VALUES('"+topicId+"', '"+type+"')";
+		String query = "INSERT INTO topics(id, private, type) VALUES('"+topicId+"', '"+secret+"', '"+type+"')";
+		connection.executeUpdate(query);
+		connection.disconnect(); }
+	
+	public void updateQuestion(String topicId, String question) {
+		connection.connect();
+		String query = "UPDATE topics SET question = '"+question+"' WHERE id = '"+topicId+"')";
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	

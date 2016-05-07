@@ -17,12 +17,14 @@ import com.itcr.demoscratos.models.FullTopic;
 import com.itcr.demoscratos.models.Ring;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
+import com.itcr.demoscratos.mongodb.ConnectionMongo;
 
 public final class RequestController {
 	
 	private ApacheHttpClient client; 
 	private ObjectMapper mapper;
 	private DataBaseController database;
+	private ConnectionMongo mongodb = new ConnectionMongo();
 	private User currentUser;
 	
 	private static RequestController instance = null;
@@ -34,10 +36,8 @@ public final class RequestController {
 	
 	public static synchronized RequestController getInstance() {
 		if (instance == null) {
-			instance = new RequestController(); 
-		}
-		return instance;	
-	}
+			instance = new RequestController(); }
+		return instance; }
 	
 	public User getCurrentUser(){
 		return currentUser; }
@@ -100,9 +100,11 @@ public final class RequestController {
 	public FullTopic getFullTopic(String idTopic) {
 		client.getHttpRequest(Resource.TOPIC.getUrl() + idTopic);
 		JSONObject json = new JSONObject(client.getOutput());
-		FullTopic fullTopic = new FullTopic(json);
-		fullTopic.setType(database.selectTopicType(idTopic));
+		String type = database.selectTopicAttr(idTopic, "type");
+		String secret = database.selectTopicAttr(idTopic, "private");
+		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type);
 		if (!fullTopic.getType().equals("simple")) {
+			fullTopic.setQuestion(database.selectTopicAttr(idTopic, "question"));
 			fullTopic.setOptions(database.selectOptions(idTopic)); }
 		return fullTopic; }
 	
@@ -132,23 +134,25 @@ public final class RequestController {
 		if (checkRing(member1, member2, member3)) {
 			database.updateRing(currentUser.getId(), member1.getEmail(), member2.getEmail(), member3.getEmail()); } }
 	
-	public String postTopicSimple(String idForum, String title, String tag, String closingAt, boolean votable, String source, String content) {
+	public String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, boolean votable, boolean secret) {
+		String type = "simple";
+		return postTopic(idForum, title, tag, closingAt, source, content, type, votable, secret); }
+	
+	private String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, String type, boolean votable, boolean secret) {
 		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
 		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
 		JSONObject object = new JSONObject(client.getOutput());
-		FullTopic fullTopic = new FullTopic(object);
-		database.insertTopic(fullTopic.getId(), "simple");
-		return fullTopic.getId(); }
-	
-	public String postTopicPersonalizedVote(String idForum, String title, String tag, String closingAt, String source, String content, boolean multiple, ArrayList<String> options) {
-		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+true+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
-		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
-		System.out.println(client.getOutput());
-		JSONObject object = new JSONObject(client.getOutput());
-		FullTopic fullTopic = new FullTopic(object);
+		FullTopic fullTopic = new FullTopic(object, secret, type);
 		String idTopic = fullTopic.getId();
+		client.postHttpRequest(Resource.TOPIC.publish(idTopic), "");
+		mongodb.updateTopic(idTopic, idForum);
+		database.insertTopic(idTopic, type, String.valueOf(secret));
+		return idTopic; }
+	
+	public String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, boolean multiple, boolean secret, String question, ArrayList<String> options) {
 		String type = (multiple) ? "multiple":"unique";
-		database.insertTopic(idTopic, type);
+		String idTopic = postTopic(idForum, title, tag, closingAt, source, content, type, true, secret);
+		database.updateQuestion(idTopic, question);
 		for (String option: options) { database.insertOption(idTopic, option); }
 		return idTopic; }
 			

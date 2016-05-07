@@ -8,6 +8,8 @@ import org.json.JSONObject;
 public final class FullTopic extends Topic {
 	
 	private boolean votable;
+	private boolean secret;
+	private String question;
 	private String source;
 	private String type;
 	private StringBuffer clauses;
@@ -17,9 +19,8 @@ public final class FullTopic extends Topic {
 	private ArrayList<String> abstentions = new ArrayList<String>();
 	private ArrayList<String> options = new ArrayList<String>();
 	//private ArrayList<String> votes = new ArrayList<String>();
-	
 
-	public FullTopic(JSONObject json) {
+	public FullTopic(JSONObject json, boolean secret, String type) {
 		super(json);
 		setVotable(json.getBoolean("votable"));
 		setSource(json.getString("source"));
@@ -27,24 +28,37 @@ public final class FullTopic extends Topic {
 		setParticipants(json.getJSONArray("participants"));
 		setUpvotes(json.getJSONArray("upvotes"));
 		setDownvotes(json.getJSONArray("downvotes"));
-		setAbstentions(json.getJSONArray("abstentions")); }
+		setAbstentions(json.getJSONArray("abstentions"));
+		setSecret(secret); setType(type); }
 
 	public boolean isVotable() {
 		return votable; }
 
-	public void setVotable(boolean votable) {
+	private void setVotable(boolean votable) {
 		this.votable = votable; }
+	
+	public boolean isSecret() {
+		return secret; }
+
+	private void setSecret(boolean secret) {
+		this.secret = secret; }
+	
+	public String getQuestion() {
+		return question; }
+
+	public void setQuestion(String question) {
+		this.question = question; }
 
 	public String getSource() {
 		return source; }
 
-	public void setSource(String source) {
+	private void setSource(String source) {
 		this.source = source; }
 	
 	public String getType() {
 		return type; }
 
-	public void setType(String type) {
+	private void setType(String type) {
 		this.type = type; }
 	
 	public String getClauses() {
@@ -97,6 +111,6 @@ public final class FullTopic extends Topic {
 	@Override
 	public String toString() {
 		return super.toString()
-				+ "\nFullTopic [votable=" + votable + ", source=" + source + ", type=" + type + ", clauses=" + clauses
-				+ ", participants=" + participants + ", upvotes=" + upvotes + ", downvotes=" + downvotes
-				+ ", abstentions=" + abstentions + ", options=" + options + "]"; } }
+				+ "\nFullTopic [votable=" + votable + ", secret=" + secret + ", question=" + question + ", source=" + source
+				+ ", type=" + type + ", clauses=" + clauses + ", participants=" + participants + ", upvotes=" + upvotes
+				+ ", downvotes=" + downvotes + ", abstentions=" + abstentions + ", options=" + options + "]"; } }

@@ -6,8 +6,9 @@ CREATE TABLE rings (
 	
 CREATE TABLE topics (
 	id varchar(30) NOT NULL PRIMARY KEY,
-	private varchar(6),
-	type varchar(10));
+	private varchar(6) NOT NULL,
+	type varchar(10) NOT NULL,
+	question varchar(40));
 	
 CREATE TABLE options (
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
