@@ -87,6 +87,16 @@ public final class RequestController {
 			topics.add(new Topic(json)); }
 		return topics; }
 	
+	public ArrayList<String> getTags() {
+		ArrayList<String> tags = new ArrayList<String>();
+		client.getHttpRequest(Resource.TAGS.getUrl());
+		JSONArray array = new JSONArray(client.getOutput());
+		JSONObject json;
+		for (short index = 0; index < array.length(); index++) {
+			json = array.getJSONObject(index);
+			tags.add(json.getString("name")); }
+		return tags; }
+	
 	public FullTopic getFullTopic(String idTopic) {
 		client.getHttpRequest(Resource.TOPIC.getUrl() + idTopic);
 		JSONObject json = new JSONObject(client.getOutput());
@@ -199,4 +209,4 @@ public final class RequestController {
 		this.database = database; }
 	
 	private void setCurrentUser(User currentUser) {
-		this.currentUser = currentUser; }}
+		this.currentUser = currentUser; } }

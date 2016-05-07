@@ -9,12 +9,13 @@ enum Resource {
 	FORUM("/api/forum/"),
 	TOPICS("/api/topic/all?forum="),
 	TOPIC("/api/topic/"),
-	TOPIC_CREATE("/api/topic/create"),
+	TOPIC_CREATE("/api/topic/create/"),
 	USER("/api/user/"),
 	SEARCH_USER("/api/user/search?q="),
-	PROFILE("/settings/profile"),
-	PASSWORD("/settings/password"),
-	NOTIFICATIONS("/settings/notifications");
+	PROFILE("/settings/profile/"),
+	PASSWORD("/settings/password/"),
+	NOTIFICATIONS("/settings/notifications/"),
+	TAGS("/api/tag/all/");
 		
 	private final String url;
 	
