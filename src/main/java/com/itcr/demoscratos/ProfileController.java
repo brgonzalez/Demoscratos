@@ -42,7 +42,7 @@ public class ProfileController {
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
 		}
-		request.postProfile(name, lastName, email,"");
+		request.postProfile(name, lastName, "");
 		
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user);
