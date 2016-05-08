@@ -8,7 +8,7 @@ $(document).ready(function() {
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
-            $(wrapper).append('<div><input type="text" name="options-questions[]" class="form-control"/><a href="#" class="remove_field"><span id="icon" class="glyphicon glyphicon-minus-sign"></span></a></div>'); //add input box
+            $(wrapper).append('<div><input type="text" name="optionsQuestion[]" class="form-control"/><a href="#" class="remove_field"><span id="icon" class="glyphicon glyphicon-minus-sign"></span></a></div>'); //add input box
         }
     });
     
@@ -16,27 +16,44 @@ $(document).ready(function() {
         e.preventDefault(); $(this).parent('div').remove(); x--;
     })
     
-    $("#myonoffswitch").click( function(){
+    $("#votable").click( function(){
     	
     	if($(this).is(':checked')){
-    		$('#sss').show();
+    		$('#settings-vote').show();
+    		$(this).val('true');
+
     	}
     	if(!$(this).is(':checked')){
-    		$('#sss').hide();
+    		$('#settings-vote').hide();
+    		$('#space-selections').hide();
+    		$(this).val('false');
+    		$('#semiPublic').val('false');
+    		$("#secret").val('false');
+    		$("#simple").val('false');
+    		$("#multiselection").val('false');
+    		$("#selection").val('false');
+
+
+    		//Resetear los inputs
+
     	}
      });
     
     
     
-    $("#public").click (function(){
+    $("#semiPublic").click (function(){
     	if($(this).is(':checked')){
-    		$("#private").attr("checked", false);
+    		$("#secret").attr("checked", false);
+    		$("#secret").val('false');
+    		$(this).val('true');
     	}
     });
     
-    $("#private").click (function(){
+    $("#secret").click (function(){
     	if($(this).is(':checked')){
-    		$("#public").attr("checked", false);
+    		$("#semiPublic").attr("checked", false);
+    		$("#semiPublic").val('false');
+    		$(this).val('true');
     	}
     });
     
@@ -45,6 +62,12 @@ $(document).ready(function() {
     	if($(this).is(':checked')){
     		$("#multiselection").attr("checked", false);
     		$("#selection").attr("checked", false);
+    		
+    		$("#multiselection").val('false');
+    		$("#selection").val('false');
+    		
+    		$(this).val('true');		
+    		
     		$('#space-selections').hide();
     	}
 
@@ -53,8 +76,14 @@ $(document).ready(function() {
     $("#selection").click (function(){
     	if($(this).is(':checked')){
     		$('#space-selections').show();
+    		
     		$("#multiselection").attr("checked", false);
     		$("#simple").attr("checked", false);
+    		
+    		$("#multiselection").val('false');
+    		$("#simple").val('false');
+    		
+    		$(this).val('true');	
     	}
     	if(!$(this).is(':checked')){
     		$('#space-selections').hide();
@@ -64,8 +93,15 @@ $(document).ready(function() {
     $("#multiselection").click (function(){
     	if($(this).is(':checked')){
     		$('#space-selections').show();
+    		
     		$("#selection").attr("checked", false);
     		$("#simple").attr("checked", false);
+    		
+    		$("#selection").val('false');
+    		$("#simple").val('false');
+    		
+    		$(this).val('true');
+    		
 
     	}
     	if(!$(this).is(':checked')){

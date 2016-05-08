@@ -17,8 +17,6 @@
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/home.css">	
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">	
 
-		<link rel="stylesheet" type="text/css" href="/demoscratos/styles/general.css">
-
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
 

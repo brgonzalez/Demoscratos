@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Topic;
@@ -89,7 +90,62 @@ public class TopicsController {
 	
 	@RequestMapping(value = "forum/{idForum}/topic/new" , method = RequestMethod.GET)
 	public String newTopic(Locale locale, Model model,@PathVariable(value="idForum") String idForum) {
-		//model.addAttribute("topics", topics);
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		model.addAttribute("idForum", idForum);
+
+		ArrayList<String> tags = request.getTags();
+		model.addAttribute("tags",tags);
+		return "new-topic";
+	}
+	
+	@RequestMapping(value = "forum/{idForum}/topic/new" , method = RequestMethod.POST)
+	public String postNewTopic(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="topicName") String topicName,
+			@RequestParam(value="tag") String tag,
+			@RequestParam(value="content") String content,			
+			@RequestParam(value="votable",defaultValue = "false") String votablex,
+			@RequestParam(value="secret",defaultValue = "false") String secretx,
+			@RequestParam(value="semiPublic",defaultValue = "false") String semipublicx,
+			@RequestParam(value="simple",defaultValue = "false") String simplex,
+			@RequestParam(value="selection",defaultValue = "false") String selectionx,
+			@RequestParam(value="multiselection",defaultValue = "false") String multiselectionx,
+			@RequestParam(value="question") String question,
+			@RequestParam(value="date") String date,
+			@RequestParam(value="optionsQuestion[]") ArrayList<String> optionsQuestion) {
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
+		ArrayList<String> tags = request.getTags();
+		model.addAttribute("tags",tags);
+		System.out.println(optionsQuestion);
+		boolean simple = Boolean.valueOf(simplex);
+		boolean votable = Boolean.valueOf(votablex);
+		boolean secret = Boolean.valueOf(secretx);
+		boolean multiple = Boolean.valueOf(multiselectionx);
+
+		
+		if(!simple){
+			request.postTopic(idForum, topicName, tag, "2016-05-30T10:00:00.000Z", "http://www.gitlab.com", content, multiple, secret, question, optionsQuestion);
+		
+		}
+		
 		return "new-topic";
 	}
 }
+
+
+
+
+
+
+
+
+

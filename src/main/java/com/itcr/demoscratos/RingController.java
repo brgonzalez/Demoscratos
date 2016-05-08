@@ -57,7 +57,15 @@ public class RingController {
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
-		request.postRing(emailMember1, emailMember2, emailMember3);
+		try{
+			request.postRing(emailMember1, emailMember2, emailMember3);
+
+		}catch(RuntimeException e ){
+			e.getMessage();
+		}
+		finally{
+			
+		}
 		ArrayList<User> members = request.getRing();
 		if(members.size() > 0){
 			model.addAttribute("displayButton", "none" );

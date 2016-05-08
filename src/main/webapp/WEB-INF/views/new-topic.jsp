@@ -10,7 +10,6 @@
 	<head>
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
 		
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/new-topic.css">
@@ -34,40 +33,40 @@
 		<div class = "container">
 
 			<div class ="space-new-topic col-xs-12 col-sm-12 col-md-8  col-lg-8 col-md-offset-2 col-lg-offset-2">
-				<form:form href ="forum/${idForum}/topic/new">
+				<form:form href ="forum/${idForum}/topic/new" method ="POST">
 					<h3>Nuevo Tema</h3>
 					<fieldset class="form-group">
 				    	<label>Nombre del tema</label>
-				    	<input type="text" class="form-control" name ="topicName" placeholder="Nombre del tema">
+				    	<input type="text" class="form-control" name ="topicName" placeholder="Nombre del tema" required>
 					</fieldset>
 
 
 					<div class="form-group">
-					  	<label for="sel1">Etiqueta:</label>
-				  		<select class="form-control" id="sel1">
-						    <option>Etiqueta1</option>
-						    <option>Etiqueta2</option>
-						    <option>Etiqueta3</option>
-						    <option>Etiqueta4</option>
-				  		</select>
+					  	<label>Etiqueta:</label>
+				  		<select class="form-control" id="sel1" name = "tag">
+					  		<c:forEach var="tag" items="${tags}">
+							    <option>${tag}</option>
+					  		</c:forEach>
+				  		</select>	  			
 					</div>
 
 					<fieldset class="form-group">
 						<label>Contenido</label>						
-						<textarea name= "content" class="form-control" type="textbox" rows = "4" validate ="max-length:4096"></textarea>
+						<textarea name= "content" class="form-control" type="textbox" rows = "4" validate ="max-length:4096" required></textarea>
 					</fieldset>
 					
 					<fieldset class="form-group">
-						<label>Autor</label>
-						<input type="text" class="form-control" name ="authorName" placeholder="Autor">
+				    	<label>URL del tema</label>
+				    	<input type="text" class="form-control" name ="topicUrl" placeholder="Url del tema">
 					</fieldset>
+					
 
 					<fieldset class="form-group">
 
 						<div>
 							<label>Votable</label>
 							<div class="onoffswitch">
-							    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+							    <input type="checkbox" name="votable" class="onoffswitch-checkbox" id="myonoffswitch" checked value="true">
 							    <label class="onoffswitch-label" for="myonoffswitch">
 							        <span class="onoffswitch-inner"></span>
 							        <span class="onoffswitch-switch"></span>
@@ -76,19 +75,19 @@
 						</div>
 	
 	
-						<div id = "sss" class ="container-options-topic form-group" >
+						<div id = "settings-vote" class ="container-options-topic form-group" >
 							<div class = "raw">	
 								<div class="column">
 									<h4>Modalidad de voto</h4>
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input name ="private" id = "private"type="checkbox" value="" >Privada</label>
+								 		<label><input type="checkbox" name="secret" checked value="false">Privada</label>
 									</div>
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input name ="public" id ="public" type="checkbox" value="">Semipública</label>
+								 		<label><input name ="semiPublic" id ="semiPublic" type="checkbox" value="true"/>Semipública</label>
 									</div>
 								</div>
 							</div>
@@ -98,17 +97,17 @@
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input name ="simple" id="simple" type="checkbox" value="">Simple</label>
+								 		<label><input name ="simple" id="simple" type="checkbox" value="false">Simple</label>
 									</div>
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input name ="selection" id ="selection" type="checkbox" value="">Selección</label>
+								 		<label><input name ="selection" id ="selection" type="checkbox" value="false">Selección</label>
 									</div>
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input name ="multiselection" id="multiselection"type="checkbox" value="">Múltiple</label>
+								 		<label><input name ="multiselection" id="multiselection"type="checkbox" value="false">Múltiple</label>
 									</div>
 								</div>
 							</div>
@@ -116,13 +115,15 @@
 						
 						<div style= "display: none;"id ="space-selections">
 							<label >Escriba su pregunta</label>
-							<input type="text" class="form-control" id="input-question" placeholder="Escriba su pregunta">
+							<input type="text" name = "question"class="form-control" id="input-question" placeholder="Escriba su pregunta">
 		
 							
 							<label>Ingrese las opciones</label>
 		
 							<div class="input_fields_wrap" id="short-input">
-					            <div><input  type="text" name="options-questions[]" class="form-control"><span id="icon" class="add_field_button glyphicon glyphicon-plus-sign"></span></div>
+							
+					            <div><input  type="text" name="optionsQuestion[]" class="form-control" value=""><span id="icon" class="add_field_button glyphicon glyphicon-plus-sign"></span></div>
+
 					        </div>
 				        
 				        </div>

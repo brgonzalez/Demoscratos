@@ -1,0 +1,2 @@
+Manejar errores con excepciones
+Quitar error semantic a vistas

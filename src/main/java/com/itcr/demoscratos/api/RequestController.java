@@ -146,13 +146,13 @@ public final class RequestController {
 		String idTopic = fullTopic.getId();
 		client.postHttpRequest(Resource.TOPIC.publish(idTopic), "");
 		mongodb.updateTopic(idTopic, idForum);
-		database.insertTopic(idTopic, type, String.valueOf(secret));
+		database.insertTopic(idTopic,  String.valueOf(secret),type);
 		return idTopic; }
 	
 	public String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, boolean multiple, boolean secret, String question, ArrayList<String> options) {
 		String type = (multiple) ? "multiple":"unique";
 		String idTopic = postTopic(idForum, title, tag, closingAt, source, content, type, true, secret);
-		database.updateQuestion(idTopic, question);
+		//database.updateQuestion(idTopic, question);
 		for (String option: options) { database.insertOption(idTopic, option); }
 		return idTopic; }
 			
