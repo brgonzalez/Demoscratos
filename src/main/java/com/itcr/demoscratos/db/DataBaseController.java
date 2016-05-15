@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.itcr.demoscratos.models.Option;
 import com.itcr.demoscratos.models.Ring;
 
 public final class DataBaseController {
@@ -44,14 +45,18 @@ public final class DataBaseController {
 		catch (SQLException e) { e.printStackTrace(); } 
 		return ring; }
 	
-	public ArrayList<String> selectOptions(String topicId) {
+	public ArrayList<Option> selectOptions(String topicId) {
 		connection.connect();
-		String query = "SELECT opt FROM options WHERE topic='"+ topicId +"'";
+		String query = "SELECT * FROM options WHERE topic='"+ topicId +"'";
 		ResultSet result = connection.executeQuery(query);
-		ArrayList<String> options = new ArrayList<String>();
+		ArrayList<Option> options = new ArrayList<Option>();
+		String topic = topicId;
+		String option; int id;
 		try {
 			while (result.next()) {
-				options.add(result.getString("opt")); }
+				id = result.getInt("id");
+				option = result.getString("opt");
+				options.add(new Option(id, topic, option)); }
 			connection.disconnect(); }
 		catch (SQLException e) { e.printStackTrace(); } 
 		return options; }

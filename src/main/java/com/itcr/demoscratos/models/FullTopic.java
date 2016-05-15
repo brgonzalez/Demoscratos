@@ -16,7 +16,7 @@ public final class FullTopic extends Topic {
 	private ArrayList<String> upvotes = new ArrayList<String>();
 	private ArrayList<String> downvotes = new ArrayList<String>();
 	private ArrayList<String> abstentions = new ArrayList<String>();
-	private ArrayList<String> options = new ArrayList<String>();
+	private ArrayList<Option> options = new ArrayList<Option>();
 	//private ArrayList<String> votes = new ArrayList<String>();
 
 	public FullTopic(JSONObject json, boolean secret, String type) {
@@ -95,10 +95,10 @@ public final class FullTopic extends Topic {
 		for (int index = 0; index < abstentions.length(); index ++) {
 			this.abstentions.add(abstentions.get(index).toString()); } }
 	
-	public ArrayList<String> getOptions() {
+	public ArrayList<Option> getOptions() {
 		return options;	}
 
-	public void setOptions(ArrayList<String> options) {
+	public void setOptions(ArrayList<Option> options) {
 		this.options = options;	}
 
 	@Override
