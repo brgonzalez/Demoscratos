@@ -17,7 +17,7 @@ public final class FullTopic extends Topic {
 	private ArrayList<String> downvotes = new ArrayList<String>();
 	private ArrayList<String> abstentions = new ArrayList<String>();
 	private ArrayList<Option> options = new ArrayList<Option>();
-	//private ArrayList<String> votes = new ArrayList<String>();
+	private ArrayList<Vote> votes = new ArrayList<Vote>();
 
 	public FullTopic(JSONObject json, boolean secret, String type) {
 		super(json, type);
@@ -100,10 +100,16 @@ public final class FullTopic extends Topic {
 
 	public void setOptions(ArrayList<Option> options) {
 		this.options = options;	}
+	
+	public ArrayList<Vote> getVote() {
+		return votes;	}
+
+	public void setVotes(ArrayList<Vote> votes) {
+		this.votes = votes;	}
 
 	@Override
 	public String toString() {
 		return super.toString()
-				+ "\nFullTopic [votable=" + votable + ", secret=" + secret + ", question=" + question + ", source=" + source
-				+ ", clauses=" + clauses + ", participants=" + participants + ", upvotes=" + upvotes
-				+ ", downvotes=" + downvotes + ", abstentions=" + abstentions + ", options=" + options + "]"; } }
+				+ "FullTopic [votable=" + votable + ", secret=" + secret + ", question=" + question + ", source=" + source
+				+ ", clauses=" + clauses + ", participants=" + participants + ", upvotes=" + upvotes + ", downvotes="
+				+ downvotes + ", abstentions=" + abstentions + ", options=" + options + ", votes=" + votes + "]"; } }
