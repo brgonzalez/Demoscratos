@@ -11,7 +11,6 @@ public final class FullTopic extends Topic {
 	private boolean secret;
 	private String question;
 	private String source;
-	private String type;
 	private StringBuffer clauses;
 	private ArrayList<String> participants = new ArrayList<String>();
 	private ArrayList<String> upvotes = new ArrayList<String>();
@@ -21,7 +20,7 @@ public final class FullTopic extends Topic {
 	//private ArrayList<String> votes = new ArrayList<String>();
 
 	public FullTopic(JSONObject json, boolean secret, String type) {
-		super(json);
+		super(json, type);
 		setVotable(json.getBoolean("votable"));
 		setSource(json.getString("source"));
 		setClauses(json.getJSONArray("clauses"));
@@ -54,12 +53,6 @@ public final class FullTopic extends Topic {
 
 	private void setSource(String source) {
 		this.source = source; }
-	
-	public String getType() {
-		return type; }
-
-	private void setType(String type) {
-		this.type = type; }
 	
 	public String getClauses() {
 		return clauses.toString(); }
@@ -112,5 +105,5 @@ public final class FullTopic extends Topic {
 	public String toString() {
 		return super.toString()
 				+ "\nFullTopic [votable=" + votable + ", secret=" + secret + ", question=" + question + ", source=" + source
-				+ ", type=" + type + ", clauses=" + clauses + ", participants=" + participants + ", upvotes=" + upvotes
+				+ ", clauses=" + clauses + ", participants=" + participants + ", upvotes=" + upvotes
 				+ ", downvotes=" + downvotes + ", abstentions=" + abstentions + ", options=" + options + "]"; } }

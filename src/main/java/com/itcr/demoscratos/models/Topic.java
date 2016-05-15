@@ -6,14 +6,16 @@ public class Topic {
 	
 	private String id;
 	private String title;
+	private String type;
 	private boolean closed;
 	private Object closingAt;
 
-	public Topic(JSONObject json) {
+	public Topic(JSONObject json, String type) {
 		setId(json.getString("id"));
 		setTitle(json.getString("mediaTitle"));
 		setClosed(json.getBoolean("closed"));
-		setClosingAt(json.get("closingAt")); }
+		setClosingAt(json.get("closingAt"));
+		setType(type); }
 
 	public String getId() {
 		return id; }
@@ -26,6 +28,12 @@ public class Topic {
 
 	public void setTitle(String title) {
 		this.title = title; }
+	
+	public String getType() {
+		return type; }
+
+	public void setType(String type) {
+		this.type = type; }
 
 	public boolean isClosed() {
 		return closed; }
@@ -41,4 +49,5 @@ public class Topic {
 
 	@Override
 	public String toString() {
-		return "Topic [id=" + id + ", title=" + title + ", closed=" + closed + ", closingAt=" + closingAt.toString() + "]"; } }
+		return "Topic [id=" + id + ", title=" + title + ", type=" + type + ", closed=" + closed + ", closingAt="
+				+ closingAt + "]"; } }

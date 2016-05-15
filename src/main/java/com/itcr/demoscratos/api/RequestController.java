@@ -15,6 +15,7 @@ import com.itcr.demoscratos.models.Api;
 import com.itcr.demoscratos.models.Forum;
 import com.itcr.demoscratos.models.FullTopic;
 import com.itcr.demoscratos.models.Ring;
+import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.mongodb.ConnectionMongo;
@@ -46,7 +47,8 @@ public final class RequestController {
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
 		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
 		client.setToken();
-		if (isLoggedIn()) { setCurrentUser(getUserByEmail(email)); } }
+		if (isLoggedIn()) { setCurrentUser(getUserByEmail(email)); }
+		else { System.err.println("El correo electrónico o la contraseña no existen"); } }
 	
 	public void signUp(String email, String firstName, String lastName, String password) {
 		String json = "{ \"email\": \""+email+"\", \"firstName\":\""+firstName+"\", \"lastName\":\""+lastName+"\", \"password\":\""+password+"\", \"re_password\":\""+password+"\" }";
@@ -81,20 +83,23 @@ public final class RequestController {
 		ArrayList<Topic> topics = new ArrayList<Topic>();
 		client.getHttpRequest(Resource.TOPICS.getUrl() + idForum);
 		JSONArray array = new JSONArray(client.getOutput());
+		String type, idTopic;
 		JSONObject json;
 		for (short index = 0; index < array.length(); index++) {
 			json = array.getJSONObject(index);
-			topics.add(new Topic(json)); }
+			idTopic = json.getString("id");
+			type = database.selectTopicAttr(idTopic, "type");
+			topics.add(new Topic(json, type)); }
 		return topics; }
 	
-	public ArrayList<String> getTags() {
-		ArrayList<String> tags = new ArrayList<String>();
+	public ArrayList<Tag> getTags() {
+		ArrayList<Tag> tags = new ArrayList<Tag>();
 		client.getHttpRequest(Resource.TAGS.getUrl());
 		JSONArray array = new JSONArray(client.getOutput());
 		JSONObject json;
 		for (short index = 0; index < array.length(); index++) {
 			json = array.getJSONObject(index);
-			tags.add(json.getString("name")); }
+			tags.add(new Tag(json)); }
 		return tags; }
 	
 	public FullTopic getFullTopic(String idTopic) {
@@ -112,7 +117,9 @@ public final class RequestController {
 		client.getHttpRequest(Resource.SEARCH_USER.getUrl() + email);
 		JSONArray array = new JSONArray(client.getOutput());
 		User user = null;
+		System.out.println(array.toString());
 		if (array.length() == 1) { user = new User(array.getJSONObject(0), email); }
+		System.out.println(user);
 		return user; }
 			
 	public ArrayList<User> getRing() {
@@ -141,7 +148,9 @@ public final class RequestController {
 	private String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, String type, boolean votable, boolean secret) {
 		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
 		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
+		System.out.println(client.getOutput());
 		JSONObject object = new JSONObject(client.getOutput());
+		System.out.println(client.getOutput());
 		FullTopic fullTopic = new FullTopic(object, secret, type);
 		String idTopic = fullTopic.getId();
 		client.postHttpRequest(Resource.TOPIC.publish(idTopic), "");
@@ -152,7 +161,7 @@ public final class RequestController {
 	public String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, boolean multiple, boolean secret, String question, ArrayList<String> options) {
 		String type = (multiple) ? "multiple":"unique";
 		String idTopic = postTopic(idForum, title, tag, closingAt, source, content, type, true, secret);
-		//database.updateQuestion(idTopic, question);
+		database.updateQuestion(idTopic, question);
 		for (String option: options) { database.insertOption(idTopic, option); }
 		return idTopic; }
 			
@@ -178,6 +187,24 @@ public final class RequestController {
 		String json = "{ \"replies\": "+replies+", \"new-topic\": "+newTopic+" }";
 		client.postHttpRequest(Resource.PASSWORD.getUrl(), json); }
 	
+	public void postPositiveVote(String idTopic) {
+		postVote(idTopic, "positive"); }
+	
+	public void postNegativeVote(String idTopic) {
+		postVote(idTopic, "negative"); }
+	
+	private void postVote(String idTopic, String value) {
+		String json = "{ \"value\":\""+value+"\" }";
+		client.postHttpRequest(Resource.TOPIC.vote(idTopic), json);	}
+	
+	public void postTag(String idTag, String name) {
+		String json = "{ \"name\":\""+name+"\" }";
+		client.postHttpRequest(Resource.TAG.getUrl()+idTag, json); }
+	
+	public void postTag(String name) {
+		String json = "{ \"hash\":\""+name.toLowerCase()+"\", \"name\":\""+name+"\", \"image\": \"internet\"}";
+		client.postHttpRequest(Resource.TAG_CREATE.getUrl(), json); }
+		
 	public void deleteForum(String idForum) {
 		client.deleteHttpRequest(Resource.FORUM.getUrl() + idForum); }
 	
@@ -195,7 +222,7 @@ public final class RequestController {
 					return true; }
 				else {
 					System.err.println("No es posible agregarse a usted mismo al anillo de confianza");
-					return false; }	}	
+					return false; }	}
 			else {
 				System.err.println("Todos los correos deben ser distintos");
 				return false; } }

@@ -61,7 +61,7 @@ final class ApacheHttpClient {
 		getRequest =  new HttpGet(path + resource);
 		getRequest.addHeader("Accept", "application/json");
 		getRequest.addHeader("Accept-Language", "es-419,es;q=0.8");
-		getRequest.addHeader("Cookie", "token="+token); }
+		getRequest.addHeader("Cookie", token); }
 	
 	private void setPostRequest(String resource, String json) {
 		postRequest = new HttpPost(path + resource);
@@ -72,13 +72,13 @@ final class ApacheHttpClient {
 		postRequest.setEntity(input);
 		postRequest.addHeader("Accept", "application/json");
 		postRequest.addHeader("Accept-Language", "es-419,es;q=0.8");
-		postRequest.addHeader("Cookie", "token="+token); }
+		postRequest.addHeader("Cookie", token); }
 	
 	private void setDeleteRequest(String resource) {
 		deleteRequest = new HttpDelete(path + resource);
 		//deleteRequest.addHeader("Accept", "application/json");
 		deleteRequest.addHeader("Accept-Language", "es-419,es;q=0.8");
-		deleteRequest.addHeader("Cookie", "token="+token); }
+		deleteRequest.addHeader("Cookie", token); }
 		
 	private void setResponse(HttpGet getRequest) {
 		try { response = client.execute(this.getRequest); }
@@ -105,8 +105,8 @@ final class ApacheHttpClient {
 		return !token.isEmpty(); }
 	
 	protected void setToken() {
-		token = response.getAllHeaders()[1].getValue().split(";")[0].replace("token=", "");
-		if (token.equals("application/json")) { token = ""; } }
+		token = response.getFirstHeader("Set-Cookie").getValue().split(";")[0];
+		System.out.println(token); }
 	
 	private void setBr() {
 		try { br = new BufferedReader(new InputStreamReader((response.getEntity().getContent()))); }

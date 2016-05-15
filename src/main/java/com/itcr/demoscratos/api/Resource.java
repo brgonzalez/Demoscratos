@@ -15,6 +15,8 @@ enum Resource {
 	PROFILE("/settings/profile/"),
 	PASSWORD("/settings/password/"),
 	NOTIFICATIONS("/settings/notifications/"),
+	TAG("/api/tag/"),
+	TAG_CREATE("/api/tag/create/"),
 	TAGS("/api/tag/all/");
 		
 	private final String url;
@@ -24,6 +26,9 @@ enum Resource {
 	
 	String publish(String id) {
 		return url + id + "/publish"; }
+	
+	String vote(String id) {
+		return url + id + "/vote/"; }
 
 	String getUrl() {
 		return url; } }
