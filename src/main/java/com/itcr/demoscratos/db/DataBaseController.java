@@ -86,7 +86,7 @@ public final class DataBaseController {
 	
 	public void updateQuestion(String topicId, String question) {
 		connection.connect();
-		String query = "UPDATE topics SET question = '"+question+"' WHERE id = '"+topicId+"')";
+		String query = "UPDATE topics SET question = '"+question+"' WHERE id = '"+topicId+"'";
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	
