@@ -100,7 +100,7 @@ public final class RequestController {
 		for (short index = 0; index < array.length(); index++) {
 			json = array.getJSONObject(index);
 			tags.add(new Tag(json)); }
-		return tags; }
+		return tags; } 
 	
 	public FullTopic getFullTopic(String idTopic) {
 		client.getHttpRequest(Resource.TOPIC.getUrl() + idTopic);
@@ -117,7 +117,6 @@ public final class RequestController {
 		client.getHttpRequest(Resource.SEARCH_USER.getUrl() + email);
 		JSONArray array = new JSONArray(client.getOutput());
 		User user = null;
-		System.out.println(array.toString());
 		if (array.length() == 1) { user = new User(array.getJSONObject(0), email); }
 		return user; }
 			
@@ -145,19 +144,17 @@ public final class RequestController {
 		return postTopic(idForum, title, tag, closingAt, source, content, type, votable, secret); }
 	
 	private String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, String type, boolean votable, boolean secret) {
-		boolean flag = !isThereOwnForum(); String forum = "";
-		if (flag) { forum = postForum("Temporal", "Temporal", "Temporal"); }
+		boolean flag = !isThereOwnForum();
+		if (flag) { postForum("temporal", "Temporal", "Temporal"); }
 		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
 		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
-		System.out.println(client.getOutput());
 		JSONObject object = new JSONObject(client.getOutput());
-		System.out.println(client.getOutput());
 		FullTopic fullTopic = new FullTopic(object, secret, type);
 		String idTopic = fullTopic.getId();
 		client.postHttpRequest(Resource.TOPIC.publish(idTopic), "");
 		mongodb.updateTopic(idTopic, idForum);
 		database.insertTopic(idTopic,  String.valueOf(secret),type);
-		if (flag) { deleteForum(forum); }
+		if (flag) { deleteForum("temporal"); }
 		return idTopic; }
 	
 	private boolean isThereOwnForum() {
@@ -180,8 +177,8 @@ public final class RequestController {
 	public String postForum(String name, String title, String summary) {
 		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
 		client.postHttpRequest(Resource.FORUM.getUrl(), json);
-		Forum forum = new Forum(new JSONObject(client.getOutput()));
-		return forum.getName(); }
+		JSONObject object = new JSONObject(client.getOutput());
+		return object.getString("name"); }
 	
 	public void postPassword(String currentPassword, String newPassword) {
 		String json = "{ \"current_password\":\""+currentPassword+"\", \"password\":\""+newPassword+"\" }";
@@ -200,6 +197,9 @@ public final class RequestController {
 	
 	public void postNegativeVote(String idTopic) {
 		postVote(idTopic, "negative"); }
+	
+	public void postAbstentionVote(String idTopic) {
+		postVote(idTopic, "abstention"); }
 	
 	private void postVote(String idTopic, String value) {
 		String json = "{ \"value\":\""+value+"\" }";

@@ -76,7 +76,7 @@ final class ApacheHttpClient {
 	
 	private void setDeleteRequest(String resource) {
 		deleteRequest = new HttpDelete(path + resource);
-		//deleteRequest.addHeader("Accept", "application/json");
+		deleteRequest.addHeader("Accept", "application/json");
 		deleteRequest.addHeader("Accept-Language", "es-419,es;q=0.8");
 		deleteRequest.addHeader("Cookie", token); }
 		
