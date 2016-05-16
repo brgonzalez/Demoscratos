@@ -18,6 +18,8 @@
 		
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
         <script type="text/javascript"></script>
+        <!-- <script src="/demoscratos/resources/javascript/uniqueTopic.js"> </script> -->
+        
 	</head>
 	<body>
 		<jsp:include page="includes/header.jsp" />
@@ -32,30 +34,43 @@
 					<h5><span class = "glyphicon glyphicon-time"></span> ${topic.closingAt}</h5>
 					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
-					<h3 class = "tag-topic">Etiqueta</h4>
+					<h3 class = "tag-topic">Etiqueta</h3>
 					<h4 class = "vote-topic">Voto</h4>
-					<div class ="space-options-votes">
-						<button action ="votePositive" type="submit" id = "btn-afirmative" class = "btn btn-options"> <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>
-						<button type="submit" id = "btn-negative" class = "btn btn-options" ><span class = "glyphicon glyphicon-thumbs-down"></span> Negativo </button>
-						<button type="submit" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> Abstención</button>
-					</div>	|
 					
-					<div class ="multi-vote">
-						<form:form>
+					<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show();" type="submit" id ="button-show-ring"class="btn btn-default">Mostrar votos de anillo</button>
+					<button style="display:none;" onclick="$('#vote-ring').hide(); $('#button-hide-ring').hide(); $('#button-show-ring').show(); " type="submit" id ="button-hide-ring"class="btn btn-default">Ocultar votos de anillo</button>
+					
+					<div style="display:none;" class="panel panel-default" id="vote-ring">
+					  	<!-- Default panel contents -->
+					  	<div class="panel-heading">Votos de anillos de confianza</div>
+
+					
+					  	<table class="table">
+					  		<tr>
+					  			<th>Nombre</th>
+					  			<th>Correo</th>
+					  			<th>Voto</th>
+					  		</tr>
+					  		<tr>
+					  			<th>1</th>
+					  			<th></th>
+					  			<th></th>
+					  		</tr>
+					  		<tr>
+					  			<th>2</th>
+					  			<th></th>
+					  			<th></th>
+					  		</tr>
+					  	</table>
+					</div>
+			
+					<div class="uniqueVote">
+						<form:form href="/demoscratos/forum/${idForum}/topic/${idTopic}/unique">
 							<h4 class = "description-multi-vote"> ${question} </h4>
-							
-							<c:forEach var="option" items="${options}">
-								<h5> ${option} </h5>
-							</c:forEach>
-	
 							<div class="checkbox">
-							 	<label><input type="checkbox" value="">Option 1</label>
-							</div>
-							<div class="checkbox">
-							 	<label><input type="checkbox" value="">Option 2</label>
-							</div>
-							<div class="checkbox disabled">
-								<label><input type="checkbox" value="" >Option 3</label>
+								<c:forEach var="option" items="${options}">
+							 	<label class="form-control"><input class="unique" name="idOption" type="checkbox" value="${option.id}">${option.option} </label>
+								</c:forEach>
 							</div>
 							
 							<input type="submit" id="button-save" class="btn btn-primary button-save">

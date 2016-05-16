@@ -22,7 +22,7 @@ import com.itcr.demoscratos.models.User;
 public class TopicsController {
 		
 	private Messages messages = new Messages();
-	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TopicsController.class);
 	private RequestController request = RequestController.getInstance();
 
 	
@@ -35,30 +35,19 @@ public class TopicsController {
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		ArrayList<Topic> topics = request.getTopics(key);
+		model.addAttribute("idForum",key);
 		if(topics.size() > 0){
 			model.addAttribute("topics",topics);
-			model.addAttribute("idForum",key);
 		}
 
 		logger.info(messages.getForum(key), locale);
 		return "topics";
 	}
 	
-	@RequestMapping(value = "/topics", method = RequestMethod.GET)
-	public String topics(Locale locale, Model model) {
-		if(!request.isLoggedIn()){
-			logger.info(messages.userLoggedIn(), locale);
-			return "redirect:/login";
-		}
-		User user = request.getCurrentUser();
-		model.addAttribute("user", user );
-		logger.info(messages.getTopics(), locale);
-		return "topics";
-	}
 	
 
 	
-	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}" , method = RequestMethod.GET)
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/simple" , method = RequestMethod.GET)
 	public String showTopic(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
 			@PathVariable(value="idTopic") String idTopic
@@ -67,19 +56,20 @@ public class TopicsController {
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
-		}//******realiozar que se reciba en el URL el tipo del topic y hacer un if
+		}//******realiozar que se reciba en el URL el tipo del topic y hacer un if)
 		FullTopic topic = request.getFullTopic(idTopic);
+		if(topic.isSecret()){
+			model.addAttribute("isSecret", "none" );
+		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
-		return "simpleTopic";
-
-		
+		return "topic-simple";
 	}
 	
-	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}" , method = RequestMethod.POST)
-	public String simpleVotePositive(Locale locale, Model model,
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/simple" , method = RequestMethod.POST)
+	public String simpleVote(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
 			@RequestParam(value="vote") String vote,
 			@PathVariable(value="idTopic") String idTopic) {
@@ -89,17 +79,124 @@ public class TopicsController {
 			return "redirect:/login";
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
+		if(topic.isSecret()){
+			model.addAttribute("isSecret", "none" );
+		}
 		User user = request.getCurrentUser();
+		System.out.println("El voto es :" +vote);
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
-
-		return "simpleTopic";
+		switch(vote){
+			case "positive":
+				request.postPositiveVote(idTopic);
+				break;
+			case "negative":
+				request.postNegativeVote(idTopic);
+				break;
+			case "abstentionism":
+				request.postAbstentionVote(idTopic);
+				break;
+		}
+			
+		return "topic-simple";
 	}
-	@RequestMapping(value = "/votePositive" , method = RequestMethod.GET)
-	public String votePositive(Locale locale, Model model){
-		logger.info("voto",locale);
-		return "privateTopic";
+	
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique" , method = RequestMethod.GET)
+	public String showTopicUnique(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@PathVariable(value="idTopic") String idTopic) {
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		FullTopic topic = request.getFullTopic(idTopic);
+		if(topic.isSecret()){
+			model.addAttribute("isSecret", "none" );
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("question", topic.getQuestion());
+		model.addAttribute("options", topic.getOptions());
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
+		model.addAttribute("topic", topic);
+		return "topic-unique";
+	}
+	
+	
+
+	
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique" , method = RequestMethod.POST)
+	public String postVoteUnique(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="idOption") String idOption,
+			@PathVariable(value="idTopic") String idTopic) {
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		FullTopic topic = request.getFullTopic(idTopic);
+		if(topic.isSecret()){
+			model.addAttribute("isSecret", "none" );
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("question", topic.getQuestion());
+		model.addAttribute("options", topic.getOptions());
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
+		model.addAttribute("topic", topic);
+		request.postUniqueVote(idTopic, Integer.parseInt(idOption));
+		return "topic-unique";
+	}
+	
+	
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/multiple" , method = RequestMethod.GET)
+	public String showTopicMulti(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@PathVariable(value="idTopic") String idTopic) {
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		FullTopic topic = request.getFullTopic(idTopic);
+		if(topic.isSecret()){
+			model.addAttribute("isSecret", "none" );
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("question", topic.getQuestion());
+		model.addAttribute("options", topic.getOptions());
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
+		model.addAttribute("topic", topic);
+		return "topic-multi";
+	}
+	
+	
+
+	
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/multiple" , method = RequestMethod.POST)
+	public String postVoteMulti(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="idOption") ArrayList<String> idOption,
+			@PathVariable(value="idTopic") String idTopic) {
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		FullTopic topic = request.getFullTopic(idTopic);
+		if(topic.isSecret()){
+			model.addAttribute("isSecret", "none" );
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("question", topic.getQuestion());
+		model.addAttribute("options", topic.getOptions());
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
+		model.addAttribute("topic", topic);
+		for(String id : idOption){
+			request.postMultipleVote(idTopic, Integer.parseInt(id));
+		}
+		return "topic-multi";
 	}
 	
 	@RequestMapping(value = "forum/{idForum}/topic/new" , method = RequestMethod.GET)
@@ -168,7 +265,7 @@ public class TopicsController {
 		
 		model.addAttribute("idForum", idForum);
 
-		
+		System.out.println("La pregunta desde new es: "+question);
 		return "redirect:/forum/"+idForum;
 	}
 }

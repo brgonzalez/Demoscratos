@@ -129,7 +129,7 @@
 						
 						<div style= "display: none;"id ="space-selections">
 							<label >Escriba su pregunta</label>
-							<input type="text" name = "question"class="form-control" id="input-question" placeholder="Escriba su pregunta">
+							<input type="text" name = "question" class="form-control" id="input-question" placeholder="Escriba su pregunta">
 		
 							
 							<label>Ingrese las opciones</label>

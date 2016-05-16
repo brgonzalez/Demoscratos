@@ -30,7 +30,7 @@
 						<ul style ="list-style:none">			
 						<c:forEach var="topic" items="${topics}">
 							<li>
-								<a  href="/demoscratos/forum/${idForum}/topic/${topic.id}" method ="POST">
+								<a  href="/demoscratos/forum/${idForum}/topic/${topic.id}/${topic.type}" method ="POST">
 									<div class= "topic">
 										<h4>${topic.title}</h4>
 										<h6>${topic.closingAt}</h6>
