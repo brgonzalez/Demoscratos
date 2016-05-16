@@ -7,6 +7,7 @@ enum Resource {
 	API("/api/"),
 	FORUMS("/api/forum/all/"),
 	FORUM("/api/forum/"),
+	FORUM_MINE("/api/forum/mine"),
 	TOPICS("/api/topic/all?forum="),
 	TOPIC("/api/topic/"),
 	TOPIC_CREATE("/api/topic/create/"),

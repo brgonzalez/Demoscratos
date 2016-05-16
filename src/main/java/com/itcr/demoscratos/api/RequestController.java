@@ -3,7 +3,7 @@ package com.itcr.demoscratos.api;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+import org.apache.http.StatusLine;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -119,7 +119,6 @@ public final class RequestController {
 		User user = null;
 		System.out.println(array.toString());
 		if (array.length() == 1) { user = new User(array.getJSONObject(0), email); }
-		System.out.println(user);
 		return user; }
 			
 	public ArrayList<User> getRing() {
@@ -146,6 +145,8 @@ public final class RequestController {
 		return postTopic(idForum, title, tag, closingAt, source, content, type, votable, secret); }
 	
 	private String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, String type, boolean votable, boolean secret) {
+		boolean flag = !isThereOwnForum(); String forum = "";
+		if (flag) { forum = postForum("Temporal", "Temporal", "Temporal"); }
 		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
 		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
 		System.out.println(client.getOutput());
@@ -156,7 +157,12 @@ public final class RequestController {
 		client.postHttpRequest(Resource.TOPIC.publish(idTopic), "");
 		mongodb.updateTopic(idTopic, idForum);
 		database.insertTopic(idTopic,  String.valueOf(secret),type);
+		if (flag) { deleteForum(forum); }
 		return idTopic; }
+	
+	private boolean isThereOwnForum() {
+		StatusLine status = client.getHttpRequest(Resource.FORUM_MINE.getUrl());
+		return (status.getStatusCode() != 404); }
 	
 	public String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, boolean multiple, boolean secret, String question, ArrayList<String> options) {
 		String type = (multiple) ? "multiple":"unique";
@@ -171,9 +177,11 @@ public final class RequestController {
 	public void postUniqueVote(String idTopic, int idOption) {
 		database.insertUniqueVote(idTopic, idOption, currentUser.getEmail()); }
 	
-	public void postForum(String name, String title, String summary) {
+	public String postForum(String name, String title, String summary) {
 		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
-		client.postHttpRequest(Resource.FORUM.getUrl(), json); }
+		client.postHttpRequest(Resource.FORUM.getUrl(), json);
+		Forum forum = new Forum(new JSONObject(client.getOutput()));
+		return forum.getName(); }
 	
 	public void postPassword(String currentPassword, String newPassword) {
 		String json = "{ \"current_password\":\""+currentPassword+"\", \"password\":\""+newPassword+"\" }";
@@ -205,8 +213,8 @@ public final class RequestController {
 		String json = "{ \"hash\":\""+name.toLowerCase()+"\", \"name\":\""+name+"\", \"image\": \"internet\"}";
 		client.postHttpRequest(Resource.TAG_CREATE.getUrl(), json); }
 		
-	public void deleteForum(String idForum) {
-		client.deleteHttpRequest(Resource.FORUM.getUrl() + idForum); }
+	public void deleteForum(String nameForum) {
+		client.deleteHttpRequest(Resource.FORUM.getUrl() + nameForum); }
 	
 	public void deleteTopic(String idTopic) {
 		client.deleteHttpRequest(Resource.TOPIC.getUrl() + idTopic);

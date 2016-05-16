@@ -6,6 +6,7 @@ public final class Forum {
 	
 	private String id;
 	private String title;
+	private String name;
 	private String summary;
 	private String avatar;
 	private String displayName;
@@ -13,6 +14,7 @@ public final class Forum {
 	public Forum(JSONObject json) {      
 	    setId(json.getString("id"));
 	    setTitle(json.getString("title"));
+	    setName(json.getString("name"));
 	    setSummary(json.getString("summary"));
 	    JSONObject owner = json.getJSONObject("owner");
 	    setDisplayName(owner.getString("displayName"));
@@ -29,6 +31,12 @@ public final class Forum {
 
 	public void setTitle(String title) {
 		this.title = title; }
+	
+	public String getName() {
+		return name; }
+
+	public void setName(String name) {
+		this.name = name; }
 
 	public String getSummary() {
 		return summary; }
@@ -50,5 +58,5 @@ public final class Forum {
 
 	@Override
 	public String toString() {
-		return "Forum [id=" + id + ", title=" + title + ", summary=" + summary + ", avatar=" + avatar + ", displayName="
-				+ displayName + "]"; } }
+		return "Forum [id=" + id + ", title=" + title + ", name=" + name + ", summary=" + summary + ", avatar=" + avatar
+				+ ", displayName=" + displayName + "]"; } }
