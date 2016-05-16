@@ -59,7 +59,7 @@
 
   					<fieldset class="form-group">
 					    <label >Apellido</label>
-		    				<input name ="lastName"type="text" class="form-control"  placeholder="apellido" value="${user.lastName}">
+		    			<input name ="lastName"type="text" class="form-control"  placeholder="apellido" value="${user.lastName}">
   					</fieldset>
 
   					<HR width=50% align="center">

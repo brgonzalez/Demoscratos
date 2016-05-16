@@ -10,28 +10,17 @@
 	<head>
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
-
-		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
-		<script src="/demoscratos/resources/semantic/dist/semantic.min.js"></script>
-		
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/topics.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">
-
-
-
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
 		
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
         <script type="text/javascript"></script>
-
 	</head>
-
 	<body>
-		
 		<jsp:include page="includes/header.jsp" />
-
 
 		<div class = "container">
 
@@ -45,15 +34,19 @@
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
 					<h3 class = "tag-topic">Etiqueta</h4>
 					<h4 class = "vote-topic">Voto</h4>
-					<div style="display:${simpleVote};" class ="space-options-votes">
-						<button action="votePositive" method="POST" type="" id = "btn-afirmative" class = "btn btn-options"> <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>
-						<button type="" id = "btn-negative" class = "btn btn-options" ><span class = "glyphicon glyphicon-thumbs-down"></span> Negativo </button>
-						<button type="" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> Abstención</button>
-					</div>
-
-					<div class ="multi-vote" style="display:${multiVote};">
+					<div class ="space-options-votes">
+						<button action ="votePositive" type="submit" id = "btn-afirmative" class = "btn btn-options"> <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>
+						<button type="submit" id = "btn-negative" class = "btn btn-options" ><span class = "glyphicon glyphicon-thumbs-down"></span> Negativo </button>
+						<button type="submit" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> Abstención</button>
+					</div>	|
+					
+					<div class ="multi-vote">
 						<form:form>
-							<h4 class = "description-multi-vote">Esta es la descripciónn para el voto</h4>
+							<h4 class = "description-multi-vote"> ${question} </h4>
+							
+							<c:forEach var="option" items="${options}">
+								<h5> ${option} </h5>
+							</c:forEach>
 	
 							<div class="checkbox">
 							 	<label><input type="checkbox" value="">Option 1</label>
@@ -68,22 +61,8 @@
 							<input type="submit" id="button-save" class="btn btn-primary button-save">
 							
 						</form:form>
-					</div>
+					</div>			
 
-				
-				
-
-					<div class = "own-argument">
-						<h4>Tus argumentos</h4>
-						<textarea class="form-control" type="textbox" rows = "4" validate ="max-length:4096"></textarea>
-					</div>
-
-					<div class = "arguments">
-						<h4>Argumentos</h4>
-						<p>Un argumento</p>
-						<p>Otro argumento argumento</p>
-
-					</div>
 
 				</div>
 

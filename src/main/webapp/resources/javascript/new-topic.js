@@ -16,7 +16,7 @@ $(document).ready(function() {
         e.preventDefault(); $(this).parent('div').remove(); x--;
     })
     
-    $("#votable").click( function(){
+    $('#xxx').click( function(){
     	
     	if($(this).is(':checked')){
     		$('#settings-vote').show();
@@ -47,6 +47,9 @@ $(document).ready(function() {
     		$("#secret").val('false');
     		$(this).val('true');
     	}
+    	if(!$(this).is(':checked')){
+    		$(this).val('false');
+    	}
     });
     
     $("#secret").click (function(){
@@ -54,6 +57,9 @@ $(document).ready(function() {
     		$("#semiPublic").attr("checked", false);
     		$("#semiPublic").val('false');
     		$(this).val('true');
+    	}
+    	if(!$(this).is(':checked')){
+    		$(this).val('false');
     	}
     });
     
@@ -69,6 +75,9 @@ $(document).ready(function() {
     		$(this).val('true');		
     		
     		$('#space-selections').hide();
+    	}
+    	if(!$(this).is(':checked')){
+    		$(this).val('false');
     	}
 
     });

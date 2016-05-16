@@ -11,6 +11,9 @@
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
 		
+		<link href="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    	<link href="/demoscratos/resources/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+		
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/new-topic.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/home.css">
@@ -37,7 +40,7 @@
 					<h3>Nuevo Tema</h3>
 					<fieldset class="form-group">
 				    	<label>Nombre del tema</label>
-				    	<input type="text" class="form-control" name ="topicName" placeholder="Nombre del tema" required>
+				    	<input type="text" class="form-control" name ="title" placeholder="Nombre del tema" required>
 					</fieldset>
 
 
@@ -45,7 +48,7 @@
 					  	<label>Etiqueta:</label>
 				  		<select class="form-control" id="sel1" name = "tag">
 					  		<c:forEach var="tag" items="${tags}">
-							    <option>${tag}</option>
+							    <option>${tag.name}</option>
 					  		</c:forEach>
 				  		</select>	  			
 					</div>
@@ -57,17 +60,28 @@
 					
 					<fieldset class="form-group">
 				    	<label>URL del tema</label>
-				    	<input type="text" class="form-control" name ="topicUrl" placeholder="Url del tema">
+				    	<input type="text" class="form-control" name ="source" placeholder="Url del tema">
 					</fieldset>
-					
+					<fieldset>
+			            <div class="form-group">
+			                <label>Fecha de cierre</label>
+			                <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy- HH:ii p" data-link-field="dtp_input1">
+			                    <input class="form-control" size="16" type="text" value="" readonly>
+			                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+			                </div>
+							<input type="hidden" id="dtp_input1" value="" /><br/>
+			            </div>
+			
+        			</fieldset>
 
 					<fieldset class="form-group">
 
 						<div>
 							<label>Votable</label>
 							<div class="onoffswitch">
-							    <input type="checkbox" name="votable" class="onoffswitch-checkbox" id="myonoffswitch" checked value="true">
-							    <label class="onoffswitch-label" for="myonoffswitch">
+							    <input type="checkbox" name="votable" class="onoffswitch-checkbox" id="xxx" checked value="true">
+							    <label class="onoffswitch-label" for="xxx">
 							        <span class="onoffswitch-inner"></span>
 							        <span class="onoffswitch-switch"></span>
 							    </label>
@@ -82,12 +96,12 @@
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input type="checkbox" name="secret" checked value="false">Privada</label>
+								 		<label><input name="secret" id="secret" type="checkbox" value="false">Privada</label>
 									</div>
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input name ="semiPublic" id ="semiPublic" type="checkbox" value="true"/>Semipública</label>
+								 		<label><input name ="semiPublic" id ="semiPublic" type="checkbox" value="false"/>Semipública</label>
 									</div>
 								</div>
 							</div>
@@ -128,13 +142,48 @@
 				        
 				        </div>
 			        </fieldset>
-					<fieldset class="form-group">
-						<label>Fecha</label>
-						<input type="text" class="form-control" name="date" placeholder="Fecha">
-					</fieldset>
-
+					
+					
 			       
-			         <button type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
+			        <button type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
+			         
+			        <script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+					<script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/bootstrap/js/bootstrap.min.js"></script>
+					<script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+					<script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+					<script type="text/javascript">
+					    $('.form_datetime').datetimepicker({
+					        //language:  'fr',
+					        weekStart: 1,
+					        todayBtn:  1,
+							autoclose: 1,
+							todayHighlight: 1,
+							startView: 2,
+							forceParse: 0,
+					        showMeridian: 1
+					    });
+						$('.form_date').datetimepicker({
+					        language:  'fr',
+					        weekStart: 1,
+					        todayBtn:  1,
+							autoclose: 1,
+							todayHighlight: 1,
+							startView: 2,
+							minView: 2,
+							forceParse: 0
+					    });
+						$('.form_time').datetimepicker({
+					        language:  'fr',
+					        weekStart: 1,
+					        todayBtn:  1,
+							autoclose: 1,
+							todayHighlight: 1,
+							startView: 1,
+							minView: 0,
+							maxView: 1,
+							forceParse: 0
+					    });
+					</script>
 			       
 
 				</form:form>

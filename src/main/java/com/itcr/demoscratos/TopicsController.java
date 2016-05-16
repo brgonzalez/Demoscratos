@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itcr.demoscratos.api.RequestController;
+import com.itcr.demoscratos.models.FullTopic;
+import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 
@@ -37,7 +39,6 @@ public class TopicsController {
 			model.addAttribute("topics",topics);
 			model.addAttribute("idForum",key);
 		}
-		System.out.println(topics.get(0));
 
 		logger.info(messages.getForum(key), locale);
 		return "topics";
@@ -60,27 +61,40 @@ public class TopicsController {
 	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}" , method = RequestMethod.GET)
 	public String showTopic(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
-			@PathVariable(value="idTopic") String idTopic) {
+			@PathVariable(value="idTopic") String idTopic
+			/*@PathVariable(value="typeTopic") String typeTopic*/) {
 		logger.info("forum = "+ idForum +", topic = " + idTopic, locale);
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
-		}
+		}//******realiozar que se reciba en el URL el tipo del topic y hacer un if
+		FullTopic topic = request.getFullTopic(idTopic);
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
-		Topic topic = request.getFullTopic(idTopic);
+		model.addAttribute("topic", topic);
+		return "simpleTopic";
+
+		
+	}
+	
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}" , method = RequestMethod.POST)
+	public String simpleVotePositive(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="vote") String vote,
+			@PathVariable(value="idTopic") String idTopic) {
+		logger.info(vote, locale); 
+		if(!request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/login";
+		}
+		FullTopic topic = request.getFullTopic(idTopic);
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
 
-		if(true){
-			model.addAttribute("simpleVote", "block");
-			model.addAttribute("multiVote", "none");
-
-		}
-		else{
-
-		}
-		return "privateTopic";
+		return "simpleTopic";
 	}
 	@RequestMapping(value = "/votePositive" , method = RequestMethod.GET)
 	public String votePositive(Locale locale, Model model){
@@ -96,7 +110,7 @@ public class TopicsController {
 		}
 		model.addAttribute("idForum", idForum);
 
-		ArrayList<String> tags = request.getTags();
+		ArrayList<Tag> tags = request.getTags();
 		model.addAttribute("tags",tags);
 		return "new-topic";
 	}
@@ -104,9 +118,10 @@ public class TopicsController {
 	@RequestMapping(value = "forum/{idForum}/topic/new" , method = RequestMethod.POST)
 	public String postNewTopic(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
-			@RequestParam(value="topicName") String topicName,
+			@RequestParam(value="title") String title,
 			@RequestParam(value="tag") String tag,
-			@RequestParam(value="content") String content,			
+			@RequestParam(value="content") String content,
+			@RequestParam(value="source") String source,
 			@RequestParam(value="votable",defaultValue = "false") String votablex,
 			@RequestParam(value="secret",defaultValue = "false") String secretx,
 			@RequestParam(value="semiPublic",defaultValue = "false") String semipublicx,
@@ -114,8 +129,8 @@ public class TopicsController {
 			@RequestParam(value="selection",defaultValue = "false") String selectionx,
 			@RequestParam(value="multiselection",defaultValue = "false") String multiselectionx,
 			@RequestParam(value="question") String question,
-			@RequestParam(value="date") String date,
-			@RequestParam(value="optionsQuestion[]") ArrayList<String> optionsQuestion) {
+			//@RequestParam(value="closingAt") String closingAt,
+			@RequestParam(value="optionsQuestion[]") ArrayList<String> options) {
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
@@ -123,21 +138,38 @@ public class TopicsController {
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
-		ArrayList<String> tags = request.getTags();
+		ArrayList<Tag> tags = request.getTags();
 		model.addAttribute("tags",tags);
-		System.out.println(optionsQuestion);
+		System.out.println(title);
+		System.out.println(tag);
+		System.out.println("Votable"+votablex);
+		System.out.println("Secret:"+secretx);
+		System.out.println("Semipublic"+semipublicx);
+		System.out.println("Simple"+simplex);
+		System.out.println("Selection"+selectionx);
+		System.out.println("Multiselection"+multiselectionx);
+		System.out.println(options);
 		boolean simple = Boolean.valueOf(simplex);
 		boolean votable = Boolean.valueOf(votablex);
 		boolean secret = Boolean.valueOf(secretx);
 		boolean multiple = Boolean.valueOf(multiselectionx);
 
-		
-		if(!simple){
-			request.postTopic(idForum, topicName, tag, "2016-05-30T10:00:00.000Z", "http://www.gitlab.com", content, multiple, secret, question, optionsQuestion);
-		
+		if(votable){
+			if(!simple){
+				request.postTopic(idForum, title, tag, "2016-05-30T10:00:00.000Z", source, content, 
+						multiple, secret, question, options);
+			}
+			else{
+				request.postTopic(idForum, title, tag, "2016-05-30T10:00:00.000Z", source, content, votable, secret);
+			}
+		}else{
+			request.postTopic(idForum, title, tag, "2016-05-30T10:00:00.000Z", source, content, votable, secret);
 		}
 		
-		return "new-topic";
+		model.addAttribute("idForum", idForum);
+
+		
+		return "redirect:/forum/"+idForum;
 	}
 }
 
