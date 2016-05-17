@@ -110,7 +110,11 @@ public final class RequestController {
 		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type);
 		if (!fullTopic.getType().equals("simple")) {
 			fullTopic.setQuestion(database.selectTopicAttr(idTopic, "question"));
-			fullTopic.setOptions(database.selectOptions(idTopic)); }
+			fullTopic.setOptions(database.selectOptions(idTopic));
+			if (fullTopic.getType().equals("multiple")) {
+				fullTopic.setVotes(database.selectMultipleVotes(idTopic)); }
+			if (fullTopic.getType().equals("unique")) {
+				fullTopic.setVotes(database.selectUniqueVotes(idTopic)); } }
 		return fullTopic; }
 	
 	public User getUserByEmail(String email) {

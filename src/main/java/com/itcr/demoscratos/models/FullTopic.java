@@ -106,6 +106,15 @@ public final class FullTopic extends Topic {
 
 	public void setVotes(ArrayList<Vote> votes) {
 		this.votes = votes;	}
+	
+	public boolean userAlreadyVoted (String email) {
+		if (votes.isEmpty()) { return false; }
+		
+		for (Vote vote : votes) {
+			if (vote.getEmail().equals(email)) {
+				return true; } }
+		
+		return false; }
 
 	@Override
 	public String toString() {

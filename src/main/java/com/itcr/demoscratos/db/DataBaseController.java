@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.itcr.demoscratos.models.Option;
 import com.itcr.demoscratos.models.Ring;
+import com.itcr.demoscratos.models.Vote;
 
 public final class DataBaseController {
 	
@@ -60,6 +61,38 @@ public final class DataBaseController {
 			connection.disconnect(); }
 		catch (SQLException e) { e.printStackTrace(); } 
 		return options; }
+	
+	public ArrayList<Vote> selectMultipleVotes(String topicId) {
+		connection.connect();
+		String query = "SELECT * FROM multiple_votes WHERE topic='"+ topicId +"'";
+		ResultSet result = connection.executeQuery(query);
+		ArrayList<Vote> votes = new ArrayList<Vote>();
+		String topic = topicId;
+		String email; int option;
+		try {
+			while (result.next()) {
+				option = result.getInt("opt");
+				email = result.getString("email");
+				votes.add(new Vote(option, topic, email)); }
+			connection.disconnect(); }
+		catch (SQLException e) { e.printStackTrace(); } 
+		return votes; }
+	
+	public ArrayList<Vote> selectUniqueVotes(String topicId) {
+		connection.connect();
+		String query = "SELECT * FROM unique_votes WHERE topic='"+ topicId +"'";
+		ResultSet result = connection.executeQuery(query);
+		ArrayList<Vote> votes = new ArrayList<Vote>();
+		String topic = topicId;
+		String email; int option;
+		try {
+			while (result.next()) {
+				option = result.getInt("opt");
+				email = result.getString("email");
+				votes.add(new Vote(option, topic, email)); }
+			connection.disconnect(); }
+		catch (SQLException e) { e.printStackTrace(); } 
+		return votes; }
 	
 	public void deleteRing(String userId) {
 		connection.connect();

@@ -105,8 +105,8 @@ final class ApacheHttpClient {
 		return !token.isEmpty(); }
 	
 	protected void setToken() {
-		token = response.getFirstHeader("Set-Cookie").getValue().split(";")[0];
-		System.out.println(token); }
+		try { token = response.getFirstHeader("Set-Cookie").getValue().split(";")[0]; }
+		catch (NullPointerException e) { token = ""; } }
 	
 	private void setBr() {
 		try { br = new BufferedReader(new InputStreamReader((response.getEntity().getContent()))); }
