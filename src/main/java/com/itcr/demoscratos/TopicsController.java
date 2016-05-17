@@ -226,12 +226,13 @@ public class TopicsController {
 			@RequestParam(value="selection",defaultValue = "false") String selectionx,
 			@RequestParam(value="multiselection",defaultValue = "false") String multiselectionx,
 			@RequestParam(value="question") String question,
-			//@RequestParam(value="closingAt") String closingAt,
+			@RequestParam(value="closingAt") String closingAt,
 			@RequestParam(value="optionsQuestion[]") ArrayList<String> options) {
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
 		}
+		System.out.println("Fecha: "+ closingAt);
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
@@ -251,16 +252,18 @@ public class TopicsController {
 		boolean secret = Boolean.valueOf(secretx);
 		boolean multiple = Boolean.valueOf(multiselectionx);
 
-		if(votable){
+		String[] splitDate = closingAt.split(" ");
+		closingAt = splitDate[0]+"T"+splitDate[1]+".000Z";
+		if(votable){ 
 			if(!simple){
-				request.postTopic(idForum, title, tag, "2016-05-30T10:00:00.000Z", source, content, 
+				request.postTopic(idForum, title, tag, closingAt, source, content, 
 						multiple, secret, question, options);
 			}
 			else{
-				request.postTopic(idForum, title, tag, "2016-05-30T10:00:00.000Z", source, content, votable, secret);
+				request.postTopic(idForum, title, tag, closingAt, source, content, votable, secret);
 			}
 		}else{
-			request.postTopic(idForum, title, tag, "2016-05-30T10:00:00.000Z", source, content, votable, secret);
+			request.postTopic(idForum, title, tag, closingAt, source, content, votable, secret);
 		}
 		
 		model.addAttribute("idForum", idForum);
