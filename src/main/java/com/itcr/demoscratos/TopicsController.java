@@ -1,6 +1,10 @@
 package com.itcr.demoscratos;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -18,6 +22,7 @@ import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.models.Vote;
+import com.itcr.demoscratos.services.ServiceDate;
 
 @Controller
 public class TopicsController {
@@ -52,15 +57,39 @@ public class TopicsController {
 	public String showTopic(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
 			@PathVariable(value="idTopic") String idTopic
-			/*@PathVariable(value="typeTopic") String typeTopic*/) {
+			/*@PathVariable(value="typeTopic") String typeTopic*/) throws ParseException {
 		logger.info("forum = "+ idForum +", topic = " + idTopic, locale);
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
 		}
+		
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		FullTopic topic = request.getFullTopic(idTopic);
+		
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
+		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		if(isClosed | isVoted){
+			model.addAttribute("voted", "block");
+			model.addAttribute("displayVote", "none");
+			if(isClosed){
+				model.addAttribute("close", "Cerrado");
+				model.addAttribute("message", "No se aceptan más votos");
+			}else{
+				model.addAttribute("close", serviceDate.getCloseDate());
+			}
+			if(isVoted && !isClosed){
+				model.addAttribute("message", "Usted ya emitió su voto");
+			}
+		}else{
+			model.addAttribute("voted", "none");
+			model.addAttribute("displayVote", "block");
+			model.addAttribute("close", serviceDate.getCloseDate());
+		}
+		
+		
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
 		if(topic.isSecret()){
@@ -72,16 +101,6 @@ public class TopicsController {
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
-		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
-			model.addAttribute("voted", "block");
-			model.addAttribute("displayVote", "none");
-		}
-		else{
-			
-			model.addAttribute("voted", "none");
-			model.addAttribute("displayVote", "block");
-		}
-		
 		return "topic-simple";
 	}
 	
@@ -106,6 +125,28 @@ public class TopicsController {
 			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
+
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
+		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		if(isClosed | isVoted){
+			model.addAttribute("voted", "block");
+			model.addAttribute("displayVote", "none");
+			if(isClosed){
+				model.addAttribute("close", "Cerrado");
+				model.addAttribute("message", "No se aceptan más votos");
+			}else{
+				model.addAttribute("close", serviceDate.getCloseDate());
+			}
+			if(isVoted && !isClosed){
+				model.addAttribute("message", "Usted ya emitió su voto");
+			}
+		}else{
+			model.addAttribute("voted", "none");
+			model.addAttribute("displayVote", "block");
+			model.addAttribute("close", serviceDate.getCloseDate());
+		}
+		
 		System.out.println("El voto es :" +vote);
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
@@ -121,15 +162,6 @@ public class TopicsController {
 			case "abstentionism":
 				request.postAbstentionVote(idTopic);
 				break;
-		}
-		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
-			model.addAttribute("voted", "block");
-			model.addAttribute("displayVote", "none");
-		}
-		else{
-			
-			model.addAttribute("voted", "none");
-			model.addAttribute("displayVote", "block");
 		}
 			
 		return "topic-simple";
@@ -159,14 +191,25 @@ public class TopicsController {
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
-		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
+		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
-		}
-		else{
-			
+			if(isClosed){
+				model.addAttribute("close", "Cerrado");
+				model.addAttribute("message", "No se aceptan más votos");
+			}else{
+				model.addAttribute("close", serviceDate.getCloseDate());
+			}
+			if(isVoted && !isClosed){
+				model.addAttribute("message", "Usted ya emitió su voto");
+			}
+		}else{
 			model.addAttribute("voted", "none");
 			model.addAttribute("displayVote", "block");
+			model.addAttribute("close", serviceDate.getCloseDate());
 		}
 		return "topic-unique";
 	}
@@ -200,14 +243,25 @@ public class TopicsController {
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
 		request.postUniqueVote(idTopic, Integer.parseInt(idOption));
-		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
+		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
-		}
-		else{
-			
+			if(isClosed){
+				model.addAttribute("close", "Cerrado");
+				model.addAttribute("message", "No se aceptan más votos");
+			}else{
+				model.addAttribute("close", serviceDate.getCloseDate());
+			}
+			if(isVoted && !isClosed){
+				model.addAttribute("message", "Usted ya emitió su voto");
+			}
+		}else{
 			model.addAttribute("voted", "none");
 			model.addAttribute("displayVote", "block");
+			model.addAttribute("close", serviceDate.getCloseDate());
 		}
 		return "topic-unique";
 	}
@@ -237,14 +291,25 @@ public class TopicsController {
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
-		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
+		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
-		}
-		else{
-			
+			if(isClosed){
+				model.addAttribute("close", "Cerrado");
+				model.addAttribute("message", "No se aceptan más votos");
+			}else{
+				model.addAttribute("close", serviceDate.getCloseDate());
+			}
+			if(isVoted && !isClosed){
+				model.addAttribute("message", "Usted ya emitió su voto");
+			}
+		}else{
 			model.addAttribute("voted", "none");
 			model.addAttribute("displayVote", "block");
+			model.addAttribute("close", serviceDate.getCloseDate());
 		}
 		return "topic-multi";
 	}
@@ -280,14 +345,25 @@ public class TopicsController {
 		for(String id : idOption){
 			request.postMultipleVote(idTopic, Integer.parseInt(id));
 		}
-		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
+		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
-		}
-		else{
-			
+			if(isClosed){
+				model.addAttribute("close", "Cerrado");
+				model.addAttribute("message", "No se aceptan más votos");
+			}else{
+				model.addAttribute("close", serviceDate.getCloseDate());
+			}
+			if(isVoted && !isClosed){
+				model.addAttribute("message", "Usted ya emitió su voto");
+			}
+		}else{
 			model.addAttribute("voted", "none");
 			model.addAttribute("displayVote", "block");
+			model.addAttribute("close", serviceDate.getCloseDate());
 		}
 		return "topic-multi";
 	}

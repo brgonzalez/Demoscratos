@@ -31,7 +31,7 @@
 
 				<div class ="view-topic">
 				
-					<h5><span class = "glyphicon glyphicon-time"></span> ${topic.closingAt}</h5>
+					<h5><span class = "glyphicon glyphicon-time"></span> ${close}</h5>
 					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
 					<h3 class = "tag-topic">Etiqueta</h3>
@@ -60,7 +60,7 @@
 						  		
 					  	</table>
 					</div>
-					<h3 class = "voted" style="display:${voted};"> Usted ya efectuó el voto en este tema</h3>
+					<h3 class = "voted" style="display:${voted};"> ${message} </h3>
 			
 					<div style="display:${displayVote};" class="uniqueVote">
 						<form:form href="/demoscratos/forum/${idForum}/topic/${idTopic}/unique">
