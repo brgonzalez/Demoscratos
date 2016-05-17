@@ -49,20 +49,17 @@
 					
 					  	<table class="table">
 					  		<tr>
-					  			<th>Nombre</th>
 					  			<th>Correo</th>
 					  			<th>Voto</th>
 					  		</tr>
-					  		<tr>
-					  			<th>1</th>
-					  			<th></th>
-					  			<th></th>
-					  		</tr>
-					  		<tr>
-					  			<th>2</th>
-					  			<th></th>
-					  			<th></th>
-					  		</tr>
+					  		<c:forEach var="vote" items="${votes}">
+					  		
+						  		<tr>
+						  			<th>${vote.email }</th>
+						  			<th>${vote.stringOption }</th>
+						  		</tr>
+						  	</c:forEach>
+						  		
 					  	</table>
 					</div>
 					<h4 class = "vote-topic">Voto</h4>

@@ -17,6 +17,7 @@ import com.itcr.demoscratos.models.FullTopic;
 import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
+import com.itcr.demoscratos.models.Vote;
 
 @Controller
 public class TopicsController {
@@ -67,6 +68,8 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
+			ArrayList<Vote> votes = topic.getVisibleVotes();
+			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
 		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
@@ -98,6 +101,8 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
+			ArrayList<Vote> votes = topic.getVisibleVotes();
+			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
@@ -144,6 +149,8 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
+			ArrayList<Vote> votes = topic.getVisibleVotes();
+			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
@@ -182,6 +189,8 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
+			ArrayList<Vote> votes = topic.getVisibleVotes();
+			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
@@ -218,6 +227,8 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
+			ArrayList<Vote> votes = topic.getVisibleVotes();
+			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
@@ -256,6 +267,8 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
+			ArrayList<Vote> votes = topic.getVisibleVotes();
+			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
