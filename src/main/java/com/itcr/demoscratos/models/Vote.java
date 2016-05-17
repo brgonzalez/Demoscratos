@@ -5,6 +5,7 @@ public final class Vote {
 	private int option;
 	private String topic;
 	private String email;
+	private String stringOption;
 		
 	public Vote(int option, String topic, String email) {
 		setOption(option); setTopic(topic); setEmail(email); }
@@ -26,6 +27,12 @@ public final class Vote {
 
 	public void setEmail(String email) {
 		this.email = email;	}
+	
+	public String getStringOption() {
+		return stringOption; }
+
+	public void setStringOption(String stringOption) {
+		this.stringOption = stringOption; }
 
 	@Override
 	public String toString() {

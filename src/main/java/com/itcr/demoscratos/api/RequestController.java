@@ -108,6 +108,12 @@ public final class RequestController {
 		String type = database.selectTopicAttr(idTopic, "type");
 		String secret = database.selectTopicAttr(idTopic, "private");
 		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type);
+		ArrayList<String> ringEmails = database.selectRingMembers(currentUser.getEmail());
+		ArrayList<User> ringUsers = new ArrayList<User>();
+		if (!ringEmails.isEmpty()) {
+			for (String email : ringEmails) {
+				ringUsers.add(getUserByEmail(email)); }	}
+		fullTopic.setRingMembers(ringUsers);
 		if (!fullTopic.getType().equals("simple")) {
 			fullTopic.setQuestion(database.selectTopicAttr(idTopic, "question"));
 			fullTopic.setOptions(database.selectOptions(idTopic));

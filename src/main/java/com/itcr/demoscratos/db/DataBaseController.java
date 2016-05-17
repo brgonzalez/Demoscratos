@@ -31,6 +31,18 @@ public final class DataBaseController {
 		catch (SQLException e) { e.printStackTrace(); } 
 		return type; }
 	
+	public ArrayList<String> selectRingMembers(String email) {
+		connection.connect();
+		String query = "SELECT id from rings where member1 = '"+email+"' or member2 = '"+email+"' or member3 = '"+email+"'";
+		ResultSet result = connection.executeQuery(query);
+		ArrayList<String> members = new ArrayList<String>();
+		try {
+			if (result.next()) {
+				members.add(result.getString("id")); }
+			connection.disconnect(); }
+		catch (SQLException e) { e.printStackTrace(); } 
+		return members; }
+	
 	public Ring selectRing(String userId) {
 		connection.connect();
 		String query = "SELECT * FROM rings WHERE id='"+ userId +"'";
