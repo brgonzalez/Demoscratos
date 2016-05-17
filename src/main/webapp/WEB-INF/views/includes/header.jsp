@@ -9,7 +9,7 @@
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
       					</button>
-      					<a href="/demoscratos/forums" id="name-app"class="navbar-brand"></a>
+      					<a href="/demoscratos/forums" id="name-app"class="navbar-brand">Demoscratos</a>
    					</div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

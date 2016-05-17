@@ -96,7 +96,7 @@
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input name="secret" id="secret" type="checkbox" value="false">Privada</label>
+								 		<label><input name="secret" id="secret" type="checkbox" checked value="true">Privada</label>
 									</div>
 								</div>
 								<div class="column">
@@ -111,7 +111,7 @@
 								</div>
 								<div class="column">
 									<div class="checkbox">
-								 		<label><input name ="simple" id="simple" type="checkbox" value="false">Simple</label>
+								 		<label><input name ="simple" id="simple" type="checkbox" checked value="true">Simple</label>
 									</div>
 								</div>
 								<div class="column">
@@ -145,7 +145,7 @@
 					
 					
 			       
-			        <button type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
+			        <button onSubmit="alert('Thank you for your feedback.');" type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
 			         
 			        <script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
 					<script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/bootstrap/js/bootstrap.min.js"></script>

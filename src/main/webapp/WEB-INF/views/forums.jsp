@@ -42,7 +42,7 @@
 						<li>
 							<a action = "forum" href="forum/${forum.id}" method ="POST">
 								
-								<div class = "forum" key="${forum.id}">
+								<div class="forum" key="${forum.id}">
 	
 									<h4>${forum.title}</h4>
 									

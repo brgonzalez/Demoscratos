@@ -56,15 +56,29 @@ public class TopicsController {
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
-		}//******realiozar que se reciba en el URL el tipo del topic y hacer un if)
-		FullTopic topic = request.getFullTopic(idTopic);
-		if(topic.isSecret()){
-			model.addAttribute("isSecret", "none" );
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
+		FullTopic topic = request.getFullTopic(idTopic);
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
+		if(topic.isSecret()){
+			model.addAttribute("isSecret", "none" );
+			model.addAttribute("modality", "Privado" );
+		}
+		else{
+			model.addAttribute("modality", "Semipúblico" );
+		}
+		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+			model.addAttribute("voted", "block");
+			model.addAttribute("displayVote", "none");
+		}
+		else{
+			
+			model.addAttribute("voted", "none");
+			model.addAttribute("displayVote", "block");
+		}
+		
 		return "topic-simple";
 	}
 	
@@ -81,6 +95,10 @@ public class TopicsController {
 		FullTopic topic = request.getFullTopic(idTopic);
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
+			model.addAttribute("modality", "Privado" );
+		}
+		else{
+			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
 		System.out.println("El voto es :" +vote);
@@ -89,6 +107,7 @@ public class TopicsController {
 		model.addAttribute("topic", topic);
 		switch(vote){
 			case "positive":
+				System.out.println("Se vota positivo");
 				request.postPositiveVote(idTopic);
 				break;
 			case "negative":
@@ -97,6 +116,15 @@ public class TopicsController {
 			case "abstentionism":
 				request.postAbstentionVote(idTopic);
 				break;
+		}
+		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+			model.addAttribute("voted", "block");
+			model.addAttribute("displayVote", "none");
+		}
+		else{
+			
+			model.addAttribute("voted", "none");
+			model.addAttribute("displayVote", "block");
 		}
 			
 		return "topic-simple";
@@ -113,6 +141,10 @@ public class TopicsController {
 		FullTopic topic = request.getFullTopic(idTopic);
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
+			model.addAttribute("modality", "Privado" );
+		}
+		else{
+			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("question", topic.getQuestion());
@@ -120,6 +152,15 @@ public class TopicsController {
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
+		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+			model.addAttribute("voted", "block");
+			model.addAttribute("displayVote", "none");
+		}
+		else{
+			
+			model.addAttribute("voted", "none");
+			model.addAttribute("displayVote", "block");
+		}
 		return "topic-unique";
 	}
 	
@@ -138,6 +179,10 @@ public class TopicsController {
 		FullTopic topic = request.getFullTopic(idTopic);
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
+			model.addAttribute("modality", "Privado" );
+		}
+		else{
+			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("question", topic.getQuestion());
@@ -146,6 +191,15 @@ public class TopicsController {
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
 		request.postUniqueVote(idTopic, Integer.parseInt(idOption));
+		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+			model.addAttribute("voted", "block");
+			model.addAttribute("displayVote", "none");
+		}
+		else{
+			
+			model.addAttribute("voted", "none");
+			model.addAttribute("displayVote", "block");
+		}
 		return "topic-unique";
 	}
 	
@@ -161,6 +215,10 @@ public class TopicsController {
 		FullTopic topic = request.getFullTopic(idTopic);
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
+			model.addAttribute("modality", "Privado" );
+		}
+		else{
+			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("question", topic.getQuestion());
@@ -168,6 +226,15 @@ public class TopicsController {
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
+		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+			model.addAttribute("voted", "block");
+			model.addAttribute("displayVote", "none");
+		}
+		else{
+			
+			model.addAttribute("voted", "none");
+			model.addAttribute("displayVote", "block");
+		}
 		return "topic-multi";
 	}
 	
@@ -186,6 +253,10 @@ public class TopicsController {
 		FullTopic topic = request.getFullTopic(idTopic);
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
+			model.addAttribute("modality", "Privado" );
+		}
+		else{
+			model.addAttribute("modality", "Semipúblico" );
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("question", topic.getQuestion());
@@ -195,6 +266,15 @@ public class TopicsController {
 		model.addAttribute("topic", topic);
 		for(String id : idOption){
 			request.postMultipleVote(idTopic, Integer.parseInt(id));
+		}
+		if(topic.userAlreadyVoted(user.getEmail(), user.getId())){ // Modifica la vista si un usuario ya votó
+			model.addAttribute("voted", "block");
+			model.addAttribute("displayVote", "none");
+		}
+		else{
+			
+			model.addAttribute("voted", "none");
+			model.addAttribute("displayVote", "block");
 		}
 		return "topic-multi";
 	}

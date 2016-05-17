@@ -47,9 +47,9 @@ $(document).ready(function() {
     		$("#secret").val('false');
     		$(this).val('true');
     	}
-    	if(!$(this).is(':checked')){
-    		$(this).val('false');
-    	}
+    	//if(!$(this).is(':checked')){
+    	//	$(this).val('false');
+    	//}
     });
     
     $("#secret").click (function(){
@@ -58,9 +58,9 @@ $(document).ready(function() {
     		$("#semiPublic").val('false');
     		$(this).val('true');
     	}
-    	if(!$(this).is(':checked')){
-    		$(this).val('false');
-    	}
+    	//if(!$(this).is(':checked')){
+    	//	$(this).val('false');
+    	//}
     });
     
     
@@ -76,9 +76,9 @@ $(document).ready(function() {
     		
     		$('#space-selections').hide();
     	}
-    	if(!$(this).is(':checked')){
-    		$(this).val('false');
-    	}
+    	//if(!$(this).is(':checked')){
+    	//	$(this).val('false');
+    	//}
 
     });
     
@@ -118,11 +118,21 @@ $(document).ready(function() {
     	}
     });
     
-    
-    
-    
+
     
 });
+
+
+function confirmForChanges() {
+	  var r = confirm("Do you want to proceed");
+	  if (r) {
+	    alert("Your changes have been saved");
+	  } else {
+	    alert("changes not saved")
+	  }
+	  return r;//if true then submit else don't submit
+}
+
 /*
     $("#myonoffswitch").click( function(){
        if( $(this).is(':checked') ) alert("checked");

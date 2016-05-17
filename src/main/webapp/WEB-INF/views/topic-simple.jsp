@@ -66,14 +66,15 @@
 					  	</table>
 					</div>
 					<h4 class = "vote-topic">Voto</h4>
-					<div class ="space-options-votes">
-						<form action="/demoscratos/forum/${idForum}/topic/${idTopic}/simple" method="POST" >
+					<h3 class = "voted" style="display:${voted};"> Usted ya efectuó el voto en este tema</h3>
+					<div style="display:${displayVote};" class ="space-options-votes">
+						<form  action="/demoscratos/forum/${idForum}/topic/${idTopic}/simple" method="POST" >
 							<button name="vote" value="positive" type="submit" id = "btn-afirmative"  class = "btn btn-options" > <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>
 							<button name="vote" value="negative" type="submit" id = "btn-negative" class = "btn btn-options" ><span class = "glyphicon glyphicon-thumbs-down"></span> Negativo </button>
 							<button name="vote" value="abstentionism" type="submit" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> Abstención</button>
 						</form>
 					</div>
-					
+					<!-- 
 					<div class = "own-argument">
 						<h4>Tus argumentos</h4>
 						<textarea class="form-control" type="textbox" rows = "4" validate ="max-length:4096"></textarea>
@@ -85,6 +86,8 @@
 						<p>Otro argumento argumento</p>
 
 					</div>
+					
+					 -->
 
 				</div>
 

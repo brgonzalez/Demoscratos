@@ -43,4 +43,7 @@ body{
 #none{
 	display:none;
 }
+
+.voted{
+	color: #0B610B;
 }

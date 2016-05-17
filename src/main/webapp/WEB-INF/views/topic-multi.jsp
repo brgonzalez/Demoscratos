@@ -63,8 +63,9 @@
 					  		</tr>
 					  	</table>
 					</div>
+					<h3 class = "voted" style="display:${voted};"> Usted ya efectuó el voto en este tema</h3>
 			
-					<div class="uniqueVote">
+					<div style="display:${displayVote};" class="uniqueVote">
 						<form:form href="/demoscratos/forum/${idForum}/topic/${idTopic}/unique">
 							<h4 class = "description-multi-vote"> ${question} </h4>
 							<div class="checkbox">
