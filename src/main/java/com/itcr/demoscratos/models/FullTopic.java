@@ -12,6 +12,7 @@ public final class FullTopic extends Topic {
 	private String question;
 	private String source;
 	private StringBuffer clauses;
+	private User currentUser;
 	private ArrayList<String> participants = new ArrayList<String>();
 	private ArrayList<String> upvotes = new ArrayList<String>();
 	private ArrayList<String> downvotes = new ArrayList<String>();
@@ -20,7 +21,7 @@ public final class FullTopic extends Topic {
 	private ArrayList<Option> options = new ArrayList<Option>();
 	private ArrayList<Vote> votes = new ArrayList<Vote>();
 
-	public FullTopic(JSONObject json, boolean secret, String type) {
+	public FullTopic(JSONObject json, boolean secret, String type, User currentUser) {
 		super(json, type);
 		setVotable(json.getBoolean("votable"));
 		setSource(json.getString("source"));
@@ -29,7 +30,7 @@ public final class FullTopic extends Topic {
 		setUpvotes(json.getJSONArray("upvotes"));
 		setDownvotes(json.getJSONArray("downvotes"));
 		setAbstentions(json.getJSONArray("abstentions"));
-		setSecret(secret); setType(type); }
+		setSecret(secret); setType(type); setCurrentUser(currentUser); }
 
 	public boolean isVotable() {
 		return votable; }
@@ -64,40 +65,28 @@ public final class FullTopic extends Topic {
 			json = clauses.getJSONObject(index);
 			this.clauses.append(json.getString("markup") + "\n"); } }
 
-	public ArrayList<String> getParticipants() {
-		return participants; }
+	private void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser; }
 
 	private void setParticipants(JSONArray participants) {
 		this.participants.clear();
 		for (int index = 0; index < participants.length(); index ++) {
 			this.participants.add(participants.get(index).toString()); } }
 
-	public ArrayList<String> getUpvotes() {
-		return upvotes; }
-
 	private void setUpvotes(JSONArray upvotes) {
 		this.upvotes.clear();
 		for (int index = 0; index < upvotes.length(); index ++) {
 			this.upvotes.add(upvotes.get(index).toString()); } }
-
-	public ArrayList<String> getDownvotes() {
-		return downvotes; }
 
 	private void setDownvotes(JSONArray downvotes) {
 		this.downvotes.clear();
 		for (int index = 0; index < downvotes.length(); index ++) {
 			this.downvotes.add(downvotes.get(index).toString()); } }
 
-	public ArrayList<String> getAbstentions() {
-		return abstentions; }
-
 	private void setAbstentions(JSONArray abstentions) {
 		this.abstentions.clear();
 		for (int index = 0; index < abstentions.length(); index ++) {
 			this.abstentions.add(abstentions.get(index).toString()); } }
-	
-	public ArrayList<User> getRingMembers() {
-		return ringMembers;	}
 
 	public void setRingMembers(ArrayList<User> ringMembers) {
 		this.ringMembers = ringMembers;	}
@@ -107,75 +96,67 @@ public final class FullTopic extends Topic {
 
 	public void setOptions(ArrayList<Option> options) {
 		this.options = options;	}
-	
-	public ArrayList<Vote> getVote() {
-		return votes; }
 
 	public void setVotes(ArrayList<Vote> votes) {
 		this.votes = votes;	}
 	
-	public boolean userAlreadyVoted(String email, String id) {
-		if (votes.isEmpty()) { return false; }
-		
-		if (!super.getType().equals("simple")) {
-			for (Vote vote : votes) {
-				if (vote.getEmail().equals(email)) {
-					return true; } } }
-		else {
-			for (String vote : upvotes) {
-				if (vote.equals(id)) {
-					return true; } }
-			
-			for (String vote : downvotes) {
-				if (vote.equals(id)) {
-					return true; } }
-			
-			for (String vote : abstentions) {
-				if (vote.equals(id)) {
-					return true; } } }
-		
+	private boolean userAlreadyVotedSimple() {
+		return participants.contains(currentUser.getId()); }
+	
+	private boolean userAlreadyVotedUnique() {
+		for (Vote vote: votes) {
+			if (vote.getEmail().equals(currentUser.getEmail())) {
+				return true; } }
 		return false; }
 	
-	private String getStringOption(int id) {
-		for (Option option: options) {
-			if (option.getId() == id)
-				return option.getOption(); }
-		return ""; }	
+	public boolean userAlreadyVoted(int option) {
+		for (Vote vote: votes) {
+			if ( (vote.getEmail().equals(currentUser.getEmail()))
+					&& (vote.getOption().getId() == option)) {
+				return true; } }
+		return false; }
 	
-	public ArrayList<Vote> getVisibleVotes() {
-		ArrayList<Vote> visibleVotes = new ArrayList<Vote>();
-		if (!ringMembers.isEmpty()) {
-			if (!super.getType().equals("simple")) {
-				for (User user : ringMembers) {
-					for (Vote vote: votes) {
-						if (vote.getEmail().equals(user.getEmail())) {
-							vote.setStringOption(getStringOption(vote.getOption()));
-							visibleVotes.add(vote); } } } }
-			else {
-				for (User user : ringMembers) {
-					for (String vote: upvotes) {
-						if (vote.equals(user.getId())) {
-							Vote new_vote = new Vote(0, super.getId(), user.getEmail());
-							new_vote.setStringOption("positive"); 
-							visibleVotes.add(new_vote); } } }
-				for (User user : ringMembers) {
-					for (String vote: downvotes) {
-						if (vote.equals(user.getId())) {
-							Vote new_vote = new Vote(1, super.getId(), user.getEmail());
-							new_vote.setStringOption("negative"); 
-							visibleVotes.add(new_vote); } } }
-				for (User user : ringMembers) {
-					for (String vote: abstentions) {
-						if (vote.equals(user.getId())) {
-							Vote new_vote = new Vote(2, super.getId(), user.getEmail());
-							new_vote.setStringOption("abstention"); 
-							visibleVotes.add(new_vote); } } } }	}
-		
-		return visibleVotes; } 
+	public boolean userAlreadyVoted() {
+		if (super.getType().equals("simple")) {
+			return userAlreadyVotedSimple(); }
+		else {
+			return userAlreadyVotedUnique(); } }
+	
+	private ArrayList<VisibleVote> getVisibleVotesSimple() {
+		ArrayList<VisibleVote> votes = new ArrayList<VisibleVote>();
+		Option option;
+		for (User user : ringMembers) {
+			if (upvotes.contains(user.getId())) {
+				option = new Option(1, super.getId(), "positive");
+				votes.add(new VisibleVote(option, user)); }
+			else if (downvotes.contains(user.getId())) {
+				option = new Option(0, super.getId(), "negative");
+				votes.add(new VisibleVote(option, user)); }
+			else if (abstentions.contains(user.getId())) {
+				option = new Option(-1, super.getId(), "abstention");
+				votes.add(new VisibleVote(option, user)); } }
+		return votes; }
+	
+	private ArrayList<VisibleVote> getVisibleVotesOther() {
+		ArrayList<VisibleVote> vvotes = new ArrayList<VisibleVote>();
+		Option option;
+		for (User user : ringMembers) {
+			for (Vote vote : votes) {
+				if (vote.getEmail().equals(user.getEmail())) {
+					option = vote.getOption();
+					vvotes.add(new VisibleVote(option, user)); } } } 
+		return vvotes; }
+	
+	public ArrayList<VisibleVote> getVisibleVotes() {
+		if (super.getType().equals("simple")) {
+			return getVisibleVotesSimple(); }
+		else {
+			return getVisibleVotesOther(); } }
 
 	@Override
 	public String toString() {
 		return super.toString()
 				+ "FullTopic [votable=" + votable + ", secret=" + secret + ", question=" + question + ", source=" + source
-				+ ", clauses=" + clauses + ", participants=" + participants + ", upvotes=" + upvotes + ", downvotes="
-				+ downvotes + ", abstentions=" + abstentions + ", options=" + options + ", votes=" + votes + "]"; } }
+				+ ", clauses=" + clauses + ", currentUser=" + currentUser + ", participants=" + participants
+				+ ", upvotes=" + upvotes + ", downvotes=" + downvotes + ", abstentions=" + abstentions
+				+ ", ringMembers=" + ringMembers + ", options=" + options + ", votes=" + votes + "]"; } }

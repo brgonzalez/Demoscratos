@@ -107,7 +107,7 @@ public final class RequestController {
 		JSONObject json = new JSONObject(client.getOutput());
 		String type = database.selectTopicAttr(idTopic, "type");
 		String secret = database.selectTopicAttr(idTopic, "private");
-		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type);
+		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type, currentUser);
 		ArrayList<String> ringEmails = database.selectRingMembers(currentUser.getEmail());
 		ArrayList<User> ringUsers = new ArrayList<User>();
 		if (!ringEmails.isEmpty()) {
@@ -117,10 +117,7 @@ public final class RequestController {
 		if (!fullTopic.getType().equals("simple")) {
 			fullTopic.setQuestion(database.selectTopicAttr(idTopic, "question"));
 			fullTopic.setOptions(database.selectOptions(idTopic));
-			if (fullTopic.getType().equals("multiple")) {
-				fullTopic.setVotes(database.selectMultipleVotes(idTopic)); }
-			if (fullTopic.getType().equals("unique")) {
-				fullTopic.setVotes(database.selectUniqueVotes(idTopic)); } }
+			fullTopic.setVotes(database.selectVotes(idTopic, type)); }
 		return fullTopic; }
 	
 	public User getUserByEmail(String email) {
@@ -159,7 +156,7 @@ public final class RequestController {
 		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
 		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
 		JSONObject object = new JSONObject(client.getOutput());
-		FullTopic fullTopic = new FullTopic(object, secret, type);
+		FullTopic fullTopic = new FullTopic(object, secret, type, currentUser);
 		String idTopic = fullTopic.getId();
 		client.postHttpRequest(Resource.TOPIC.publish(idTopic), "");
 		mongodb.updateTopic(idTopic, idForum);
