@@ -22,6 +22,7 @@ import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.models.Vote;
+import com.itcr.demoscratos.services.Messages;
 import com.itcr.demoscratos.services.ServiceDate;
 
 @Controller
@@ -43,6 +44,16 @@ public class TopicsController {
 		ArrayList<Topic> topics = request.getTopics(key);
 		model.addAttribute("idForum",key);
 		if(topics.size() > 0){
+			for(Topic topic : topics){
+				
+				ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+				if(serviceDate.isClose()){
+					topic.setClosingAt("Cerrado");
+				}
+				else{
+					topic.setClosingAt(serviceDate.getCloseDate());
+				}
+			}
 			model.addAttribute("topics",topics);
 		}
 
@@ -441,12 +452,3 @@ public class TopicsController {
 		return "redirect:/forum/"+idForum;
 	}
 }
-
-
-
-
-
-
-
-
-

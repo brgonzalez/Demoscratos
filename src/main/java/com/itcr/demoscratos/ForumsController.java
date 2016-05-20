@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Forum;
 import com.itcr.demoscratos.models.User;
+import com.itcr.demoscratos.services.Messages;
 
 /*
  * 			Controlador para la vista forums

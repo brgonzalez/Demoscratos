@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.User;
+import com.itcr.demoscratos.services.Messages;
 
 
 @Controller

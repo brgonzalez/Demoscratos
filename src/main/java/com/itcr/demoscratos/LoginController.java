@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itcr.demoscratos.api.RequestController;
+import com.itcr.demoscratos.services.Messages;
 
 @Controller
 public class LoginController {
 	
 	private Messages messages = new Messages();
 	private RequestController request = RequestController.getInstance();
-	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String logedIn(Locale locale, Model model) {

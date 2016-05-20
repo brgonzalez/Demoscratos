@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
+import com.itcr.demoscratos.services.Messages;
 
 /*
  * 			Controlador para admin

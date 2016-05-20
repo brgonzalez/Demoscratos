@@ -1,9 +1,9 @@
-package com.itcr.demoscratos;
+package com.itcr.demoscratos.services;
 
 public class Messages {
 	
 	public String userLoggedIn(){
-		return "Usuario ya está conectado";
+		return "El usuario no está autentificado";
 	}
 	
 	public String login(){
