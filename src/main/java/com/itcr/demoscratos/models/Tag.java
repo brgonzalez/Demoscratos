@@ -21,4 +21,8 @@ public final class Tag {
 		return name; }
 
 	public void setName(String name) {
-		this.name = name; } }
+		this.name = name; }
+
+	@Override
+	public String toString() {
+		return "Tag [id=" + id + ", name=" + name + "]"; } }

@@ -148,10 +148,14 @@ public final class FullTopic extends Topic {
 		return vvotes; }
 	
 	public ArrayList<VisibleVote> getVisibleVotes() {
-		if (super.getType().equals("simple")) {
-			return getVisibleVotesSimple(); }
+		if (!secret) { 
+			if (super.getType().equals("simple")) {
+				return getVisibleVotesSimple(); }
+			else {
+				return getVisibleVotesOther(); } }
 		else {
-			return getVisibleVotesOther(); } }
+			System.err.println("No es posible obtener los votos puesto que el tema es secreto");
+			return new ArrayList<VisibleVote>(); } }
 
 	@Override
 	public String toString() {

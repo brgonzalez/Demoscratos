@@ -159,9 +159,8 @@ public final class RequestController {
 		FullTopic fullTopic = new FullTopic(object, secret, type, currentUser);
 		String idTopic = fullTopic.getId();
 		client.postHttpRequest(Resource.TOPIC.publish(idTopic), "");
-		mongodb.updateTopic(idTopic, idForum);
-		database.insertTopic(idTopic,  String.valueOf(secret),type);
-		if (flag) { deleteForum("temporal"); }
+		database.insertTopic(idTopic, String.valueOf(secret), type);
+		if (flag) { mongodb.updateTopic(idTopic, idForum); deleteForum("temporal"); }
 		return idTopic; }
 	
 	private boolean isThereOwnForum() {
