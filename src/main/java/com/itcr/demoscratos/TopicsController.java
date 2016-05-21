@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.FullTopic;
+import com.itcr.demoscratos.models.Option;
 import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
+import com.itcr.demoscratos.models.VisibleVote;
 import com.itcr.demoscratos.models.Vote;
 import com.itcr.demoscratos.services.Messages;
 import com.itcr.demoscratos.services.ServiceDate;
@@ -81,7 +83,7 @@ public class TopicsController {
 		
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
-		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		boolean isVoted =topic.userAlreadyVoted();
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
@@ -108,7 +110,7 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
-			ArrayList<Vote> votes = topic.getVisibleVotes();
+			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
@@ -131,7 +133,7 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
-			ArrayList<Vote> votes = topic.getVisibleVotes();
+			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
@@ -139,7 +141,7 @@ public class TopicsController {
 
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
-		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		boolean isVoted =topic.userAlreadyVoted();
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
@@ -192,7 +194,7 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
-			ArrayList<Vote> votes = topic.getVisibleVotes();
+			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
@@ -204,7 +206,13 @@ public class TopicsController {
 		model.addAttribute("topic", topic);
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
-		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		boolean isVoted = false;
+		for(Option o : topic.getOptions()){
+			if (topic.userAlreadyVoted(o.getId())){
+				isVoted = true;
+				break;
+			}
+		}
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
@@ -243,7 +251,7 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
-			ArrayList<Vote> votes = topic.getVisibleVotes();
+			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
@@ -256,7 +264,13 @@ public class TopicsController {
 		request.postUniqueVote(idTopic, Integer.parseInt(idOption));
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
-		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		boolean isVoted = false;
+		for(Option o : topic.getOptions()){
+			if (topic.userAlreadyVoted(o.getId())){
+				isVoted = true;
+				break;
+			}
+		}
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
@@ -292,7 +306,7 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
-			ArrayList<Vote> votes = topic.getVisibleVotes();
+			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
@@ -304,7 +318,13 @@ public class TopicsController {
 		model.addAttribute("topic", topic);
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
-		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		boolean isVoted = false;
+		for(Option o : topic.getOptions()){
+			if (topic.userAlreadyVoted(o.getId())){
+				isVoted = true;
+				break;
+			}
+		}
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
@@ -343,7 +363,7 @@ public class TopicsController {
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
-			ArrayList<Vote> votes = topic.getVisibleVotes();
+			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
@@ -358,7 +378,13 @@ public class TopicsController {
 		}
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
-		boolean isVoted =topic.userAlreadyVoted(user.getEmail(), user.getId());
+		boolean isVoted = false;
+		for(Option o : topic.getOptions()){
+			if (topic.userAlreadyVoted(o.getId())){
+				isVoted = true;
+				break;
+			}
+		}
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
