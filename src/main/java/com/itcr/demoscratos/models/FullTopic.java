@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.itcr.demoscratos.api.RequestController;
+
 public final class FullTopic extends Topic {
 	
 	private boolean votable;
@@ -141,7 +143,14 @@ public final class FullTopic extends Topic {
 			if (option.getId() == id)
 				return option.getOption(); }
 		return ""; }	
-	
+	public ArrayList<Vote> getVotesSimplesVisibles(){
+		RequestController rc = RequestController.getInstance();
+		FullTopic t = rc.getFullTopic("573b1565c7eba5847691f1e3");
+		System.out.println(t.upvotes);
+		ArrayList<Vote> visibleVotes = new ArrayList<Vote>();
+		return visibleVotes;
+
+	}
 	public ArrayList<Vote> getVisibleVotes() {
 		ArrayList<Vote> visibleVotes = new ArrayList<Vote>();
 		if (!ringMembers.isEmpty()) {
@@ -178,4 +187,13 @@ public final class FullTopic extends Topic {
 		return super.toString()
 				+ "FullTopic [votable=" + votable + ", secret=" + secret + ", question=" + question + ", source=" + source
 				+ ", clauses=" + clauses + ", participants=" + participants + ", upvotes=" + upvotes + ", downvotes="
-				+ downvotes + ", abstentions=" + abstentions + ", options=" + options + ", votes=" + votes + "]"; } }
+				+ downvotes + ", abstentions=" + abstentions + ", options=" + options + ", votes=" + votes + "]"; } 
+	
+	public static void main(String[] args){
+		RequestController rc = RequestController.getInstance();
+		rc.signIn("brarigoch@gmail.com", "12345678");
+		FullTopic t = rc.getFullTopic("573b1565c7eba5847691f1e3");
+		System.out.println(t.upvotes);
+	}
+
+}
