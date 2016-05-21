@@ -145,7 +145,7 @@
 					
 					
 			       
-			        <button onSubmit="alert('Thank you for your feedback.');" type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
+			        <button onSubmit="alert('Operación existosa.');" type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
 			         
 			        <script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
 					<script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/bootstrap/js/bootstrap.min.js"></script>

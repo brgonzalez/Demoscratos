@@ -74,34 +74,18 @@ public final class DataBaseController {
 		catch (SQLException e) { e.printStackTrace(); } 
 		return options; }
 	
-	public ArrayList<Vote> selectMultipleVotes(String topicId) {
+	public ArrayList<Vote> selectVotes(String topicId, String type) {
 		connection.connect();
-		String query = "SELECT * FROM multiple_votes WHERE topic='"+ topicId +"'";
+		String query = "SELECT t1.id, t1.opt, t2.email FROM options AS t1, (SELECT * FROM "+type+"_votes WHERE topic = '"+topicId+"') AS t2 WHERE t1.id = t2.opt";
 		ResultSet result = connection.executeQuery(query);
 		ArrayList<Vote> votes = new ArrayList<Vote>();
-		String topic = topicId;
-		String email; int option;
+		String email, option; int id;
 		try {
 			while (result.next()) {
-				option = result.getInt("opt");
+				id = result.getInt("id");
+				option = result.getString("opt");
 				email = result.getString("email");
-				votes.add(new Vote(option, topic, email)); }
-			connection.disconnect(); }
-		catch (SQLException e) { e.printStackTrace(); } 
-		return votes; }
-	
-	public ArrayList<Vote> selectUniqueVotes(String topicId) {
-		connection.connect();
-		String query = "SELECT * FROM unique_votes WHERE topic='"+ topicId +"'";
-		ResultSet result = connection.executeQuery(query);
-		ArrayList<Vote> votes = new ArrayList<Vote>();
-		String topic = topicId;
-		String email; int option;
-		try {
-			while (result.next()) {
-				option = result.getInt("opt");
-				email = result.getString("email");
-				votes.add(new Vote(option, topic, email)); }
+				votes.add(new Vote(new Option(id, topicId, option), email)); }
 			connection.disconnect(); }
 		catch (SQLException e) { e.printStackTrace(); } 
 		return votes; }

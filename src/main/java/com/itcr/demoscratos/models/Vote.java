@@ -2,38 +2,26 @@ package com.itcr.demoscratos.models;
 
 public final class Vote {
 	
-	private int option;
-	private String topic;
+	private Option option;
 	private String email;
-	private String stringOption;
 		
-	public Vote(int option, String topic, String email) {
-		setOption(option); setTopic(topic); setEmail(email); }
+	public Vote(Option option, String email) {
+		setOption(option); setEmail(email); }
 
-	public int getOption() {
+	public Option getOption() {
 		return option; }
 
-	public void setOption(int option) {
+	public void setOption(Option option) {
 		this.option = option; }
-
-	public String getTopic() {
-		return topic; }
-
-	public void setTopic(String topic) {
-		this.topic = topic; }
 
 	public String getEmail() {
 		return email; }
 
 	public void setEmail(String email) {
-		this.email = email;	}
-	
-	public String getStringOption() {
-		return stringOption; }
-
-	public void setStringOption(String stringOption) {
-		this.stringOption = stringOption; }
+		this.email = email; }
 
 	@Override
 	public String toString() {
-		return "Vote [option=" + option + ", topic=" + topic + ", email=" + email + "]"; } }
+		return "Vote [option=" + option.toString() + ", email=" + email + "]"; } }
+	
+	
