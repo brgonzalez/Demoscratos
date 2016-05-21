@@ -110,9 +110,12 @@ public final class RequestController {
 		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type, currentUser);
 		ArrayList<String> ringEmails = database.selectRingMembers(currentUser.getEmail());
 		ArrayList<User> ringUsers = new ArrayList<User>();
+		System.out.println("Ring from before "+ringEmails);
+
 		if (!ringEmails.isEmpty()) {
 			for (String email : ringEmails) {
 				ringUsers.add(getUserByEmail(email)); }	}
+		System.out.println("Ring from request "+ringUsers);
 		fullTopic.setRingMembers(ringUsers);
 		if (!fullTopic.getType().equals("simple")) {
 			fullTopic.setQuestion(database.selectTopicAttr(idTopic, "question"));
@@ -144,7 +147,7 @@ public final class RequestController {
 		User member2 = getUserByEmail(email2);
 		User member3 = getUserByEmail(email3);
 		if (checkRing(member1, member2, member3)) {
-			database.updateRing(currentUser.getId(), member1.getEmail(), member2.getEmail(), member3.getEmail()); } }
+			database.updateRing(currentUser.getEmail(), member1.getEmail(), member2.getEmail(), member3.getEmail()); } }
 	
 	public String postTopic(String idForum, String title, String tag, String closingAt, String source, String content, boolean votable, boolean secret) {
 		String type = "simple";
