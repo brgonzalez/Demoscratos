@@ -14,6 +14,7 @@ import com.itcr.demoscratos.db.DataBaseController;
 import com.itcr.demoscratos.models.Api;
 import com.itcr.demoscratos.models.Forum;
 import com.itcr.demoscratos.models.FullTopic;
+import com.itcr.demoscratos.models.Report;
 import com.itcr.demoscratos.models.Ring;
 import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
@@ -110,12 +111,9 @@ public final class RequestController {
 		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type, currentUser);
 		ArrayList<String> ringEmails = database.selectRingMembers(currentUser.getEmail());
 		ArrayList<User> ringUsers = new ArrayList<User>();
-		System.out.println("Ring from before "+ringEmails);
-
 		if (!ringEmails.isEmpty()) {
 			for (String email : ringEmails) {
 				ringUsers.add(getUserByEmail(email)); }	}
-		System.out.println("Ring from request "+ringUsers);
 		fullTopic.setRingMembers(ringUsers);
 		if (!fullTopic.getType().equals("simple")) {
 			fullTopic.setQuestion(database.selectTopicAttr(idTopic, "question"));
@@ -141,6 +139,13 @@ public final class RequestController {
 		else {
 			System.err.println("El usuario actual aún no ha definido un anillo de confianza.");	}
 		return users; }
+	
+	public Report getReport(String idTopic) {
+		FullTopic topic = getFullTopic(idTopic);
+		if (topic.getType().equals("simple")) {
+			return topic.getReportSimple(); }
+		else {
+			return database.selectReport(topic.getId(), topic.getType()); }	}
 		
 	public void postRing(String email1, String email2, String email3) {
 		User member1 = getUserByEmail(email1);

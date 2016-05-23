@@ -31,6 +31,20 @@ public final class FullTopic extends Topic {
 		setDownvotes(json.getJSONArray("downvotes"));
 		setAbstentions(json.getJSONArray("abstentions"));
 		setSecret(secret); setType(type); setCurrentUser(currentUser); }
+	
+	public Report getReportSimple() {
+		int totalParticipants = participants.size();
+		Option optionPositive = new Option(1, super.getId(), "positive");
+		Option optionNegative = new Option(0, super.getId(), "negative");
+		Option optionAbstention = new Option(-1, super.getId(), "abstention");
+		TotalVotes totalPositive = new TotalVotes(optionPositive, upvotes.size());
+		TotalVotes totalNegative = new TotalVotes(optionNegative, downvotes.size());
+		TotalVotes totalAbstention = new TotalVotes(optionAbstention, abstentions.size());
+		ArrayList<TotalVotes> totalVotes = new ArrayList<TotalVotes>();
+		totalVotes.add(totalPositive);
+		totalVotes.add(totalNegative);
+		totalVotes.add(totalAbstention);
+		return new Report(totalParticipants, totalVotes); }
 
 	public boolean isVotable() {
 		return votable; }
