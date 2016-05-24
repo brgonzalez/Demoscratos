@@ -6,8 +6,6 @@
 	<head>
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/semantic/dist/semantic.min.css">
-		<script src="/demoscratos/resources/semantic/dist/semantic.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/topics.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">
