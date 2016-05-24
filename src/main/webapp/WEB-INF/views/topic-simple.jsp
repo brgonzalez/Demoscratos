@@ -50,13 +50,16 @@
 					  	<table class="table">
 					  		<tr>
 					  			<th>Correo</th>
+					  			<th>Nombre</th>
 					  			<th>Voto</th>
 					  		</tr>
 					  		<c:forEach var="vote" items="${votes}">
 					  		
 						  		<tr>
-						  			<th>${vote.email }</th>
-						  			<th>${vote.stringOption }</th>
+						  			<th>${vote.user.email }</th>
+						  			<th>${vote.user.name }</th>
+						  			<th>${vote.option.option }</th>
+						  			
 						  		</tr>
 						  	</c:forEach>
 						  		

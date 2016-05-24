@@ -33,13 +33,10 @@
 
 		<div class = "container">
 
-			<div class= "col-xs-1 col-sm-1 col-md-2 col-lg-3">
-			</div>
-
-			<div id ="container-forums" class ="container-forums col-xs-10 col-sm-10 col-md-8 col-lg-6">
+			<div id ="container-forums" class ="container-forums col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<ul>
 					<li>
-						<a href="admin/tags" method ="POST">
+						<a href="admin/tags" method ="POST" class ="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								
 							<div class = "admin" >
 	
@@ -51,7 +48,19 @@
 	
 							</div>
 						</a>
-						<a href="admin/topics" method ="POST">
+						<a href="admin/forums" method ="POST" class ="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								
+							<div class = "admin" >
+	
+								<h4>Gestión de democracias</h4>
+									
+								<hr>
+									
+								<p>En una democracia se puden crear un conjunto de temas relacionados</p>
+	
+							</div>
+						</a>
+						<a href="admin/topics" method ="POST" class ="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								
 							<div class = "admin" >
 	
@@ -63,14 +72,24 @@
 	
 							</div>
 						</a>
+						<a href="admin/topics" method ="POST" class ="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								
+							<div class = "admin" >
+	
+								<h4>Reportes</h4>
+									
+								<hr>
+									
+								<p>Se puede realizar un reporte de los temas para mejor visualización de resultados</p>
+	
+							</div>
+						</a>
 					</li>
 				</ul>
 
 				
 			</div>
 		
-			<div class= "col-xs-1 col-sm-1 col-md-2 col-lg-3">
-			</div>
 
 		</div>
 

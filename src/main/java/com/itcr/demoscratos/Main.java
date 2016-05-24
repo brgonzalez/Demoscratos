@@ -3,6 +3,7 @@ package com.itcr.demoscratos;
 import java.util.ArrayList;
 
 import com.itcr.demoscratos.api.RequestController;
+import com.itcr.demoscratos.models.FullTopic;
 
 public abstract class Main {
 
@@ -12,5 +13,11 @@ public abstract class Main {
 		System.out.println("Hello World!");
 		// Ejemplo:
 		RequestController rc = new RequestController();
-		rc.signIn("brarigoch@gmail.com", "12345678");
-		rc.postNegativeVote("573ab500c7eba5847691f1d1"); } }
+		rc.signIn("alvaradof620@gmail.com", "12345678");
+		FullTopic t =rc.getFullTopic("57408751566b08414b1c4bf4");
+
+
+
+
+	}
+}
