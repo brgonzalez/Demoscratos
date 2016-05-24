@@ -177,7 +177,7 @@ public class TopicsController {
 				break;
 		}
 			
-		return "topic-simple";
+		return "redirect:/forum/"+idForum;
 	}
 	
 	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique" , method = RequestMethod.GET)
@@ -288,7 +288,7 @@ public class TopicsController {
 			model.addAttribute("displayVote", "block");
 			model.addAttribute("close", serviceDate.getCloseDate());
 		}
-		return "topic-unique";
+		return "redirect:/forum/"+idForum;
 	}
 	
 	
@@ -402,7 +402,7 @@ public class TopicsController {
 			model.addAttribute("displayVote", "block");
 			model.addAttribute("close", serviceDate.getCloseDate());
 		}
-		return "topic-multi";
+		return "redirect:/forum/"+idForum;
 	}
 	
 	@RequestMapping(value = "forum/{idForum}/topic/new" , method = RequestMethod.GET)
@@ -412,6 +412,8 @@ public class TopicsController {
 			return "redirect:/login";
 		}
 		model.addAttribute("idForum", idForum);
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
 
 		ArrayList<Tag> tags = request.getTags();
 		model.addAttribute("tags",tags);
@@ -444,19 +446,12 @@ public class TopicsController {
 		model.addAttribute("idForum", idForum);
 		ArrayList<Tag> tags = request.getTags();
 		model.addAttribute("tags",tags);
-		System.out.println(title);
-		System.out.println(tag);
-		System.out.println("Votable"+votablex);
-		System.out.println("Secret:"+secretx);
-		System.out.println("Semipublic"+semipublicx);
-		System.out.println("Simple"+simplex);
-		System.out.println("Selection"+selectionx);
-		System.out.println("Multiselection"+multiselectionx);
-		System.out.println(options);
+		
 		boolean simple = Boolean.valueOf(simplex);
 		boolean votable = Boolean.valueOf(votablex);
 		boolean secret = Boolean.valueOf(secretx);
 		boolean multiple = Boolean.valueOf(multiselectionx);
+		System.out.println("Pregunta desde controllador"+ question);
 
 		String[] splitDate = closingAt.split(" ");
 		closingAt = splitDate[0]+"T"+splitDate[1]+".000Z";

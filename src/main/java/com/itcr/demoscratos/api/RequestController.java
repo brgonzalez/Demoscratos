@@ -130,7 +130,7 @@ public final class RequestController {
 			
 	public ArrayList<User> getRing() {
 		ArrayList<User> users = new ArrayList<User>(); 
-		Ring ring = database.selectRing(currentUser.getId());
+		Ring ring = database.selectRing(currentUser.getEmail());
 		if (ring != null) {	
 			User member1 = getUserByEmail(ring.getMember1());
 			User member2 = getUserByEmail(ring.getMember2());

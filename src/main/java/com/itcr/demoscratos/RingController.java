@@ -32,6 +32,7 @@ public class RingController {
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		ArrayList<User> members = request.getRing();
+		System.out.println(members);
 		if(members.size() > 0){
 			model.addAttribute("member1", members.get(0));
 			model.addAttribute("member2",  members.get(1) );

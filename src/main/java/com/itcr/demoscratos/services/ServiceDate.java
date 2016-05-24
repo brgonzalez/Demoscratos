@@ -43,6 +43,9 @@ public class ServiceDate {
 			}
 			return "Cierra en "+hours+" horas";
 		}
-		return "Cierra en "+minutes+ " minutos";
+		if( minutes == 0){
+			return "Cerrado";
+		}
+		return "Cierra en "+minutes + " minutos";
 	}
 }

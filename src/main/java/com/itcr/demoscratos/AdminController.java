@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
+import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.services.Messages;
+import com.itcr.demoscratos.services.ServiceDate;
 
 /*
  * 			Controlador para admin
@@ -34,6 +36,27 @@ public class AdminController {
 		return "admin";
 	}
 	
+	@RequestMapping(value = "/admin/forums " , method = RequestMethod.GET)
+	public String displayTopiscForum(Locale locale, Model model,@PathVariable(value="idForum") String idForum) {
+
+		ArrayList<Topic> topics = request.getTopics(idForum);
+		model.addAttribute("idForum",idForum);
+		if(topics.size() > 0){
+			for(Topic topic : topics){
+				
+				ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+				if(serviceDate.isClose()){
+					topic.setClosingAt("Cerrado");
+				}
+				else{
+					topic.setClosingAt(serviceDate.getCloseDate());
+				}
+			}
+			model.addAttribute("topics",topics);
+		}
+		return "admin-forums";
+	}
+	
 	@RequestMapping(value = "/admin/tags" , method = RequestMethod.GET)
 	public String getTags(Locale locale, Model model) {		
 		ArrayList<Tag> tags = request.getTags();
@@ -46,16 +69,6 @@ public class AdminController {
 		model.addAttribute("tags", tags );
 		return "admin-tags";
 	}
-	@RequestMapping(value = "/admin/tags/delete" , method = RequestMethod.POST)
-	public String deleteTag(Locale locale,@PathVariable(value="idTag") String idTag,Model model) {		
-		ArrayList<Tag> tags = request.getTags();
-		model.addAttribute("tags", tags );
-		return "admin-tags";
-	}
-	@RequestMapping(value = "/admin/topics" , method = RequestMethod.GET)
-	public String getTopicsToPublish(Locale locale, Model model) {		
-		ArrayList<Topic> topics = null;
-		model.addAttribute("topics", topics );
-		return "admin-topics";
-	}
+
+
 }

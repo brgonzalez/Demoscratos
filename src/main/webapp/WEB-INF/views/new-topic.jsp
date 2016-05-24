@@ -58,19 +58,19 @@
 						<textarea name= "content" class="form-control" type="textbox" rows = "4" validate ="max-length:4096" required></textarea>
 					</fieldset>
 					
-					<fieldset class="form-group">
+					<fieldset style ="display: none;" class="form-group">
 				    	<label>URL del tema</label>
-				    	<input type="text" class="form-control" name ="source" placeholder="Url del tema">
+				    	<input type="text" class="form-control" name ="source" placeholder="Url del tema" value="http://democracyos.org/">
 					</fieldset>
 					<fieldset>
 			            <div class="form-group">
 			                <label>Fecha de cierre</label>
 			                <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy- HH:ii p" data-link-field="dtp_input1">
-			                    <input class="form-control" size="16" type="text" value="" readonly>
+			                    <input class="form-control" size="16" type="text" value="" required>
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
 			                </div>
-							<input type="hidden" name="closingAt" id="dtp_input1" value="" /><br/>
+							<input type="hidden" name="closingAt" id="dtp_input1" value="" required/><br/>
 			            </div>
 			
         			</fieldset>
