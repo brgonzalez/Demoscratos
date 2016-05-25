@@ -34,9 +34,9 @@ public final class FullTopic extends Topic {
 	
 	public Report getReportSimple() {
 		int totalParticipants = participants.size();
-		Option optionPositive = new Option(1, super.getId(), "positive");
-		Option optionNegative = new Option(0, super.getId(), "negative");
-		Option optionAbstention = new Option(-1, super.getId(), "abstention");
+		Option optionPositive = new Option(1, super.getId(), "positivo");
+		Option optionNegative = new Option(0, super.getId(), "negativo");
+		Option optionAbstention = new Option(-1, super.getId(), "abstención");
 		TotalVotes totalPositive = new TotalVotes(optionPositive, upvotes.size());
 		TotalVotes totalNegative = new TotalVotes(optionNegative, downvotes.size());
 		TotalVotes totalAbstention = new TotalVotes(optionAbstention, abstentions.size());
@@ -119,13 +119,13 @@ public final class FullTopic extends Topic {
 	
 	private boolean userAlreadyVotedUnique() {
 		for (Vote vote: votes) {
-			if (vote.getEmail().equals(currentUser.getEmail())) {
+			if (vote.getUserEmail().equals(currentUser.getEmail())) {
 				return true; } }
 		return false; }
 	
 	public boolean userAlreadyVoted(int option) {
 		for (Vote vote: votes) {
-			if ( (vote.getEmail().equals(currentUser.getEmail()))
+			if ( (vote.getUserEmail().equals(currentUser.getEmail()))
 					&& (vote.getOption().getId() == option)) {
 				return true; } }
 		return false; }
@@ -156,7 +156,7 @@ public final class FullTopic extends Topic {
 		Option option;
 		for (User user : ringMembers) {
 			for (Vote vote : votes) {
-				if (vote.getEmail().equals(user.getEmail())) {
+				if (vote.getUserEmail().equals(user.getEmail())) {
 					option = vote.getOption();
 					vvotes.add(new VisibleVote(option, user)); } } } 
 		return vvotes; }

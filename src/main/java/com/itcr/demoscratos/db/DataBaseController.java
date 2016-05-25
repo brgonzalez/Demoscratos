@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.itcr.demoscratos.models.GivenVote;
 import com.itcr.demoscratos.models.Option;
 import com.itcr.demoscratos.models.Report;
 import com.itcr.demoscratos.models.Ring;
@@ -92,6 +93,21 @@ public final class DataBaseController {
 		catch (SQLException e) { e.printStackTrace(); } 
 		return votes; }
 	
+	public ArrayList<GivenVote> selectGivenVotes(String topicId) {
+		connection.connect();
+		String query = "SELECT t1.email_user, t1.email_member FROM (SELECT * FROM given_votes WHERE topic = '"+topicId+"') AS t1 WHERE t1.opt IS NULL";
+		ResultSet result = connection.executeQuery(query);
+		ArrayList<GivenVote> votes = new ArrayList<GivenVote>();
+		String userEmail, memberEmail;
+		try {
+			while (result.next()) {
+				userEmail = result.getString("email_user");
+				memberEmail = result.getString("email_member");
+				votes.add(new GivenVote(new Option(0, topicId, ""), userEmail, memberEmail)); }
+			connection.disconnect(); }
+		catch (SQLException e) { e.printStackTrace(); } 
+		return votes; }
+	
 	public Report selectReport(String topicId, String type) {
 		connection.connect();
 		String query = "SELECT t2.id, t2.opt, t1.cnt FROM (SELECT opt, count(*) as 'cnt' FROM "+type+"_votes WHERE topic = '"+topicId+"' GROUP BY opt) AS t1, options AS t2 WHERE t2.id = t1.opt";
@@ -136,6 +152,18 @@ public final class DataBaseController {
 	public void insertTopic(String topicId, String secret, String type) {
 		connection.connect();
 		String query = "INSERT INTO topics(id, private, type) VALUES('"+topicId+"', '"+secret+"', '"+type+"')";
+		connection.executeUpdate(query);
+		connection.disconnect(); }
+	
+	public void insertGivenVote(String topicId, String userEmail, String memberEmail) {
+		connection.connect();
+		String query = "INSERT INTO given_votes(topic, email_user, email_member) VALUES ('"+topicId+"', '"+userEmail+"', '"+memberEmail+"')";
+		connection.executeUpdate(query);
+		connection.disconnect(); }
+	
+	public void updateGivenVote(String topicId, int optionId) {
+		connection.connect();
+		String query = "UPDATE given_votes SET opt = "+optionId+" WHERE topic = '"+topicId+"'";
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	

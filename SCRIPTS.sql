@@ -41,3 +41,9 @@ CREATE TABLE unique_votes (
     FOREIGN KEY (topic) 
         REFERENCES topics(id)
         ON DELETE CASCADE);
+
+CREATE TABLE given_votes (
+    topic varchar(30) NOT NULL,
+	opt INT, 
+    email_user varchar(30) NOT NULL,
+    email_member varchar(30) NOT NULL);

@@ -14,6 +14,7 @@ import com.itcr.demoscratos.db.DataBaseController;
 import com.itcr.demoscratos.models.Api;
 import com.itcr.demoscratos.models.Forum;
 import com.itcr.demoscratos.models.FullTopic;
+import com.itcr.demoscratos.models.GivenVote;
 import com.itcr.demoscratos.models.Report;
 import com.itcr.demoscratos.models.Ring;
 import com.itcr.demoscratos.models.Tag;
@@ -187,6 +188,12 @@ public final class RequestController {
 	
 	public void postUniqueVote(String idTopic, int idOption) {
 		database.insertUniqueVote(idTopic, idOption, currentUser.getEmail()); }
+	
+	public void postGivenVote(String idTopic, String memberEmail) {
+		database.insertGivenVote(idTopic, currentUser.getEmail(), memberEmail); }
+	
+	public ArrayList<GivenVote> getGivenVote(String idTopic) {
+		return database.selectGivenVotes(idTopic); }
 	
 	public String postForum(String name, String title, String summary) {
 		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
