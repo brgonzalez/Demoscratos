@@ -2,6 +2,9 @@ package com.itcr.demoscratos.services;
 
 public class Messages {
 	
+	public String voted(){
+		return "Ya has realizado el voto";
+	}
 	public String userLoggedIn(){
 		return "El usuario no está autentificado";
 	}
