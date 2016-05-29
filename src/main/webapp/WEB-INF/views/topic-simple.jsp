@@ -24,7 +24,7 @@
         
 	</head>
 
-	<body>
+	<body class ="wall">
 		
 		<jsp:include page="includes/header.jsp" />
 
@@ -37,35 +37,47 @@
 					<h5><span class = "glyphicon glyphicon-time"></span> ${close}</h5>
 					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: ${modality}</h4>
-					<h3 class = "tag-topic">Etiqueta</h3>
-					
-					<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show();" type="submit" id ="button-show-ring"class="btn btn-default">Mostrar votos de anillo</button>
-					<button style="display:none;" onclick="$('#vote-ring').hide(); $('#button-hide-ring').hide(); $('#button-show-ring').show(); " type="submit" id ="button-hide-ring"class="btn btn-default">Ocultar votos de anillo</button>
-					
-					<div style="display:none;" class="panel panel-default" id="vote-ring">
-					  	<!-- Default panel contents -->
-					  	<div class="panel-heading">Votos de anillos de confianza</div>
-
-					
-					  	<table class="table">
-					  		<tr>
-					  			<th>Correo</th>
-					  			<th>Nombre</th>
-					  			<th>Voto</th>
-					  		</tr>
-					  		<c:forEach var="vote" items="${votes}">
-					  		
-						  		<tr>
-						  			<th>${vote.user.email }</th>
-						  			<th>${vote.user.name }</th>
-						  			<th>${vote.option.option }</th>
-						  			
-						  		</tr>
-						  	</c:forEach>
-						  		
-					  	</table>
+					<div style="display:${isSecret};">
+						
+							<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show(); $('#selection-ring').hide(); $('#btn-s-give-vote').show(); $('#btn-h-give-vote').hide(); " type="submit" id ="button-show-ring"class="btn btn-default">Votos de anillo</button>
+							<button style="display:none;" onclick="$('#vote-ring').hide(); $('#button-hide-ring').hide(); $('#button-show-ring').show(); " type="submit" id ="button-hide-ring"class="btn btn-default">Ocultar votos de anillo</button>
+							
+							<button style="display:${isSecret};" onclick=" $('#btn-h-give-vote').show(); $(this).hide(); $('#vote-ring').hide(); $('#selection-ring').show(); $('#button-show-ring').show(); $('#button-hide-ring').hide();" type="submit" id ="btn-s-give-vote" class="btn btn-default">Ceder voto</button>
+							<button style="display:none;" onclick="$(this).hide(); $('#btn-s-give-vote').show(); $('#selection-ring').hide();" type="submit" id ="btn-h-give-vote" class="btn btn-default">Ocultar ceder voto</button>
+							<div style="display:none;" class="panel panel-default" id="vote-ring">
+							  	<table class="table table-striped">
+								  		<tr>
+								  			<td><b>Correo</b></td>
+								  			<td><b>Nombre</b></td>
+								  			<td><b>Voto</b></td>
+								  		</tr>
+							  		<c:forEach var="vote" items="${votes}">
+									  		<tr>
+									  			<td>${vote.user.email }</td>
+									  			<td>${vote.user.name }</td>
+									  			<td>${vote.option.option }</td>
+									  			
+									  		</tr>
+								  	</c:forEach>
+								  		
+							  	</table>
+							</div>
+							<div style="display:none;" id ="selection-ring">
+								<form:form action="/demoscratos/forum/${idForum}/topic/${idTopic}/simple" method="POST">
+									<fieldset class="form-group">
+									  	<label>Seleccione miembro del anillo de confianza</label>
+								  		<select class="form-control" name = "memberRing">
+									  		<c:forEach var="member" items="${members}">
+											    <option>${member.email}</option>
+									  		</c:forEach>
+								  		</select>	  			
+								</fieldset>
+								<button type="submit" class="btn btn-default">Ceder</button>
+								</form:form>
+							</div>
+						
 					</div>
-					<h4 class = "vote-topic">Voto</h4>
+					<h4 class = "vote-topic">Voto personal</h4>
 					<h3 class = "voted" style="display:${voted};">  ${message} </h3>
 					<div style="display:${displayVote};" class ="space-options-votes">
 						<form  action="/demoscratos/forum/${idForum}/topic/${idTopic}/simple" method="POST" >

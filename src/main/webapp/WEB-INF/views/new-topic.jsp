@@ -30,7 +30,7 @@
 
 		
 	</head>
-	<body>
+	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
 
 		<div class = "container">

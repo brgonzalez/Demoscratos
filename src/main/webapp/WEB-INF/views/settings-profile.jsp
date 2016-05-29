@@ -20,7 +20,7 @@
 
 	</head>
 
-	<body>
+	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
 
 
@@ -64,7 +64,7 @@
 
   					<fieldset class="form-group">
     					<label>Correo</label>
-		    				<input name ="email"type="text" class="form-control"  placeholder="correo" value="${user.email}">
+		    				<input name ="email"type="text" class="form-control"  placeholder="correo" value="${user.email}" disabled>
   					</fieldset>
 
   					<HR width=50% align="center">

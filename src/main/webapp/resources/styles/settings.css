@@ -16,7 +16,7 @@
 /* Change the link color on hover */
 .nav-stacked li a:hover {
     background-color: #555;
-    color: white;
+    color: black;
 }
 
 #column-ring-input{

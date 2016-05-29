@@ -19,7 +19,7 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
         <script type="text/javascript"></script>
 	</head>
-	<body>
+	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
 		<div class = "container">
 			<div class ="space-topic col-xs-12 col-sm-12 col-md-6 col-lg-6 col-lg-offset-3 col-md-offset-3">

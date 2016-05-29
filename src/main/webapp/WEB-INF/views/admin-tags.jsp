@@ -16,7 +16,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
 	</head>
-	<body>
+	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
 		<div class = "container" id= "container">
 			<div class = "topics-column col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">

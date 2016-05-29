@@ -1,4 +1,8 @@
-body{
+.name-app{
+	font-weight: bold;
+}
+
+.wall{
 	background-color: #E6E6E6;
 }
 

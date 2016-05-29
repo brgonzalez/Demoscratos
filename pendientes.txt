@@ -1,3 +1,6 @@
+Guardar a
+
+
 Manejar errores con excepciones
-Quitar error semantic a vistas
 Atrapar el error cuando democracy no este corriendo
+Porcentaje reporte

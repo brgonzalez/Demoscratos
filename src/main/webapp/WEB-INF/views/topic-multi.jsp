@@ -21,7 +21,7 @@
         <!-- <script src="/demoscratos/resources/javascript/uniqueTopic.js"> </script> -->
         
 	</head>
-	<body>
+	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
 
 		<div class = "container">
@@ -34,35 +34,31 @@
 					<h5><span class = "glyphicon glyphicon-time"></span> ${close}</h5>
 					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
-					<h3 class = "tag-topic">Etiqueta</h3>
-					<h4 class = "vote-topic">Voto</h4>
 					
 					<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show();" type="submit" id ="button-show-ring"class="btn btn-default">Mostrar votos de anillo</button>
 					<button style="display:none;" onclick="$('#vote-ring').hide(); $('#button-hide-ring').hide(); $('#button-show-ring').show(); " type="submit" id ="button-hide-ring"class="btn btn-default">Ocultar votos de anillo</button>
 					
 					<div style="display:none;" class="panel panel-default" id="vote-ring">
 					  	<!-- Default panel contents -->
-					  	<div class="panel-heading">Votos de anillos de confianza</div>
-
-					
-					  	<table class="table">
-					  		<tr>
-					  			<th>Correo</th>
-					  			<th>Nombre</th>
-					  			<th>Voto</th>
-					  		</tr>
-					  		<c:forEach var="vote" items="${votes}">
-					  		
+					  	<table class="table table-striped">
 						  		<tr>
-						  			<th>${vote.user.email }</th>
-						  			<th>${vote.user.name }</th>
-						  			<th>${vote.option.option }</th>
-						  			
+						  			<td><b>Correo</b></td>
+						  			<td><b>Nombre</b></td>
+						  			<td><b>Voto</b></td>
 						  		</tr>
+					  		<c:forEach var="vote" items="${votes}">
+							  		<tr>
+							  			<td>${vote.user.email }</td>
+							  			<td>${vote.user.name }</td>
+							  			<td>${vote.option.option }</td>
+							  			
+							  		</tr>
 						  	</c:forEach>
 						  		
 					  	</table>
 					</div>
+					<h4 class = "vote-topic">Voto personal</h4>
+					
 					<h3 class = "voted" style="display:${voted};"> ${message} </h3>
 			
 					<div style="display:${displayVote};" class="uniqueVote">

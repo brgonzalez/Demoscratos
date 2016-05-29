@@ -26,7 +26,7 @@
 
 	</head>
 
-	<body>
+	<body class="wall">
 		
 		<jsp:include page="includes/header.jsp" />
 		
