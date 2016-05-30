@@ -93,17 +93,16 @@ public final class DataBaseController {
 		catch (SQLException e) { e.printStackTrace(); } 
 		return votes; }
 	
-	public ArrayList<GivenVote> selectGivenVotes(String topicId) {
+	public ArrayList<GivenVote> selectGivenVotes(String topicId, String memberEmail) {
 		connection.connect();
-		String query = "SELECT t1.email_user, t1.email_member FROM (SELECT * FROM given_votes WHERE topic = '"+topicId+"') AS t1 WHERE t1.opt IS NULL";
+		String query = "SELECT email_user FROM given_votes WHERE topic = '"+topicId+"' AND email_member = '"+memberEmail+"' AND opt = 4";
 		ResultSet result = connection.executeQuery(query);
 		ArrayList<GivenVote> votes = new ArrayList<GivenVote>();
-		String userEmail, memberEmail;
+		String userEmail;
 		try {
 			while (result.next()) {
 				userEmail = result.getString("email_user");
-				memberEmail = result.getString("email_member");
-				votes.add(new GivenVote(new Option(0, topicId, ""), userEmail, memberEmail)); }
+				votes.add(new GivenVote(null, userEmail, memberEmail)); }
 			connection.disconnect(); }
 		catch (SQLException e) { e.printStackTrace(); } 
 		return votes; }
@@ -157,13 +156,19 @@ public final class DataBaseController {
 	
 	public void insertGivenVote(String topicId, String userEmail, String memberEmail) {
 		connection.connect();
-		String query = "INSERT INTO given_votes(topic, email_user, email_member) VALUES ('"+topicId+"', '"+userEmail+"', '"+memberEmail+"')";
+		String query = "INSERT INTO given_votes(topic, opt, email_user, email_member) VALUES ('"+topicId+"', 4, '"+userEmail+"', '"+memberEmail+"')";
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	
-	public void updateGivenVote(String topicId, int optionId) {
+	public void updateGivenVote(int givenVoteId, int optionId) {
 		connection.connect();
-		String query = "UPDATE given_votes SET opt = "+optionId+" WHERE topic = '"+topicId+"'";
+		String query = "UPDATE given_votes SET opt = "+optionId+" WHERE id = '"+givenVoteId+"'";
+		connection.executeUpdate(query);
+		connection.disconnect(); }
+	
+	public void updateTopicApproval(String topicId) {
+		connection.connect();
+		String query = "UPDATE topics SET approved = 'true' WHERE id = '"+topicId+"'";
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	

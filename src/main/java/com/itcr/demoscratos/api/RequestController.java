@@ -81,7 +81,7 @@ public final class RequestController {
 			forums.add(new Forum(json)); }
 		return forums; }
 	
-	public ArrayList<Topic> getTopics(String idForum) {
+	public ArrayList<Topic> getTopicsAdmin(String idForum) {
 		ArrayList<Topic> topics = new ArrayList<Topic>();
 		client.getHttpRequest(Resource.TOPICS.getUrl() + idForum);
 		JSONArray array = new JSONArray(client.getOutput());
@@ -92,6 +92,20 @@ public final class RequestController {
 			idTopic = json.getString("id");
 			type = database.selectTopicAttr(idTopic, "type");
 			topics.add(new Topic(json, type)); }
+		return topics; }
+	
+	public ArrayList<Topic> getTopics(String idForum) {
+		ArrayList<Topic> topics = new ArrayList<Topic>();
+		client.getHttpRequest(Resource.TOPICS.getUrl() + idForum);
+		JSONArray array = new JSONArray(client.getOutput());
+		String type, idTopic, approved;
+		JSONObject json;
+		for (short index = 0; index < array.length(); index++) {
+			json = array.getJSONObject(index);
+			idTopic = json.getString("id");
+			approved = database.selectTopicAttr(idTopic, "approved");
+			type = database.selectTopicAttr(idTopic, "type");
+			if (approved.equals("true")) { topics.add(new Topic(json, type)); } }
 		return topics; }
 	
 	public ArrayList<Tag> getTags() {
@@ -109,7 +123,8 @@ public final class RequestController {
 		JSONObject json = new JSONObject(client.getOutput());
 		String type = database.selectTopicAttr(idTopic, "type");
 		String secret = database.selectTopicAttr(idTopic, "private");
-		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type, currentUser);
+		ArrayList<GivenVote> givenVotes = database.selectGivenVotes(idTopic, currentUser.getEmail());
+		FullTopic fullTopic = new FullTopic(json, Boolean.valueOf(secret), type, currentUser, givenVotes);
 		ArrayList<String> ringEmails = database.selectRingMembers(currentUser.getEmail());
 		ArrayList<User> ringUsers = new ArrayList<User>();
 		if (!ringEmails.isEmpty()) {
@@ -165,8 +180,7 @@ public final class RequestController {
 		String json = "{ \"topicId\": \"\", \"author\": \"\", \"authorUrl\": \"\", \"forum\": \""+idForum+"\", \"mediaTitle\": \""+title+"\", \"source\": \""+source+"\", \"tag\": { \"name\": \""+tag+"\" }, \"closingAt\":\""+closingAt+"\", \"votable\": "+votable+", \"clauses\": [ { \"markup\": \""+content+"\" } ] }";
 		client.postHttpRequest(Resource.TOPIC_CREATE.getUrl(), json);
 		JSONObject object = new JSONObject(client.getOutput());
-		FullTopic fullTopic = new FullTopic(object, secret, type, currentUser);
-		String idTopic = fullTopic.getId();
+		String idTopic = object.getString("id");
 		client.postHttpRequest(Resource.TOPIC.publish(idTopic), "");
 		database.insertTopic(idTopic, String.valueOf(secret), type);
 		if (flag) { mongodb.updateTopic(idTopic, idForum); deleteForum("temporal"); }
@@ -191,9 +205,6 @@ public final class RequestController {
 	
 	public void postGivenVote(String idTopic, String memberEmail) {
 		database.insertGivenVote(idTopic, currentUser.getEmail(), memberEmail); }
-	
-	public ArrayList<GivenVote> getGivenVote(String idTopic) {
-		return database.selectGivenVotes(idTopic); }
 	
 	public String postForum(String name, String title, String summary) {
 		String json = "{ \"name\":\""+name+"\", \"title\":\""+title+"\", \"summary\":\""+summary+"\" }";
@@ -233,6 +244,9 @@ public final class RequestController {
 	public void postTag(String name) {
 		String json = "{ \"hash\":\""+name.toLowerCase()+"\", \"name\":\""+name+"\", \"image\": \"internet\"}";
 		client.postHttpRequest(Resource.TAG_CREATE.getUrl(), json); }
+	
+	public void postTopicApproved(String idTopic) {
+		database.updateTopicApproval(idTopic); }
 		
 	public void deleteForum(String nameForum) {
 		client.deleteHttpRequest(Resource.FORUM.getUrl() + nameForum); }

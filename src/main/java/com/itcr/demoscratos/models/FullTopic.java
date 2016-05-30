@@ -20,8 +20,9 @@ public final class FullTopic extends Topic {
 	private ArrayList<User> ringMembers = new ArrayList<User>();
 	private ArrayList<Option> options = new ArrayList<Option>();
 	private ArrayList<Vote> votes = new ArrayList<Vote>();
+	private ArrayList<GivenVote> givenVotes = new ArrayList<GivenVote>();
 
-	public FullTopic(JSONObject json, boolean secret, String type, User currentUser) {
+	public FullTopic(JSONObject json, boolean secret, String type, User currentUser, ArrayList<GivenVote> givenVotes) {
 		super(json, type);
 		setVotable(json.getBoolean("votable"));
 		setSource(json.getString("source"));
@@ -30,13 +31,14 @@ public final class FullTopic extends Topic {
 		setUpvotes(json.getJSONArray("upvotes"));
 		setDownvotes(json.getJSONArray("downvotes"));
 		setAbstentions(json.getJSONArray("abstentions"));
-		setSecret(secret); setType(type); setCurrentUser(currentUser); }
+		setSecret(secret); setType(type);
+		setCurrentUser(currentUser); setGivenVotes(givenVotes); }
 	
 	public Report getReportSimple() {
 		int totalParticipants = participants.size();
 		Option optionPositive = new Option(1, super.getId(), "positivo");
-		Option optionNegative = new Option(0, super.getId(), "negativo");
-		Option optionAbstention = new Option(-1, super.getId(), "abstención");
+		Option optionNegative = new Option(2, super.getId(), "negativo");
+		Option optionAbstention = new Option(3, super.getId(), "abstención");
 		TotalVotes totalPositive = new TotalVotes(optionPositive, upvotes.size());
 		TotalVotes totalNegative = new TotalVotes(optionNegative, downvotes.size());
 		TotalVotes totalAbstention = new TotalVotes(optionAbstention, abstentions.size());
@@ -114,6 +116,12 @@ public final class FullTopic extends Topic {
 	public void setVotes(ArrayList<Vote> votes) {
 		this.votes = votes;	}
 	
+	public ArrayList<GivenVote> getGivenVotes() {
+		return givenVotes; }
+
+	private void setGivenVotes(ArrayList<GivenVote> givenVotes) {
+		this.givenVotes = givenVotes; }
+
 	private boolean userAlreadyVotedSimple() {
 		return participants.contains(currentUser.getId()); }
 	
@@ -141,13 +149,13 @@ public final class FullTopic extends Topic {
 		Option option;
 		for (User user : ringMembers) {
 			if (upvotes.contains(user.getId())) {
-				option = new Option(1, super.getId(), "positive");
+				option = new Option(1, super.getId(), "positivo");
 				votes.add(new VisibleVote(option, user)); }
 			else if (downvotes.contains(user.getId())) {
-				option = new Option(0, super.getId(), "negative");
+				option = new Option(2, super.getId(), "negativo");
 				votes.add(new VisibleVote(option, user)); }
 			else if (abstentions.contains(user.getId())) {
-				option = new Option(-1, super.getId(), "abstention");
+				option = new Option(3, super.getId(), "abstención");
 				votes.add(new VisibleVote(option, user)); } }
 		return votes; }
 	

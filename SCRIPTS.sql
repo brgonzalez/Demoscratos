@@ -41,9 +41,23 @@ CREATE TABLE unique_votes (
     FOREIGN KEY (topic) 
         REFERENCES topics(id)
         ON DELETE CASCADE);
+        
+INSERT INTO topics(id, private, type, question) VALUES('0', 'true', 'simple', NULL);
+INSERT INTO options(topic, opt) VALUES('0', 'positivo');
+INSERT INTO options(topic, opt) VALUES('0', 'negativo');
+INSERT INTO options(topic, opt) VALUES('0', 'abstención');
+INSERT INTO options(topic, opt) VALUES('0', 'nulo');
+ALTER TABLE topics ADD COLUMN approved varchar(6) DEFAULT 'false';
 
 CREATE TABLE given_votes (
-    topic varchar(30) NOT NULL,
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    topic varchar(30),
 	opt INT, 
     email_user varchar(30) NOT NULL,
-    email_member varchar(30) NOT NULL);
+    email_member varchar(30) NOT NULL,
+    FOREIGN KEY (opt) 
+        REFERENCES options(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (topic) 
+        REFERENCES topics(id)
+        ON DELETE CASCADE);
