@@ -32,17 +32,19 @@ public class RingController {
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		ArrayList<User> members = request.getRing();
-		System.out.println(members);
 		if(members.size() > 0){
 			model.addAttribute("member1", members.get(0));
 			model.addAttribute("member2",  members.get(1) );
 			model.addAttribute("member3",  members.get(2) );
 			model.addAttribute("displayButton", "none" );
+			model.addAttribute("modify-ring", "none" );
 			//model.addAttribute("displayShow-ring", "none" );*/
 		}
 		else{
 			model.addAttribute("displayButton", "block" );
 			model.addAttribute("sring", "none" );
+			model.addAttribute("modify-ring", "none" );
+			
 		}
 		logger.info(messages.getRing(), locale);
 		return "settings-ring";
@@ -59,21 +61,20 @@ public class RingController {
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
-		try{
-			request.postRing(emailMember1, emailMember2, emailMember3);
+		
+		request.postRing(emailMember1, emailMember2, emailMember3);
 
-		}catch(RuntimeException e ){
-			e.getMessage();
-		}
-		finally{
-			
-		}
+		
 		ArrayList<User> members = request.getRing();
 		if(members.size() > 0){
 			model.addAttribute("displayButton", "none" );
 			model.addAttribute("member1", members.get(0));
 			model.addAttribute("member2",  members.get(1) );
 			model.addAttribute("member3",  members.get(2) );
+		}
+		else{
+			model.addAttribute("displayButton", "block" );
+			model.addAttribute("sring", "none" );
 		}
 		logger.info(messages.updatedRing(), locale);
 		return "settings-ring";

@@ -15,8 +15,12 @@
 	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
 		<div class = "container" id= "container">
-			<div class = "topics-column col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-				<input onclick="location.href='/demoscratos/forum/${idForum}/topic/new';" type="submit" class="btn btn-primary" value ="Crear nuevo tema"/>
+			<div class = "topics-column col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				<input onclick="location.href='/demoscratos/forum/${idForum}/topic/new';" type="submit" class="btn btn-success form-control" value ="Crear nuevo tema"/>
+			
+			</div>
+			
+			<div class = "topics-column col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<!--<div id = "selected-topics">
 					<ul class="nav nav-tabs">
 						  <li><a href="#">Abiertos</a></li>

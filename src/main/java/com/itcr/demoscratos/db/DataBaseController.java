@@ -107,7 +107,7 @@ public final class DataBaseController {
 	
 	public ArrayList<GivenVote> selectGivenVotes(String topicId, String memberEmail) {
 		connection.connect();
-		String query = "SELECT email_user FROM given_votes WHERE topic = '"+topicId+"' AND email_member = '"+memberEmail+"' AND opt = 4";
+		String query = "SELECT id, email_user FROM given_votes WHERE topic = '"+topicId+"' AND email_member = '"+memberEmail+"' AND opt = 4";
 		ResultSet result = connection.executeQuery(query);
 		ArrayList<GivenVote> votes = new ArrayList<GivenVote>();
 		String userEmail; int id;

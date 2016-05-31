@@ -32,9 +32,9 @@
 
 			<div class ="space-new-topic col-xs-12 col-sm-12 col-md-8  col-lg-8 col-md-offset-2 col-lg-offset-2">
 				<form:form href ="admin/forum/new" method ="POST">
-					<h3>Crearción de una nueva democracia</h3>
+					<h3>Creación de una nueva democracia</h3>
 					<fieldset class="form-group">
-				    	<label>Nombre de ka democracia</label>
+				    	<label>Nombre de la democracia</label>
 				    	<input type="text" class="form-control" name ="title" placeholder="Nombre de la democracia" required>
 					</fieldset>
 
@@ -44,7 +44,7 @@
 						<textarea name= "description" class="form-control" type="textbox" rows = "4" validate ="max-length:4096" required></textarea>
 					</fieldset>
 					
-					<button onSubmit="alert('Operación existosa.');" type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
+					<button onSubmit="alert('Operación existosa.');" type="submit" class="btn btn-success form-control" >Guardar</button>
 					
 				</form:form>
 			</div>

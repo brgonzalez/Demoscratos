@@ -31,14 +31,14 @@
 		<div class ="container col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		
 			<div class= "buttons-topic col-xs-6 col-sm-6 col-md-2 col-lg-2">
-				<form:form href="admin/forum/${idForum}/topic/${idTopic}/publish">
-					<button class ="btn btn-default form-control" type="submit">Publicar tema</button>
+				<form:form action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/publish" method="POST">
+					<button class ="btn btn-success btn-block m-x-auto" type="submit">Publicar tema</button>
 				</form:form>
 				<form:form action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/report" method="POST">
-					<button class ="btn btn-default form-control" type="submit">Reporte de tema </button>
+					<button class ="btn btn-info form-control" type="submit">Reporte de tema </button>
 				</form:form>
-				<form:form href="admin/forum/${idForum}/topic/${idTopic}/delete">
-					<button class ="btn btn-default form-control" type="submit">Borrar tema </button>
+				<form:form action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/delete" method="POST">
+					<button class ="btn btn-danger form-control" type="submit">Borrar tema </button>
 				</form:form>
 			</div>
 

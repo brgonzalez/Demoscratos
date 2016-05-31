@@ -68,8 +68,7 @@ public class VoteSimpleController {
 			model.addAttribute("displayVote", "block");
 			model.addAttribute("close", serviceDate.getCloseDate());
 		}
-		
-		
+	
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
 		if(topic.isSecret()){
@@ -81,6 +80,10 @@ public class VoteSimpleController {
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
+		
+		
+		System.out.println("*+++++++++++++++++++++++++"+topic.getGivenVotes());
+		model.addAttribute("givenVotes", topic.getGivenVotes());
 		return "topic-simple";
 	}
 	
@@ -89,10 +92,20 @@ public class VoteSimpleController {
 			@PathVariable(value="idForum") String idForum,
 			@RequestParam(value="vote") String vote,
 			@PathVariable(value="idTopic") String idTopic) {
-		logger.info(vote, locale); 
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
+		}
+		switch(vote){
+			case "positive":
+				request.postPositiveVote(idTopic);
+				break;
+			case "negative":
+				request.postNegativeVote(idTopic);
+				break;
+			case "abstentionism":
+				request.postAbstentionVote(idTopic);
+				break;
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
 		if(topic.isSecret()){
@@ -127,22 +140,11 @@ public class VoteSimpleController {
 			model.addAttribute("close", serviceDate.getCloseDate());
 		}
 		
-		System.out.println("El voto es :" +vote);
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
 		model.addAttribute("topic", topic);
-		switch(vote){
-			case "positive":
-				System.out.println("Se vota positivo");
-				request.postPositiveVote(idTopic);
-				break;
-			case "negative":
-				request.postNegativeVote(idTopic);
-				break;
-			case "abstentionism":
-				request.postAbstentionVote(idTopic);
-				break;
-		}
+		
+		
 			
 		return "redirect:/forum/"+idForum;
 	}
@@ -152,7 +154,17 @@ public class VoteSimpleController {
 			@PathVariable(value="idForum") String idForum,
 			@RequestParam(value="memberRing") String memberRing,
 			@PathVariable(value="idTopic") String idTopic) {
-		System.out.println(memberRing);
+		request.postGiveVote(idTopic, memberRing);
+			
+		return "redirect:/forum/"+idForum+"/topic/"+idTopic+"/simple";
+	}
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/simple/{idGivenVote}" ,params="idOption", method = RequestMethod.POST)
+	public String voteGivenVote(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="idOption") String idOption,
+			@PathVariable(value="idTopic") String idTopic,
+			@PathVariable(value="idGivenVote") String idGivenVote) {
+		request.postGivenVote(Integer.parseInt(idGivenVote), Integer.parseInt(idOption));
 			
 		return "redirect:/forum/"+idForum+"/topic/"+idTopic+"/simple";
 	}

@@ -35,29 +35,6 @@ public class AdminReportController {
 	
 	private RequestController request = RequestController.getInstance();
 	
-	@RequestMapping(value = "/admin/forum/{idForum}/topic/{idTopic}/report" , method = RequestMethod.POST)
-	public String showTopic(Locale locale, Model model,
-			@PathVariable(value="idForum") String idForum,
-			@PathVariable(value="idTopic") String idTopic){
-		if(!request.isLoggedIn()){
-			logger.info(messages.userLoggedIn(), locale);
-			return "redirect:/login";
-		}
-		Report report = request.getReport(idTopic);
-		User user = request.getCurrentUser();
-		FullTopic topic = request.getFullTopic(idTopic);
-		
-		model.addAttribute("user", user );
-		model.addAttribute("topic", topic );
-		model.addAttribute("report", report );
-		
-		if(topic.isSecret()){
-			model.addAttribute("modality", "Privado");
-		}else{
-			model.addAttribute("modality", "Semipúblico");
-		}
-		
-		return "admin-report";
-	}
+	
 	
 }

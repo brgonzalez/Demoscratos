@@ -30,10 +30,14 @@
 
 		<div class = "container">
 
-			<div class= "col-xs-1 col-sm-1 col-md-2 col-lg-3">
+			<div class= "col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				<input onclick="location.href='/demoscratos/admin/forums/new';" type="submit" class="btn btn-success form-control" value ="Crear nueva democracia"/>
 			</div>
 
-			<div id ="container-forums" class ="container-forums col-xs-10 col-sm-10 col-md-8 col-lg-6">
+			<div id ="container-forums" class ="container-forums col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				
+				
+				
 				<ul>
 					<c:forEach var="forum" items="${forums}">
 						<li>

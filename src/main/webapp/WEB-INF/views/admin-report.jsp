@@ -18,8 +18,10 @@
 	</head>
 	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
+		
 		<div class = "container col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" id= "container">
-				<h2> Reporte sobre el tema ${topic.title}. </h2>
+				<h1>Reporte</h1>
+				<h2>${topic.title}. </h2>
 				<hr>
 				<h4> <b>La modalidad del tema es: </b> ${modality } </h4>
 				<h4> <b>Total de participantes:</b> ${report.totalParticipants }</h4>

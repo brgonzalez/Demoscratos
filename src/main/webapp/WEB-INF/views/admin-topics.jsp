@@ -18,7 +18,12 @@
 	</head>
 	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
-		<div class = "container col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" id= "container">
+		<div class = "col-xs-12 col-sm-12 col-md-3 col-lg-3"> 
+			<input onclick="location.href='/demoscratos/admin/forum/${idForum}/delete';" type="submit" class="btn btn-danger" value ="Borrar democracia"/>
+		
+		</div>
+		
+		<div class = "col-xs-12 col-sm-12 col-md-6 col-lg-6 " id= "container">
 			<div>
 				<div class ="topics-list">
 					<ul style ="list-style:none">			

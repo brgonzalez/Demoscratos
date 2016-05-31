@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Forum;
@@ -37,10 +38,6 @@ public class AdminForumsController {
 	@RequestMapping(value = "/admin/forums" , method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {		
 		
-		if(!request.isLoggedIn()){
-			logger.info(messages.userLoggedIn(), locale);
-			return "redirect:/login";
-		}
 		ArrayList<Forum> forums = request.getForums();
 		model.addAttribute("forums", forums );
 		
@@ -49,13 +46,10 @@ public class AdminForumsController {
 	}
 	@RequestMapping(value = "/admin/forum/{idForum} " , method = RequestMethod.GET)
 	public String displayTopiscForum(Locale locale, Model model,@PathVariable(value="idForum") String idForum) {
-		if(!request.isLoggedIn()){
-			logger.info(messages.userLoggedIn(), locale);
-			return "redirect:/login";
-		}
+
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
-		ArrayList<Topic> topics = request.getTopics(idForum);
+		ArrayList<Topic> topics = request.getTopicsAdmin(idForum);
 		model.addAttribute("idForum",idForum);
 		if(topics.size() > 0){
 			for(Topic topic : topics){
@@ -77,13 +71,8 @@ public class AdminForumsController {
 	public String showTopic(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
 			@PathVariable(value="idTopic") String idTopic
-			) throws ParseException {
-		logger.info("forum = "+ idForum +", topic = " + idTopic, locale);
-		if(!request.isLoggedIn()){
-			logger.info(messages.userLoggedIn(), locale);
-			return "redirect:/login";
-		}
-		
+			) {
+
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		FullTopic topic = request.getFullTopic(idTopic);
@@ -94,7 +83,7 @@ public class AdminForumsController {
 		
 		topic.setClosingAt(serviceDate.getCloseDate());
 		
-		if(topic.isSecret()){
+		if(!topic.isSecret()){
 			model.addAttribute("modality", "Semipúblico");
 		}
 		else{
@@ -111,6 +100,27 @@ public class AdminForumsController {
 		}
 
 		return "admin-topic";
+	}
+	
+
+	@RequestMapping(value = "admin/forums/new" , method = RequestMethod.GET)
+	public String getPostForum(Locale locale, Model model) {
+
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
+
+
+		return "admin-new-forum";
+	}
+	
+	@RequestMapping(value = "admin/forums/new" , method = RequestMethod.POST)
+	public String postForum(Locale locale, Model model,
+			@RequestParam(value="title") String title,
+			@RequestParam(value="description") String description) {
+		
+		request.postForum(title, title, description);
+
+		return "admin-new-forum";
 	}
 	
 }

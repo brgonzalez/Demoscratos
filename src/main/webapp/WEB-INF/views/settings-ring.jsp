@@ -55,29 +55,29 @@
 					<button onclick="$('#create-ring').hide(); $('#modify-ring').show()" id ="button-save"style="display:${displayButton};" type="submit" class="btn btn-primary button-save">Crear</button>
 				</div>
 				<div style="display:${sring};" id= "show-ring">
-					<h3>Amigo 1 </h3>
+					<h3 class="friend">Amigo 1 </h3>
 					<div class = "data">
 						<label>Nombre</label>
 						<label>Correo</label>
-		 				<label>${member1.name} </label>
+		 				<label>${member1.name} ${member1.lastName} </label>
 		 				<label>${member1.email}</label>
 		  			</div>
 		  			
 		  			<hr>
 		  			
-		  			<h3>Amigo 2 </h3>
+		  			<h3 class="friend">Amigo 2 </h3>
 					<div class = "data">
 						<label>Nombre</label>
 						<label>Correo</label>			
-		 				<label>${member2.name} </label>
+		 				<label>${member2.name} ${member2.lastName}</label>
 		 				<label>${member2.email}</label>
 		  			</div>
 		  			<hr>
-		  			<h3>Amigo 3 </h3>
+		  			<h3 class="friend">Amigo 3 </h3>
 					<div class = "data">
 						<label>Nombre</label>
 						<label>Correo</label>
-		 				<label>${member3.name}</label>
+		 				<label>${member3.name}${member3.lastName}</label>
 		 				<label>${member3.email}</label>
 		  			</div>
 		  			
@@ -88,7 +88,7 @@
 
 	  			</div>
 
-				<form:form id = "modify-ring" style="display:none;" action="settings-ring" method="post">
+				<form:form id = "modify-ring" style="display:${modify-ring};" action="settings-ring" method="post">
 					
 						<h3>Amigo 1 </h3>
 						<div>

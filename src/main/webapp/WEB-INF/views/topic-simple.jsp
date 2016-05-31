@@ -86,6 +86,26 @@
 							<button name="vote" value="abstentionism" type="submit" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> Abstención</button>
 						</form>
 					</div>
+					
+					<div>
+						<c:forEach var="vote" items="${givenVotes}">
+						<h4 class = "vote-topic">Voto cedido por ${vote.memberEmail }</h4>
+						<div style="display:${displayVote};" class ="space-options-votes">
+							<form  action="/demoscratos/forum/${idForum}/topic/${idTopic}/simple/${vote.id}" method="POST" >
+								<button name="idOption" value="1" type="submit" id = "btn-afirmative"  class = "btn btn-options" > <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>
+								<button name="idOption" value="2" type="submit" id = "btn-negative" class = "btn btn-options" ><span class = "glyphicon glyphicon-thumbs-down"></span> Negativo </button>
+								<button name="idOption" value="3" type="submit" id = "btn-abstentionism" class = "btn btn-options"> <span class = "glyphicon glyphicon-pause"></span> Abstención</button>
+							</form>
+						</div>
+							
+						</c:forEach>
+					
+					</div>
+					
+					
+					<div style="display: given-votes;">
+					
+					</div>
 					<!-- 
 					<div class = "own-argument">
 						<h4>Tus argumentos</h4>
