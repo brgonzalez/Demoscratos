@@ -110,11 +110,12 @@ public final class DataBaseController {
 		String query = "SELECT email_user FROM given_votes WHERE topic = '"+topicId+"' AND email_member = '"+memberEmail+"' AND opt = 4";
 		ResultSet result = connection.executeQuery(query);
 		ArrayList<GivenVote> votes = new ArrayList<GivenVote>();
-		String userEmail;
+		String userEmail; int id;
 		try {
 			while (result.next()) {
+				id = result.getInt("id");
 				userEmail = result.getString("email_user");
-				votes.add(new GivenVote(null, userEmail, memberEmail)); }
+				votes.add(new GivenVote(id, null, userEmail, memberEmail)); }
 			connection.disconnect(); }
 		catch (SQLException e) { e.printStackTrace(); } 
 		return votes; }

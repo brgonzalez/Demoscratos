@@ -2,11 +2,18 @@ package com.itcr.demoscratos.models;
 
 public final class GivenVote extends Vote {
 	
+	private int id;
 	private String memberEmail;
 
-	public GivenVote(Option option, String userEmail, String memberEmail) {
-		super(option, userEmail);
+	public GivenVote(int id, Option option, String userEmail, String memberEmail) {
+		super(option, userEmail); setId(id);
 		setMemberEmail(memberEmail); }
+	
+	public int getId() {
+		return id; }
+
+	public void setId(int id) {
+		this.id = id; }
 
 	public String getMemberEmail() {
 		return memberEmail;	}
@@ -19,4 +26,4 @@ public final class GivenVote extends Vote {
 
 	@Override
 	public String toString() {
-		return super.toString() + "GivenVote [memberEmail=" + memberEmail + "]"; } }
+		return "GivenVote [id=" + id + ", memberEmail=" + memberEmail + "]"; } }
