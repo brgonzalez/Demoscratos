@@ -61,6 +61,18 @@ public final class DataBaseController {
 		catch (SQLException e) { e.printStackTrace(); } 
 		return ring; }
 	
+	public boolean selectGivenVote(String topicId, String userEmail) {
+		connection.connect();
+		String query = "SELECT * FROM given_votes WHERE topic='"+ topicId +"' AND email_user = '"+userEmail+"'";
+		ResultSet result = connection.executeQuery(query);
+		boolean value = false; 
+		try {
+			if (result.next()) {
+				value = true; }
+			connection.disconnect(); }
+		catch (SQLException e) { e.printStackTrace(); } 
+		return value; }
+	
 	public ArrayList<Option> selectOptions(String topicId) {
 		connection.connect();
 		String query = "SELECT * FROM options WHERE topic='"+ topicId +"'";

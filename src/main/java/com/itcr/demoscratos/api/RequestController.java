@@ -203,7 +203,13 @@ public final class RequestController {
 	public void postUniqueVote(String idTopic, int idOption) {
 		database.insertUniqueVote(idTopic, idOption, currentUser.getEmail()); }
 	
-	public void postGivenVote(String idTopic, String memberEmail) {
+	public void postGivenVote(int idGivenVote, int idOption ) {
+		database.updateGivenVote(idGivenVote, idOption); }
+	
+	public boolean doesGivenVoteExist(String idTopic, String memberEmail) {
+		return database.selectGivenVote(idTopic, currentUser.getEmail()); }
+	
+	public void postGiveVote(String idTopic, String memberEmail) {
 		database.insertGivenVote(idTopic, currentUser.getEmail(), memberEmail); }
 	
 	public String postForum(String name, String title, String summary) {
