@@ -206,7 +206,7 @@ public final class RequestController {
 	public void postGivenVote(int idGivenVote, int idOption ) {
 		database.updateGivenVote(idGivenVote, idOption); }
 	
-	public boolean doesGivenVoteExist(String idTopic, String memberEmail) {
+	public boolean doesGivenVoteExist(String idTopic) {
 		return database.selectGivenVote(idTopic, currentUser.getEmail()); }
 	
 	public void postGiveVote(String idTopic, String memberEmail) {
