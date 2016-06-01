@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.FullTopic;
@@ -45,6 +46,9 @@ public class VoteMultipleController {
 			return "redirect:/login";
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
+		
+		model.addAttribute("members", request.getRing());
+		model.addAttribute("givenVotes", topic.getGivenVotes());
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
 			model.addAttribute("modality", "Privado" );
@@ -102,6 +106,9 @@ public class VoteMultipleController {
 			return "redirect:/login";
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
+		
+		model.addAttribute("members", request.getRing());
+		model.addAttribute("givenVotes", topic.getGivenVotes());
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
 			model.addAttribute("modality", "Privado" );
@@ -111,6 +118,8 @@ public class VoteMultipleController {
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
+		
+
 		User user = request.getCurrentUser();
 		model.addAttribute("question", topic.getQuestion());
 		model.addAttribute("options", topic.getOptions());
@@ -147,5 +156,29 @@ public class VoteMultipleController {
 			model.addAttribute("close", serviceDate.getCloseDate());
 		}
 		return "redirect:/forum/"+idForum;
+	}
+
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/multiple" ,params="memberRing", method = RequestMethod.POST)
+	public String giveSimpleVote(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="memberRing") String memberRing,
+			@PathVariable(value="idTopic") String idTopic) {
+		request.postGiveVote(idTopic, memberRing);
+			
+		return "topic-multi";
+	}
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/multiple/givenVote/{idGivenVote}" ,params="idOption", method = RequestMethod.POST)
+	public String voteGivenVote(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="idOption") ArrayList<String> idOption,
+			@PathVariable(value="idTopic") String idTopic,
+			@PathVariable(value="idGivenVote") String idGivenVote) {
+		
+		for (String id :idOption ){
+			request.postGivenVote(Integer.parseInt(idGivenVote), Integer.parseInt(id));
+		}
+		
+			
+		return "redirect:/forum/"+idForum+"/topic/"+idTopic+"/multiple";
 	}
 }

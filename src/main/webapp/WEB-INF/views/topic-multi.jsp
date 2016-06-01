@@ -35,8 +35,11 @@
 					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
 					
-					<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show();" type="submit" id ="button-show-ring"class="btn btn-default">Mostrar votos de anillo</button>
+					<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show(); $('#selection-ring').hide(); $('#btn-s-give-vote').show(); $('#btn-h-give-vote').hide(); " type="submit" id ="button-show-ring"class="btn btn-default">Votos de anillo</button>
 					<button style="display:none;" onclick="$('#vote-ring').hide(); $('#button-hide-ring').hide(); $('#button-show-ring').show(); " type="submit" id ="button-hide-ring"class="btn btn-default">Ocultar votos de anillo</button>
+							
+					<button style="display:${isSecret};" onclick=" $('#btn-h-give-vote').show(); $(this).hide(); $('#vote-ring').hide(); $('#selection-ring').show(); $('#button-show-ring').show(); $('#button-hide-ring').hide();" type="submit" id ="btn-s-give-vote" class="btn btn-default">Ceder voto</button>
+					<button style="display:none;" onclick="$(this).hide(); $('#btn-s-give-vote').show(); $('#selection-ring').hide();" type="submit" id ="btn-h-give-vote" class="btn btn-default">Ocultar ceder voto</button>
 					
 					<div style="display:none;" class="panel panel-default" id="vote-ring">
 					  	<!-- Default panel contents -->
@@ -57,12 +60,26 @@
 						  		
 					  	</table>
 					</div>
+					
+					<div style="display:none;" id ="selection-ring">
+						<form:form action="/demoscratos/forum/${idForum}/topic/${idTopic}/multiple" method="POST">
+							<fieldset class="form-group">
+							  	<label>Seleccione miembro del anillo de confianza</label>
+						  		<select class="form-control" name = "memberRing">
+							  		<c:forEach var="member" items="${members}">
+									    <option>${member.email}</option>
+							  		</c:forEach>
+						  		</select>	  			
+						</fieldset>
+						<button type="submit" class="btn btn-default">Ceder</button>
+						</form:form>
+					</div>
 					<h4 class = "vote-topic">Voto personal</h4>
 					
 					<h3 class = "voted" style="display:${voted};"> ${message} </h3>
 			
 					<div style="display:${displayVote};" class="uniqueVote">
-						<form:form href="/demoscratos/forum/${idForum}/topic/${idTopic}/unique">
+						<form:form href="/demoscratos/forum/${idForum}/topic/${idTopic}/multiple">
 							<h4 class = "description-multi-vote"> ${question} </h4>
 							<div class="checkbox">
 								<c:forEach var="option" items="${options}">
@@ -74,6 +91,29 @@
 							
 						</form:form>
 					</div>			
+					
+					<div class ="givenVotes">
+						<c:forEach var="vote" items="${givenVotes}">
+							<HR>
+							<div class="uniqueVote">
+								
+								<form:form action="/demoscratos/forum/${idForum}/topic/${idTopic}/multiple/givenVote/${vote.id}">
+									<h4>Voto cedido por ${vote.memberEmail} </h4>
+									<h4 class = "description-multi-vote"> ${question} </h4>
+									<div class="checkbox">
+										<c:forEach var="option" items="${options}">
+									 	<label class="form-control"><input class="unique" name="idOption" type="checkbox" value="${option.id}">${option.option} </label>
+										</c:forEach>
+									</div>
+								
+									<button type="submit" id="button-save" class="btn btn-primary button-save">Votar</button>
+									
+								</form:form>
+							</div>	
+						
+						</c:forEach>
+					</div>		
+					
 
 
 				</div>
