@@ -44,6 +44,11 @@ public class VoteUniqueController {
 			return "redirect:/login";
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
+		
+		model.addAttribute("members", request.getRing());
+		model.addAttribute("givenVotes", topic.getGivenVotes());
+
+		
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
 			model.addAttribute("modality", "Privado" );
@@ -101,6 +106,11 @@ public class VoteUniqueController {
 			return "redirect:/login";
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
+		
+		model.addAttribute("members", request.getRing());
+		
+		model.addAttribute("givenVotes", topic.getGivenVotes());
+
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
 			model.addAttribute("modality", "Privado" );
@@ -146,4 +156,23 @@ public class VoteUniqueController {
 		return "redirect:/forum/"+idForum;
 	}
 	
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique" ,params="memberRing", method = RequestMethod.POST)
+	public String giveSimpleVote(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="memberRing") String memberRing,
+			@PathVariable(value="idTopic") String idTopic) {
+		request.postGiveVote(idTopic, memberRing);
+			
+		return "redirect:/forum/"+idForum+"/topic/"+idTopic+"/simple";
+	}
+	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique/givenVote/{idGivenVote}" ,params="idOption", method = RequestMethod.POST)
+	public String voteGivenVote(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@RequestParam(value="idOption") String idOption,
+			@PathVariable(value="idTopic") String idTopic,
+			@PathVariable(value="idGivenVote") String idGivenVote) {
+		request.postGivenVote(Integer.parseInt(idGivenVote), Integer.parseInt(idOption));
+			
+		return "redirect:/forum/"+idForum+"/topic/"+idTopic+"/unique";
+	}
 }
