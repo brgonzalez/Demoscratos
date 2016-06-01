@@ -19,8 +19,9 @@
 	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
 		<div class = "col-xs-12 col-sm-12 col-md-3 col-lg-3"> 
-			<input onclick="location.href='/demoscratos/admin/forum/${idForum}/delete';" type="submit" class="btn btn-danger" value ="Borrar democracia"/>
-		
+			<form:form action="/demoscratos/admin/forum/${idForum}/delete" method="POST">
+				<button type="submit" class="btn btn-danger">Borrar democracia</button>
+			</form:form>
 		</div>
 		
 		<div class = "col-xs-12 col-sm-12 col-md-6 col-lg-6 " id= "container">

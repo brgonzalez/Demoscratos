@@ -89,6 +89,7 @@
 					
 					<div>
 						<c:forEach var="vote" items="${givenVotes}">
+						<hr>
 						<h4 class = "vote-topic">Voto cedido por ${vote.memberEmail }</h4>
 						<div style="display:${displayVote};" class ="space-options-votes">
 							<form  action="/demoscratos/forum/${idForum}/topic/${idTopic}/simple/${vote.id}" method="POST" >

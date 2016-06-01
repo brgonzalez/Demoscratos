@@ -123,4 +123,19 @@ public class AdminForumsController {
 		return "admin-new-forum";
 	}
 	
+	@RequestMapping(value = "/admin/forum/{idForum}/delete" , method = RequestMethod.POST)
+	public String getDeleteForum(Locale locale, Model model,
+			@RequestParam(value="idForum") String idForum) {
+		
+		ArrayList<Forum> forums = request.getForums();
+		for(Forum forum : forums){
+			if(forum.getId().equals(idForum)){
+				request.deleteForum(forum.getName());
+			}
+		}
+
+
+		return "redirect:/admin/forum";
+	}
+	
 }
