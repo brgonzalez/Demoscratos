@@ -27,6 +27,7 @@ public class LoginController {
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/forums";
 		}
+		model.addAttribute("errorLogin", "none");
 		logger.info(messages.getLogin(), locale);
 		return "login";
 	}
@@ -42,12 +43,14 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String doLogin(Locale locale,@RequestParam("email") String email,@RequestParam("password") String password) {
+	public String doLogin(Locale locale,Model model, @RequestParam("email") String email,@RequestParam("password") String password) {
 		request.signIn(email, password);
 		if(request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/forums";
 		}
+		model.addAttribute("errorLogin", "block");
+
 		logger.info(messages.errorAuth(), locale);
 		return "login";
 	}

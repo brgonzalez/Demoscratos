@@ -36,6 +36,15 @@
 		<div class = "container">
 
 			<div class ="space-new-topic col-xs-12 col-sm-12 col-md-8  col-lg-8 col-md-offset-2 col-lg-offset-2">
+				<div style ="display: ${errorDate};"class="alert alert-danger" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Error!</strong> La fecha de cierre debe ser mayor a la actual.
+				</div>
+				
+				<div style ="display: ${successNewTopic};"class="alert alert-success" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Éxito!</strong> Se ha creado el tema, se debe esperar la aprobación de un administrador.
+				</div>
 				<form:form href ="forum/${idForum}/topic/new" method ="POST">
 					<h3>Nuevo Tema</h3>
 					<fieldset class="form-group">

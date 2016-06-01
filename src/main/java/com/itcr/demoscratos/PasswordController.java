@@ -29,6 +29,9 @@ public class PasswordController {
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user);
+		model.addAttribute("success", "none");
+
+		
 		logger.info(messages.getChangePassword(), locale);
 		return "settings-password";
 	}
@@ -45,7 +48,11 @@ public class PasswordController {
 
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user);
+		
 		request.postPassword(currentPassword, newPassword);
+		
+		model.addAttribute("success", "block");
+
 				
 		logger.info(messages.updatedPassword(), locale);
 		return "settings-password";

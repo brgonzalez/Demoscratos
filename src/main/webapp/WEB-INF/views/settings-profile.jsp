@@ -44,6 +44,10 @@
 			</div>
 
 			<div class = "settings col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<div style ="display: ${success};"class="alert alert-success" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Éxito!</strong> Se ha actualizado su perfil.
+				</div>
 
 				<form:form action="settings-profile" method="post">
 					<h3>Perfil </h3>
@@ -61,10 +65,13 @@
   					</fieldset>
 
   					<HR width=50% align="center">
-
+					
+					
+		    		<input style="display: none;" name="email" type="text" class="form-control"  placeholder="correo" value="${user.email}">
+  					
   					<fieldset class="form-group">
     					<label>Correo</label>
-		    				<input name ="email"type="text" class="form-control"  placeholder="correo" value="${user.email}" disabled>
+		    				<input type="text" class="form-control"  placeholder="correo" value="${user.email}" disabled>
   					</fieldset>
 
   					<HR width=50% align="center">

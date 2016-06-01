@@ -72,7 +72,11 @@ public class TopicsController {
 		model.addAttribute("idForum", idForum);
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
+		
+		model.addAttribute("errorDate", "none");
+		model.addAttribute("successNewTopic", "none");
 
+		
 		ArrayList<Tag> tags = request.getTags();
 		model.addAttribute("tags",tags);
 		return "new-topic";
@@ -98,21 +102,31 @@ public class TopicsController {
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
 		}
-		System.out.println("Fecha: "+ closingAt);
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		model.addAttribute("idForum", idForum);
 		ArrayList<Tag> tags = request.getTags();
 		model.addAttribute("tags",tags);
 		
+		model.addAttribute("idForum", idForum);
+		
 		boolean simple = Boolean.valueOf(simplex);
 		boolean votable = Boolean.valueOf(votablex);
 		boolean secret = Boolean.valueOf(secretx);
 		boolean multiple = Boolean.valueOf(multiselectionx);
-		System.out.println("Pregunta desde controllador"+ question);
 
 		String[] splitDate = closingAt.split(" ");
 		closingAt = splitDate[0]+"T"+splitDate[1]+".000Z";
+		
+		ServiceDate serviceDate = new ServiceDate(closingAt);
+		
+		if(serviceDate.isClose()){
+			model.addAttribute("errorDate", "block");
+			model.addAttribute("successNewTopic", "none");
+
+			return "new-topic";
+		}
+		
 		if(votable){ 
 			if(!simple){
 				request.postTopic(idForum, title, tag, closingAt, source, content, 
@@ -125,9 +139,9 @@ public class TopicsController {
 			request.postTopic(idForum, title, tag, closingAt, source, content, votable, secret);
 		}
 		
-		model.addAttribute("idForum", idForum);
+		model.addAttribute("errorDate", "none");
+		model.addAttribute("successNewTopic", "block");
 
-		System.out.println("La pregunta desde new es: "+question);
-		return "redirect:/forum/"+idForum;
+		return "new-topic";
 	}
 }

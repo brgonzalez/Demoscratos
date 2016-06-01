@@ -33,16 +33,21 @@
 
 				<div class = "side-bar">
 					<ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-			    		<li ><a  href="./settings-profile.html">Perfil</a></li>
+			    		<li ><a  href="settings-profile">Perfil</a></li>
 			    		<li class= "active" ><a id ="settings-active" href=" ">Contraseña</a></li>
-			    		<li><a href="./setting-notification.html">Notificaciones</a></li>
-			    		<li><a  href="./settings-ring.html">Anillo de Confianza</a></li>
+			    		<li><a href="#">Notificaciones</a></li>
+			    		<li><a  href="settings-ring">Anillo de Confianza</a></li>
 		  			</ul>
 				</div>
 
 			</div>
 
 			<div class = "space-setting col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			
+				<div style ="display: ${success};"class="alert alert-success" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Éxito!</strong> Se ha actualizado su perfil.
+				</div>
 
 				<form:form action="settings-password" method ="post">
 					<h3>Cambie su contraseña </h3>
@@ -73,7 +78,7 @@
 				</form:form>
 
 
-			<div>	
+			</div>	
 
 			<div class = "settings col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			</div>

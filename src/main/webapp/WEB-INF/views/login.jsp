@@ -32,6 +32,11 @@
 		
 
 		<div class="container">
+		
+			<div style ="display: ${errorLogin};"class="alert alert-danger col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" role="alert" >
+			  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  	<strong>Error!</strong> El correo o la contraseña están incorrectas.
+			</div>
 
             <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
                 <div class="panel panel-info" >
