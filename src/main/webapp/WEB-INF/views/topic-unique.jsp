@@ -34,13 +34,12 @@
 					<h5><span class = "glyphicon glyphicon-time"></span> ${close}</h5>
 					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
-					
-					<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show(); $('#selection-ring').hide(); $('#btn-s-give-vote').show(); $('#btn-h-give-vote').hide(); " type="submit" id ="button-show-ring"class="btn btn-default">Votos de anillo</button>
+					<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show(); $('#${hasRing}').hide(); $('#btn-s-give-vote').show(); $('#btn-h-give-vote').hide(); " type="submit" id ="button-show-ring"class="btn btn-default">Votos de anillo</button>
 					<button style="display:none;" onclick="$('#vote-ring').hide(); $('#button-hide-ring').hide(); $('#button-show-ring').show(); " type="submit" id ="button-hide-ring"class="btn btn-default">Ocultar votos de anillo</button>
-							
-					<button style="display:${isSecret};" onclick=" $('#btn-h-give-vote').show(); $(this).hide(); $('#vote-ring').hide(); $('#selection-ring').show(); $('#button-show-ring').show(); $('#button-hide-ring').hide();" type="submit" id ="btn-s-give-vote" class="btn btn-default">Ceder voto</button>
-					<button style="display:none;" onclick="$(this).hide(); $('#btn-s-give-vote').show(); $('#selection-ring').hide();" type="submit" id ="btn-h-give-vote" class="btn btn-default">Ocultar ceder voto</button>
 					
+					<button style="display:${isSecret};" onclick=" $('#btn-h-give-vote').show(); $(this).hide(); $('#vote-ring').hide(); $('#${hasRing}').show(); $('#button-show-ring').show(); $('#button-hide-ring').hide();" type="submit" id ="btn-s-give-vote" class="btn btn-default">Ceder voto</button>
+					<button style="display:none;" onclick="$(this).hide(); $('#btn-s-give-vote').show(); $('#${hasRing}').hide();" type="submit" id ="btn-h-give-vote" class="btn btn-default">Ocultar ceder voto</button>
+			
 					<div style="display:none;" class="panel panel-default" id="vote-ring">
 					  	<!-- Default panel contents -->
 					  	<table class="table table-striped">
@@ -70,9 +69,17 @@
 									    <option>${member.email}</option>
 							  		</c:forEach>
 						  		</select>	  			
-						</fieldset>
+							</fieldset>
 						<button type="submit" class="btn btn-default">Ceder</button>
 						</form:form>
+					</div>
+					
+					<div id ="no-ring" style ="display:none;"class="alert alert-info" role="alert" >
+					  	<strong>Información!</strong> Usted no ha definido un anillo de confianza.
+					</div>
+					
+					<div id ="voteGiven" style ="display:none;"class="alert alert-info" role="alert" >
+					  	<strong>Información!</strong> Usted ha cedido el voto o ya efectuó el voto.
 					</div>
 					<h4 class = "vote-topic">Voto personal</h4>
 					

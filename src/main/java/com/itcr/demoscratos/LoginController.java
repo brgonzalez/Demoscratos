@@ -64,7 +64,7 @@ public class LoginController {
 		request.signIn(email, password);
 		request.signUp(email, firstName, lastName, password);
 		logger.info(messages.userRegistered(), locale);
-		return "login";
+		return "redirect:login";
 	}
 	@RequestMapping(value = "/signOut", method = RequestMethod.GET)
 	public String signOut(Locale locale, Model model) {

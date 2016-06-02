@@ -45,7 +45,6 @@ public class VoteUniqueController {
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
 		
-		model.addAttribute("members", request.getRing());
 		model.addAttribute("givenVotes", topic.getGivenVotes());
 
 		
@@ -72,6 +71,18 @@ public class VoteUniqueController {
 				isVoted = true;
 				break;
 			}
+		}
+		
+		if(!request.doesGivenVoteExist(idTopic) && !isVoted ){
+			if(request.getRing().size() > 0){
+				model.addAttribute("hasRing", "selection-ring");
+				model.addAttribute("members", request.getRing());
+			}
+			else{
+				model.addAttribute("hasRing", "no-ring");
+			}
+		}else{
+			model.addAttribute("hasRing", "voteGiven");
 		}
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
@@ -107,8 +118,6 @@ public class VoteUniqueController {
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
 		
-		model.addAttribute("members", request.getRing());
-		
 		model.addAttribute("givenVotes", topic.getGivenVotes());
 
 		if(topic.isSecret()){
@@ -136,6 +145,18 @@ public class VoteUniqueController {
 				break;
 			}
 		}
+		if(!request.doesGivenVoteExist(idTopic) && !isVoted ){
+			if(request.getRing().size() > 0){
+				model.addAttribute("hasRing", "selection-ring");
+				model.addAttribute("members", request.getRing());
+			}
+			else{
+				model.addAttribute("hasRing", "no-ring");
+			}
+		}else{
+			model.addAttribute("hasRing", "voteGiven");
+		}
+		
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");

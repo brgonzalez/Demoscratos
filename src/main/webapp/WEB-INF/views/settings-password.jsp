@@ -46,7 +46,7 @@
 			
 				<div style ="display: ${success};"class="alert alert-success" role="alert" >
 				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  	<strong>Éxito!</strong> Se ha actualizado su perfil.
+				  	<strong>Éxito!</strong> Se ha actualizado su contraña.
 				</div>
 
 				<form:form action="settings-password" method ="post">
@@ -58,7 +58,7 @@
   					</fieldset>
 
   					<fieldset class="form-group">
-					    <label for="profile-inputLastName">Ingrese la nueva contraseñaa</label>
+					    <label for="profile-inputLastName">Ingrese la nueva contraseña</label>
 					    <input type="password" class="form-control"  placeholder="nueva contraseña" name = "newPassword">
   					</fieldset>
 

@@ -49,8 +49,23 @@ public class VoteSimpleController {
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
 		boolean isVoted =topic.userAlreadyVoted();
+		System.out.println("se dio: "+request.doesGivenVoteExist(idTopic)+", está votado: "+isVoted);
+
+		//manipula despliegue de ceder voto
+		if(!request.doesGivenVoteExist(idTopic) && !isVoted){
+			System.out.println("Entra if");
+			if(request.getRing().size() > 0){
+				model.addAttribute("hasRing", "selection-ring");
+				model.addAttribute("members", request.getRing());
+			}
+			else{
+				model.addAttribute("hasRing", "no-ring");
+			}
+		}else{
+			model.addAttribute("hasRing", "voteGiven");
+		}
 		
-		model.addAttribute("members", request.getRing());
+		
 		
 		if(isClosed | isVoted){
 			model.addAttribute("voted", "block");
@@ -81,8 +96,6 @@ public class VoteSimpleController {
 			model.addAttribute("modality", "Semipúblico" );
 		}
 		
-		
-		System.out.println("*+++++++++++++++++++++++++"+topic.getGivenVotes());
 		model.addAttribute("givenVotes", topic.getGivenVotes());
 		return "topic-simple";
 	}
@@ -108,6 +121,8 @@ public class VoteSimpleController {
 				break;
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
+		
+
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
 			model.addAttribute("modality", "Privado" );
@@ -122,7 +137,19 @@ public class VoteSimpleController {
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
 		boolean isVoted =topic.userAlreadyVoted();
+		if(!request.doesGivenVoteExist(idTopic) && !isVoted ){
+			if(request.getRing().size() > 0){
+				model.addAttribute("hasRing", "selection-ring");
+				model.addAttribute("members", request.getRing());
+			}
+			else{
+				model.addAttribute("hasRing", "no-ring");
+			}
+		}else{
+			model.addAttribute("hasRing", "voteGiven");
+		}
 		if(isClosed | isVoted){
+
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
 			if(isClosed){
