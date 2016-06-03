@@ -36,16 +36,21 @@ public class RingController {
 			model.addAttribute("member1", members.get(0));
 			model.addAttribute("member2",  members.get(1) );
 			model.addAttribute("member3",  members.get(2) );
-			model.addAttribute("displayButton", "none" );
 			model.addAttribute("modify-ring", "none" );
-			//model.addAttribute("displayShow-ring", "none" );*/
+			model.addAttribute("noRing", "none" );
 		}
 		else{
-			model.addAttribute("displayButton", "block" );
-			model.addAttribute("sring", "none" );
-			model.addAttribute("modify-ring", "none" );
-			
+			model.addAttribute("show", "none" );
+			model.addAttribute("modify", "block" );
+			model.addAttribute("noRing", "block" );
 		}
+		//mensajes
+		model.addAttribute("noMember1", "none");
+		model.addAttribute("noMember2", "none");
+		model.addAttribute("noMember3", "none");
+		model.addAttribute("success", "none");
+
+
 		logger.info(messages.getRing(), locale);
 		return "settings-ring";
 	}
@@ -62,19 +67,52 @@ public class RingController {
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		
-		request.postRing(emailMember1, emailMember2, emailMember3);
+		boolean existEmails = true;
+		
+		//verificación de anillos
+		if(request.getUserByEmail(emailMember1) == null){
+			model.addAttribute("noMember1", "block");
+			existEmails = false;
+		}else{
+			model.addAttribute("noMember1", "none");
+		}
+		
+		if(request.getUserByEmail(emailMember2) == null){
+			model.addAttribute("noMember2", "block");
+			existEmails = false;
+		}else{
+			model.addAttribute("noMember2", "none");
+		}
+		if(request.getUserByEmail(emailMember3) == null){
+			model.addAttribute("noMember3", "block");
+			existEmails = false;
+		}else{
+			model.addAttribute("noMember3", "none");
+		}
+		
+		if (existEmails){
+			request.postRing(emailMember1, emailMember2, emailMember3);
+			model.addAttribute("success", "block");
+		}
+		else{
+			model.addAttribute("success", "none");
+
+		}
 
 		
+		model.addAttribute("noRing", "none" );
+
 		ArrayList<User> members = request.getRing();
 		if(members.size() > 0){
-			model.addAttribute("displayButton", "none" );
 			model.addAttribute("member1", members.get(0));
 			model.addAttribute("member2",  members.get(1) );
 			model.addAttribute("member3",  members.get(2) );
+			model.addAttribute("modify", "none" );
+			model.addAttribute("show", "block" );
 		}
 		else{
-			model.addAttribute("displayButton", "block" );
-			model.addAttribute("sring", "none" );
+			model.addAttribute("modify", "block" );
+			model.addAttribute("show", "none" );
 		}
 		logger.info(messages.updatedRing(), locale);
 		return "settings-ring";

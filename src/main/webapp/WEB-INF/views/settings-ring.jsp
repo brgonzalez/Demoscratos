@@ -50,11 +50,32 @@
 			</div>
 
 			<div class = "space-setting col-xs-12 col-sm-12 col-md-6 col-lg-6">
-
-				<div id ="create-ring">
-					<button onclick="$('#create-ring').hide(); $('#modify-ring').show()" id ="button-save"style="display:${displayButton};" type="submit" class="btn btn-primary button-save">Crear</button>
+			
+				<div style ="display: ${noRing};"class="alert alert-warning" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Atención!</strong> Todavía no tiene creado un anillo de confianza, prosiga a crear uno
 				</div>
-				<div style="display:${sring};" id= "show-ring">
+				
+				<div style ="display: ${success};"class="alert alert-success" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Éxito!</strong> Se ha creado correctamente su anillo de confianza
+				</div>
+				<div style ="display: ${noMember1};"class="alert alert-danger" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Error!</strong>El correo ingresado en amigo 1 no existe.
+				</div>
+				<div style ="display: ${noMember2};"class="alert alert-danger" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Error!</strong>El correo ingresado en amigo 2 no existe.
+				</div>
+				<div style ="display: ${noMember3};"class="alert alert-danger" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Error!</strong>El correo ingresado en amigo 3 no existe.
+				</div>
+				
+				
+
+				<div style="display:${show};" id= "show-ring">
 					<h3 class="friend">Amigo 1 </h3>
 					<div class = "data">
 						<label>Nombre</label>
@@ -84,11 +105,11 @@
 		  			<hr>
 						
 
-	  				<button onclick="$('#show-ring').hide(); $('#modify-ring').show()" type="submit" id ="button-save"class="btn btn-primary">Modificar</button>
+	  				<button onclick="$('#show-ring').hide(); $('#modify-ring').show()" type="submit" id ="button-save"class="btn btn-success">Modificar</button>
 
 	  			</div>
 
-				<form:form id = "modify-ring" style="display:${modify-ring};" action="settings-ring" method="post">
+				<form:form id = "modify-ring" style="display:${modify};" action="settings-ring" method="post">
 					
 						<h3>Amigo 1 </h3>
 						<div>
@@ -121,14 +142,14 @@
 	  					<HR width=50% align="center">
 	  				
 
-	  				<input  id ="button-save"type="submit" class="btn btn-primary" value="Guardar"/>
+	  				<button type="submit" class="btn btn-success">Guardar</button>
 
 
   					
 				</form:form>
 
 
-			<div>	
+			</div>	
 
 			<div class = "settings col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			</div>
