@@ -46,6 +46,18 @@ public final class DataBaseController {
 		catch (SQLException e) { e.printStackTrace(); } 
 		return members; }
 	
+	public boolean selectAdmin(String email) {
+		connection.connect();
+		String query = "select email from admins where email = '"+email+"'";
+		ResultSet result = connection.executeQuery(query);
+		boolean flag = false;
+		try {
+			if (result.next()) {
+				flag = true; }
+			connection.disconnect(); }
+		catch (SQLException e) { e.printStackTrace(); } 
+		return flag; }
+	
 	public Ring selectRing(String userId) {
 		connection.connect();
 		String query = "SELECT * FROM rings WHERE id='"+ userId +"'";
@@ -179,9 +191,9 @@ public final class DataBaseController {
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	
-	public void updateTopicApproval(String topicId) {
+	public void updateTopicApproval(String topicId, String value) {
 		connection.connect();
-		String query = "UPDATE topics SET approved = 'true' WHERE id = '"+topicId+"'";
+		String query = "UPDATE topics SET approved = '"+value+"' WHERE id = '"+topicId+"'";
 		connection.executeUpdate(query);
 		connection.disconnect(); }
 	

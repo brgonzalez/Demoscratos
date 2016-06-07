@@ -61,3 +61,7 @@ CREATE TABLE given_votes (
     FOREIGN KEY (topic) 
         REFERENCES topics(id)
         ON DELETE CASCADE);
+        
+CREATE TABLE admins (
+	email varchar(30) NOT NULL,
+    PRIMARY KEY(email));

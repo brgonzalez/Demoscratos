@@ -45,6 +45,12 @@ public final class RequestController {
 	public User getCurrentUser(){
 		return currentUser; }
 	
+	public void signInAdmin(String email, String password) {
+		if (database.selectAdmin(email)) {
+			this.signIn(email, password); }
+		else {
+			System.err.println("El usuario no ha sido registrado como administrador.");	} }
+	
 	public void signIn(String email, String password) {
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
 		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
@@ -252,7 +258,14 @@ public final class RequestController {
 		client.postHttpRequest(Resource.TAG_CREATE.getUrl(), json); }
 	
 	public void postTopicApproved(String idTopic) {
-		database.updateTopicApproval(idTopic); }
+		database.updateTopicApproval(idTopic, "true"); }
+	
+	public boolean isTopicApprove(String idTopic) {
+		String string  = database.selectTopicAttr(idTopic, "approved");
+		return string.equals("true"); }
+	
+	public void postTopicDisapprove(String idTopic) {
+		database.updateTopicApproval(idTopic, "false"); }
 		
 	public void deleteForum(String nameForum) {
 		client.deleteHttpRequest(Resource.FORUM.getUrl() + nameForum); }
