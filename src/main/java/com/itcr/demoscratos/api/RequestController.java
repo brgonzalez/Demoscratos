@@ -29,6 +29,7 @@ public final class RequestController {
 	private DataBaseController database;
 	private ConnectionMongo mongodb = new ConnectionMongo();
 	private User currentUser;
+	private String adminEmail = "ccarvajal@ic-itcr.ac.cr";
 	
 	private static RequestController instance = null;
 	
@@ -44,13 +45,7 @@ public final class RequestController {
 	
 	public User getCurrentUser(){
 		return currentUser; }
-	
-	public void signInAdmin(String email, String password) {
-		if (database.selectAdmin(email)) {
-			this.signIn(email, password); }
-		else {
-			System.err.println("El usuario no ha sido registrado como administrador.");	} }
-	
+			
 	public void signIn(String email, String password) {
 		String json = "{ \"email\": \""+ email +"\", \"password\": \""+ password +"\" }";
 		client.postHttpRequest(Resource.SINGIN.getUrl(), json);
@@ -147,7 +142,8 @@ public final class RequestController {
 		client.getHttpRequest(Resource.SEARCH_USER.getUrl() + email);
 		JSONArray array = new JSONArray(client.getOutput());
 		User user = null;
-		if (array.length() == 1) { user = new User(array.getJSONObject(0), email); }
+		boolean admin = ((email.equals(adminEmail)) ? true : false);
+		if (array.length() == 1) { user = new User(array.getJSONObject(0), email, admin); }
 		return user; }
 			
 	public ArrayList<User> getRing() {

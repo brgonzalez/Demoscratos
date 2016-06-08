@@ -9,10 +9,11 @@ public final class User {
 	private String name;
 	private String lastName;
 	private String avatar;
+	private boolean admin;
 
-	public User(JSONObject json, String email) {
+	public User(JSONObject json, String email, boolean admin) {
 		setId(json.getString("id"));
-		setEmail(email);
+		setEmail(email); setAdmin(admin);
 		String[] fullName = json.getString("displayName").split("delimitador");
 		setName(fullName[0]);
 		setLastName(fullName[1]);
@@ -47,6 +48,12 @@ public final class User {
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar; }
+
+	public boolean isAdmin() {
+		return admin; }
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin; }
 
 	@Override
 	public String toString() {

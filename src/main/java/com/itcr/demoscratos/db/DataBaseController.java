@@ -46,18 +46,6 @@ public final class DataBaseController {
 		catch (SQLException e) { e.printStackTrace(); } 
 		return members; }
 	
-	public boolean selectAdmin(String email) {
-		connection.connect();
-		String query = "select email from admins where email = '"+email+"'";
-		ResultSet result = connection.executeQuery(query);
-		boolean flag = false;
-		try {
-			if (result.next()) {
-				flag = true; }
-			connection.disconnect(); }
-		catch (SQLException e) { e.printStackTrace(); } 
-		return flag; }
-	
 	public Ring selectRing(String userId) {
 		connection.connect();
 		String query = "SELECT * FROM rings WHERE id='"+ userId +"'";
