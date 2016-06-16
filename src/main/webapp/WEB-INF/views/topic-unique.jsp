@@ -78,12 +78,14 @@
 					  	<strong>Información!</strong> Usted no ha definido un anillo de confianza.
 					</div>
 					
-					<div id ="voteGiven" style ="display:none;"class="alert alert-info" role="alert" >
-					  	<strong>Información!</strong> Usted ha cedido el voto o ya efectuó el voto.
+					<div id ="voteGiven" style ="display:none;"class="alert alert-warning" role="alert" >
+					  	<strong>Atención!</strong> No puedes ceder el voto, ya has efectuado o has cedido anteriormente
 					</div>
 					<h4 class = "vote-topic">Voto personal</h4>
-					
-					<h3 class = "voted" style="display:${voted};"> ${message} </h3>
+										
+					<div style ="display: ${voted};"class="alert alert-info" role="alert" >
+					  	<strong>Información!</strong> Ya has efectuado el voto o lo has cedido
+					</div>
 					
 					<div style="display:${displayVote};" class="uniqueVote">
 						<form:form action="/demoscratos/forum/${idForum}/topic/${idTopic}/unique">
@@ -105,7 +107,7 @@
 							<div class="uniqueVote">
 								
 								<form:form action="/demoscratos/forum/${idForum}/topic/${idTopic}/unique/givenVote/${vote.id}">
-									<h4>Voto cedido por ${vote.memberEmail} </h4>
+									<h4>Voto cedido por ${vote.user.name} ${vote.user.lastName} </h4>
 									<h4 class = "description-multi-vote"> ${question} </h4>
 									<div class="checkbox">
 										<c:forEach var="option" items="${options}">

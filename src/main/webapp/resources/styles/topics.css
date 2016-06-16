@@ -16,7 +16,11 @@
 	height: auto;
 	padding: 0.5%;
 	color: white;
-
+		
+	
+}
+.topic :hover{
+	text-decoration : none;
 }
 
 a:link :hover{

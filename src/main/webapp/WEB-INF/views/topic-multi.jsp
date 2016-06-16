@@ -31,6 +31,11 @@
 
 				<div class ="view-topic">
 				
+					<div style ="display: ${youHaveGivenVote};"class="alert alert-danger" role="alert" >
+					  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					  	<strong>Atención!</strong> No puedes realizar el voto porque lo has cedido o ya has votado
+					</div>
+				
 					<h5><span class = "glyphicon glyphicon-time"></span> ${close}</h5>
 					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
@@ -79,13 +84,14 @@
 					  	<strong>Información!</strong> Usted no ha definido un anillo de confianza.
 					</div>
 					
-					<div id ="voteGiven" style ="display:none;"class="alert alert-info" role="alert" >
-					  	<strong>Información!</strong> Usted ha cedido el voto o ya efectuó el voto.
+					<div id ="voteGiven" style ="display:none;"class="alert alert-warning" role="alert" >
+					  	<strong>Atención!</strong> No puedes ceder el voto, ya has efectuado o has cedido anteriormente
 					</div>
-					
 					<h4 class = "vote-topic">Voto personal</h4>
-					
-					<h3 class = "voted" style="display:${voted};"> ${message} </h3>
+										
+					<div style ="display: ${voted};"class="alert alert-info" role="alert" >
+					  	<strong>Información!</strong> Ya has efectuado el voto o lo has cedido
+					</div>
 			
 					<div style="display:${displayVote};" class="uniqueVote">
 						<form:form href="/demoscratos/forum/${idForum}/topic/${idTopic}/multiple">
@@ -107,7 +113,7 @@
 							<div class="uniqueVote">
 								
 								<form:form action="/demoscratos/forum/${idForum}/topic/${idTopic}/multiple/givenVote/${vote.id}">
-									<h4>Voto cedido por ${vote.memberEmail} </h4>
+									<h4>Voto cedido por ${vote.user.name} ${vote.user.lastName}</h4>
 									<h4 class = "description-multi-vote"> ${question} </h4>
 									<div class="checkbox">
 										<c:forEach var="option" items="${options}">

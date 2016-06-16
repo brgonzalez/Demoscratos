@@ -31,18 +31,29 @@
 		<div class ="container col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		
 			<div class= "buttons-topic col-xs-6 col-sm-6 col-md-2 col-lg-2">
-				<form:form action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/publish" method="POST">
+				<form:form style= "display: ${unpublish};" id ="unpublish" action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/unpublish" method="POST">
+					<button class ="btn btn-success btn-block m-x-auto" type="submit">Despublicar tema</button>
+				</form:form>
+				<form:form style= "display: ${publish};" id ="publish" action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/publish" method="POST">
 					<button class ="btn btn-success btn-block m-x-auto" type="submit">Publicar tema</button>
 				</form:form>
 				<form:form action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/report" method="POST">
 					<button class ="btn btn-info form-control" type="submit">Reporte de tema </button>
 				</form:form>
-				<form:form action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/delete" method="POST">
+				<form:form onclick="return confirm('Are you sure you want to rollback deletion of candidate table?')" action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/delete" method="POST">
 					<button class ="btn btn-danger form-control" type="submit">Borrar tema </button>
 				</form:form>
 			</div>
 
 			<div class ="space-topic view-topic col-xs-6 col-sm-6 col-md-8 col-lg-8">
+			
+				<div style ="display: ${publishMessage};"class="alert alert-info" role="alert" >
+				  	<strong>Información!</strong>Se ha publicado el tema
+				</div>
+				
+				<div style ="display: ${noPublishMessage};"class="alert alert-warning" role="alert" >
+				  	<strong>Atención!</strong> Se ha despublicado este tema
+				</div>
 
 				<div class ="header-topic">
 				

@@ -73,6 +73,11 @@
 				  	<strong>Error!</strong>El correo ingresado en amigo 3 no existe.
 				</div>
 				
+				<div style ="display: ${noRingCreated};"class="alert alert-danger" role="alert" >
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				  	<strong>Error!</strong> Su amigos deben ser distintos y usted no puede pertenecer al anillo de confianza
+				</div>
+				
 				
 
 				<div style="display:${show};" id= "show-ring">
@@ -142,7 +147,7 @@
 	  					<HR width=50% align="center">
 	  				
 
-	  				<button type="submit" class="btn btn-success">Guardar</button>
+	  				<button type="submit" class="btn btn-success btn-block">Guardar</button>
 
 
   					

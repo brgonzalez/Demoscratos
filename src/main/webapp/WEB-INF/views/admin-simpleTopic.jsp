@@ -40,6 +40,7 @@
 					<h3 class = "tag-topic">Etiqueta</h3>
 
 					<h4 class = "vote-topic">Voto simple</h4>
+				</div>
 			</div>	
 			
 

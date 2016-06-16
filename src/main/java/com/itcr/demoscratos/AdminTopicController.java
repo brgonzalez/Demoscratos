@@ -41,14 +41,25 @@ public class AdminTopicController {
 	public String publish(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
 			@PathVariable(value="idTopic") String idTopic){
-		if(!request.isLoggedIn()){
-			logger.info(messages.userLoggedIn(), locale);
-			return "redirect:/login";
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
 		}
 		Report report = request.getReport(idTopic);
 		User user = request.getCurrentUser();
 		FullTopic topic = request.getFullTopic(idTopic);
+		
+		model.addAttribute("publishMessage", "block");
+		model.addAttribute("noPublishMessage", "none");
+
 		request.postTopicApproved(idTopic);
+		
+		if(request.isTopicApprove(idTopic)){
+			model.addAttribute("unpublish", "block");
+			model.addAttribute("publish", "none");
+		}else{
+			model.addAttribute("unpublish", "none");
+			model.addAttribute("publish", "block");
+		}
 		
 		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
 		boolean isClosed = serviceDate.isClose();
@@ -75,10 +86,63 @@ public class AdminTopicController {
 		}
 		return "admin-topic";
 	}
-	@RequestMapping(value = "/admin/forum/{idForum}/topic/{idTopic}/report" , method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/admin/forum/{idForum}/topic/{idTopic}/unpublish" , method = RequestMethod.POST)
+	public String unpublish(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@PathVariable(value="idTopic") String idTopic){
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
+		Report report = request.getReport(idTopic);
+		User user = request.getCurrentUser();
+		FullTopic topic = request.getFullTopic(idTopic);
+		request.postTopicDisapprove(idTopic);
+		model.addAttribute("publishMessage", "none");
+		model.addAttribute("noPublishMessage", "block");
+		
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
+		
+		topic.setClosingAt(serviceDate.getCloseDate());
+		
+		model.addAttribute("user", user );
+		model.addAttribute("topic", topic );
+		model.addAttribute("report", report );
+		
+		request.postTopicDisapprove(idTopic);
+		
+		if(request.isTopicApprove(idTopic)){
+			model.addAttribute("unpublish", "block");
+			model.addAttribute("publish", "none");
+		}else{
+			model.addAttribute("unpublish", "none");
+			model.addAttribute("publish", "block");
+		}
+		
+		if(topic.isSecret()){
+			model.addAttribute("modality", "Privado");
+		}else{
+			model.addAttribute("modality", "Semipúblico");
+		}
+		
+		if(topic.getType().equals("simple")){
+			model.addAttribute("simple","block");
+			model.addAttribute("noSimple","none");
+		}
+		else{
+			model.addAttribute("simple","none");
+			model.addAttribute("noSimple","block");
+		}
+		return "admin-topic";
+	}
+	@RequestMapping(value = {"/admin/forum/{idForum}/topic/{idTopic}/report","/forum/{idForum}/topic/{idTopic}/report" }, method = {RequestMethod.POST,RequestMethod.GET})
 	public String report(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
 			@PathVariable(value="idTopic") String idTopic){
+		if(!request.isLoggedIn()){
+			return "redirect:/admin/login";
+		}
 
 		Report report = request.getReport(idTopic);
 		User user = request.getCurrentUser();
@@ -87,6 +151,15 @@ public class AdminTopicController {
 		model.addAttribute("user", user );
 		model.addAttribute("topic", topic );
 		model.addAttribute("report", report );
+		
+
+		if(request.isTopicApprove(idTopic)){
+			model.addAttribute("unpublish", "block");
+			model.addAttribute("publish", "none");
+		}else{
+			model.addAttribute("unpublish", "none");
+			model.addAttribute("publish", "block");
+		}
 		
 		if(topic.isSecret()){
 			model.addAttribute("modality", "Privado");
@@ -102,8 +175,21 @@ public class AdminTopicController {
 			@PathVariable(value="idForum") String idForum,
 			@PathVariable(value="idTopic") String idTopic){
 
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
+		
 		request.deleteTopic(idTopic);
+		
 
+		if(request.isTopicApprove(idTopic)){
+			model.addAttribute("unpublish", "block");
+			model.addAttribute("publish", "none");
+		}else{
+			model.addAttribute("unpublish", "none");
+			model.addAttribute("publish", "block");
+		}
+		
 		return "redirect:/admin/forum/"+idForum;
 	}
 }

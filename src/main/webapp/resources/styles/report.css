@@ -1,0 +1,21 @@
+*{
+	text-align: center; 
+}
+
+h2{
+	border-style: solid;
+	padding: 1%;
+	background-color:#3B0B39;
+
+}
+
+#report{
+	color:white;
+}
+#topic{
+	color: #3B0B39;
+}
+
+#dd{
+	background-color: white;
+}

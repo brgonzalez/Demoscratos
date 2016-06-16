@@ -140,6 +140,7 @@ public final class FullTopic extends Topic {
 	
 	public boolean userAlreadyVoted() {
 		if (super.getType().equals("simple")) {
+			System.out.println("Es simple");
 			return userAlreadyVotedSimple(); }
 		else {
 			return userAlreadyVotedUnique(); } }

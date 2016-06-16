@@ -29,7 +29,7 @@ public final class RequestController {
 	private DataBaseController database;
 	private ConnectionMongo mongodb = new ConnectionMongo();
 	private User currentUser;
-	private String adminEmail = "ccarvajal@ic-itcr.ac.cr";
+	private String adminEmail = "brgonzalezcr@gmail.com";
 	
 	private static RequestController instance = null;
 	

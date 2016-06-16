@@ -33,6 +33,9 @@ public class ForumsController {
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
 		}
+		if (request.getCurrentUser().isAdmin()){
+			return "redirect:/admin";
+		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		
@@ -49,6 +52,9 @@ public class ForumsController {
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
 		}
+		if (request.getCurrentUser().isAdmin()){
+			return "redirect:/admin";
+		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		
@@ -64,6 +70,9 @@ public class ForumsController {
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
 			return "redirect:/login";
+		}
+		if (request.getCurrentUser().isAdmin()){
+			return "redirect:/admin";
 		}
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );

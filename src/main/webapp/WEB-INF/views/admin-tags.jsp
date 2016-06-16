@@ -22,14 +22,14 @@
 			<div class = "topics-column col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
 				<form:form href= "/admin/tags" method="POST">
 					<label >Nombre de una nueva etiqueta</label>
-		    		<input name ="tag"type="text" class="form-control"  placeholder="Etiqueta" >
+		    		<input name ="tagName"type="text" class="form-control"  placeholder="Etiqueta" >
 					<input  type="submit" class=" form-control btn btn-primary" value ="Crear"/>
 				</form:form>
 
 				<div class ="tags-list">
 					
 					<c:forEach var="tag" items="${tags}">
-						<h4 class="form-control tags">${tag}</h4>
+						<h4 class="form-control tags">${tag.name}</h4>
 					</c:forEach>
 					
 				</div>	

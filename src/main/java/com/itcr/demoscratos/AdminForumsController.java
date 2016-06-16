@@ -38,6 +38,12 @@ public class AdminForumsController {
 	@RequestMapping(value = "/admin/forums" , method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {		
 		
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user);
+		
 		ArrayList<Forum> forums = request.getForums();
 		model.addAttribute("forums", forums );
 		
@@ -46,7 +52,24 @@ public class AdminForumsController {
 	}
 	@RequestMapping(value = "/admin/forum/{idForum} " , method = RequestMethod.GET)
 	public String displayTopiscForum(Locale locale, Model model,@PathVariable(value="idForum") String idForum) {
-
+		
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
+		Forum forum= null;
+		
+		ArrayList<Forum> forums = request.getForums();
+		
+		for (Forum f : forums){
+			if(f.getId().equals(idForum)){
+				forum = f;
+				break;
+			}
+		}
+		
+		
+		model.addAttribute("forum", forum);
+		
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		ArrayList<Topic> topics = request.getTopicsAdmin(idForum);
@@ -67,12 +90,31 @@ public class AdminForumsController {
 		return "admin-topics";
 	}
 	
+	@RequestMapping(value = "/admin/forum/{idForum}/delete/{nameForum} " , method = RequestMethod.POST)
+	public String deleteForum(Locale locale, Model model,@PathVariable(value="idForum") String idForum, @PathVariable("nameForum") String nameForum) {
+		
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
+			
+		User user = request.getCurrentUser();
+		model.addAttribute("user", user );
+		
+		request.deleteForum(nameForum);
+	
+	
+		return "redirect:/admin/forums";
+	}
+	
 	@RequestMapping(value = "admin/forum/{idForum}/topic/{idTopic}" , method = RequestMethod.GET)
 	public String showTopic(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
 			@PathVariable(value="idTopic") String idTopic
 			) {
-
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
+			
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
 		FullTopic topic = request.getFullTopic(idTopic);
@@ -82,6 +124,15 @@ public class AdminForumsController {
 		boolean isClosed = serviceDate.isClose();
 		
 		topic.setClosingAt(serviceDate.getCloseDate());
+		
+		if(request.isTopicApprove(idTopic)){
+			model.addAttribute("unpublish", "block");
+			model.addAttribute("publish", "none");
+		}else{
+			model.addAttribute("unpublish", "none");
+			model.addAttribute("publish", "block");
+		}
+		
 		
 		if(!topic.isSecret()){
 			model.addAttribute("modality", "Semipúblico");
@@ -98,6 +149,9 @@ public class AdminForumsController {
 			model.addAttribute("simple","none");
 			model.addAttribute("noSimple","block");
 		}
+		
+		model.addAttribute("publishMessage", "none");
+		model.addAttribute("noPublishMessage", "none");
 
 		return "admin-topic";
 	}
@@ -105,10 +159,16 @@ public class AdminForumsController {
 
 	@RequestMapping(value = "admin/forums/new" , method = RequestMethod.GET)
 	public String getPostForum(Locale locale, Model model) {
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
+		model.addAttribute("existForum", "none");
+
 
 		User user = request.getCurrentUser();
 		model.addAttribute("user", user );
-
+		
+		model.addAttribute("success", "none");
 
 		return "admin-new-forum";
 	}
@@ -117,8 +177,30 @@ public class AdminForumsController {
 	public String postForum(Locale locale, Model model,
 			@RequestParam(value="title") String title,
 			@RequestParam(value="description") String description) {
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
 		
-		request.postForum(title, title, description);
+		String name =title.replaceAll("\\P{L}+", "");
+		name = name.replaceAll("[^\\p{ASCII}]", "");
+		boolean exist = false;
+		ArrayList<Forum> forums = request.getForums();
+		for(Forum forum : forums){
+			if(forum.getName().equals(name)){
+				exist = true;
+			}
+		}
+		if(!exist){
+			request.postForum(name, title, description);
+			model.addAttribute("success", "block");
+
+			model.addAttribute("existForum", "none");
+
+		}else{
+			model.addAttribute("existForum", "block");
+		}
+		
+
 
 		return "admin-new-forum";
 	}
@@ -126,6 +208,9 @@ public class AdminForumsController {
 	@RequestMapping(value = "/admin/forum/{idForum}/delete" , method = RequestMethod.POST)
 	public String getDeleteForum(Locale locale, Model model,
 			@RequestParam(value="idForum") String idForum) {
+		if(!request.isLoggedIn() || !request.getCurrentUser().isAdmin()){
+			return "redirect:/admin/login";
+		}
 		
 		ArrayList<Forum> forums = request.getForums();
 		for(Forum forum : forums){

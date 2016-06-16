@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itcr.demoscratos.api.RequestController;
+import com.itcr.demoscratos.models.Ring;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.services.Messages;
 
@@ -36,7 +37,7 @@ public class RingController {
 			model.addAttribute("member1", members.get(0));
 			model.addAttribute("member2",  members.get(1) );
 			model.addAttribute("member3",  members.get(2) );
-			model.addAttribute("modify-ring", "none" );
+			model.addAttribute("modify", "none" );
 			model.addAttribute("noRing", "none" );
 		}
 		else{
@@ -49,6 +50,9 @@ public class RingController {
 		model.addAttribute("noMember2", "none");
 		model.addAttribute("noMember3", "none");
 		model.addAttribute("success", "none");
+		
+		model.addAttribute("noRingCreated", "none");
+
 
 
 		logger.info(messages.getRing(), locale);
@@ -90,13 +94,22 @@ public class RingController {
 			model.addAttribute("noMember3", "none");
 		}
 		
+		
+		
 		if (existEmails){
 			request.postRing(emailMember1, emailMember2, emailMember3);
-			model.addAttribute("success", "block");
+			ArrayList<User>  rings = request.getRing();
+			if(rings.size() > 0){
+				model.addAttribute("success", "block");
+				model.addAttribute("noRingCreated", "none");
+			}else{
+				model.addAttribute("noRingCreated", "block");
+				model.addAttribute("success", "none");
+			}
 		}
 		else{
 			model.addAttribute("success", "none");
-
+			model.addAttribute("noRingCreated", "none");
 		}
 
 		

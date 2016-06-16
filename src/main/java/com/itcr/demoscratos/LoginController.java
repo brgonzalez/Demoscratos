@@ -22,9 +22,22 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String logedIn(Locale locale, Model model) {
+	public String loggedIn(Locale locale, Model model) {
 		if(request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
+			return "redirect:/forums";
+		}
+		model.addAttribute("errorLogin", "none");
+		logger.info(messages.getLogin(), locale);
+		return "login";
+	}
+	@RequestMapping(value = "/admin/login", method = RequestMethod.GET)
+	public String adminLoggedIn(Locale locale, Model model) {
+		if(request.isLoggedIn()){
+			logger.info(messages.userLoggedIn(), locale);
+			if(request.getCurrentUser().isAdmin()){
+				return "redirect:/admin";
+			}
 			return "redirect:/forums";
 		}
 		model.addAttribute("errorLogin", "none");
@@ -36,17 +49,23 @@ public class LoginController {
 	public String signUp(Locale locale, Model model) {
 		if(request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
+			if(request.getCurrentUser().isAdmin()){
+				return "redirect:/admin";
+			}
 			return "redirect:/forums";
 		}
 		logger.info(messages.getSignUp(), locale);
 		return "signup";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = {"/login","/admin/login"}, method = RequestMethod.POST)
 	public String doLogin(Locale locale,Model model, @RequestParam("email") String email,@RequestParam("password") String password) {
 		request.signIn(email, password);
 		if(request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
+			if(request.getCurrentUser().isAdmin()){
+				return "redirect:/admin";
+			}
 			return "redirect:/forums";
 		}
 		model.addAttribute("errorLogin", "block");

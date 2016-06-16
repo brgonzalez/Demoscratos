@@ -31,6 +31,13 @@
 		<div class = "container">
 
 			<div class ="space-new-topic col-xs-12 col-sm-12 col-md-8  col-lg-8 col-md-offset-2 col-lg-offset-2">
+				<div style ="display:${existForum};"class="alert alert-danger" role="alert" >
+				  	<strong>Error!</strong> Ya existe una democracia con este nombre
+				</div>
+				<div style ="display:${success};"class="alert alert-danger" role="alert" >
+				  	<strong>Exito!</strong> Se ha creado correctamente la democracia
+				</div>
+							
 				<form:form href ="admin/forum/new" method ="POST">
 					<h3>Creación de una nueva democracia</h3>
 					<fieldset class="form-group">

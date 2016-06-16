@@ -1,10 +1,6 @@
 package com.itcr.demoscratos;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -19,11 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.FullTopic;
 import com.itcr.demoscratos.models.Option;
-import com.itcr.demoscratos.models.Tag;
-import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.models.VisibleVote;
-import com.itcr.demoscratos.models.Vote;
 import com.itcr.demoscratos.services.Messages;
 import com.itcr.demoscratos.services.ServiceDate;
 
@@ -44,10 +37,25 @@ public class VoteUniqueController {
 			return "redirect:/login";
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
+		User user = request.getCurrentUser();
+		model.addAttribute("question", topic.getQuestion());
+		model.addAttribute("options", topic.getOptions());
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
+		model.addAttribute("topic", topic);
 		
+		//votos cedidos
 		model.addAttribute("givenVotes", topic.getGivenVotes());
-
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
 		
+		if(isClosed){
+			return "redirect:/forum/{idForum}/topic/{idTopic}/report";
+		}
+		else{
+			model.addAttribute("close", serviceDate.getCloseDate());
+		}
+
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
 			model.addAttribute("modality", "Privado" );
@@ -57,14 +65,7 @@ public class VoteUniqueController {
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
-		User user = request.getCurrentUser();
-		model.addAttribute("question", topic.getQuestion());
-		model.addAttribute("options", topic.getOptions());
-		model.addAttribute("user", user );
-		model.addAttribute("idForum", idForum);
-		model.addAttribute("topic", topic);
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+
 		boolean isVoted = false;
 		for(Option o : topic.getOptions()){
 			if (topic.userAlreadyVoted(o.getId())){
@@ -73,6 +74,7 @@ public class VoteUniqueController {
 			}
 		}
 		
+		//view rings
 		if(!request.doesGivenVoteExist(idTopic) && !isVoted ){
 			if(request.getRing().size() > 0){
 				model.addAttribute("hasRing", "selection-ring");
@@ -84,28 +86,18 @@ public class VoteUniqueController {
 		}else{
 			model.addAttribute("hasRing", "voteGiven");
 		}
-		if(isClosed | isVoted){
+		
+		if(isVoted || request.doesGivenVoteExist(idTopic)){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
-			if(isClosed){
-				model.addAttribute("close", "Cerrado");
-				model.addAttribute("message", "No se aceptan más votos");
-			}else{
-				model.addAttribute("close", serviceDate.getCloseDate());
-			}
-			if(isVoted && !isClosed){
-				model.addAttribute("message", messages.voted());
-			}
+
 		}else{
 			model.addAttribute("voted", "none");
 			model.addAttribute("displayVote", "block");
-			model.addAttribute("close", serviceDate.getCloseDate());
 		}
+		
 		return "topic-unique";
 	}
-	
-	
-
 	
 	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique" , method = RequestMethod.POST)
 	public String postVoteUnique(Locale locale, Model model,
@@ -117,8 +109,24 @@ public class VoteUniqueController {
 			return "redirect:/login";
 		}
 		FullTopic topic = request.getFullTopic(idTopic);
+		User user = request.getCurrentUser();
+		model.addAttribute("question", topic.getQuestion());
+		model.addAttribute("options", topic.getOptions());
+		model.addAttribute("user", user );
+		model.addAttribute("idForum", idForum);
+		model.addAttribute("topic", topic);
 		
+		//votos cedidos
 		model.addAttribute("givenVotes", topic.getGivenVotes());
+		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
+		boolean isClosed = serviceDate.isClose();
+		
+		if(isClosed){
+			return "redirect:/forum/{idForum}/topic/{idTopic}/report";
+		}
+		else{
+			model.addAttribute("close", serviceDate.getCloseDate());
+		}
 
 		if(topic.isSecret()){
 			model.addAttribute("isSecret", "none" );
@@ -129,15 +137,7 @@ public class VoteUniqueController {
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
-		User user = request.getCurrentUser();
-		model.addAttribute("question", topic.getQuestion());
-		model.addAttribute("options", topic.getOptions());
-		model.addAttribute("user", user );
-		model.addAttribute("idForum", idForum);
-		model.addAttribute("topic", topic);
-		request.postUniqueVote(idTopic, Integer.parseInt(idOption));
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+
 		boolean isVoted = false;
 		for(Option o : topic.getOptions()){
 			if (topic.userAlreadyVoted(o.getId())){
@@ -145,7 +145,11 @@ public class VoteUniqueController {
 				break;
 			}
 		}
+		
+		//view rings
 		if(!request.doesGivenVoteExist(idTopic) && !isVoted ){
+			request.postUniqueVote(idTopic, Integer.parseInt(idOption));
+			isVoted = true;
 			if(request.getRing().size() > 0){
 				model.addAttribute("hasRing", "selection-ring");
 				model.addAttribute("members", request.getRing());
@@ -157,24 +161,15 @@ public class VoteUniqueController {
 			model.addAttribute("hasRing", "voteGiven");
 		}
 		
-		if(isClosed | isVoted){
+		if(isVoted || request.doesGivenVoteExist(idTopic)){
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
-			if(isClosed){
-				model.addAttribute("close", "Cerrado");
-				model.addAttribute("message", "No se aceptan más votos");
-			}else{
-				model.addAttribute("close", serviceDate.getCloseDate());
-			}
-			if(isVoted && !isClosed){
-				model.addAttribute("message", messages.voted());
-			}
+
 		}else{
 			model.addAttribute("voted", "none");
 			model.addAttribute("displayVote", "block");
-			model.addAttribute("close", serviceDate.getCloseDate());
 		}
-		return "redirect:/forum/"+idForum;
+		return "topic-unique";
 	}
 	
 	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique" ,params="memberRing", method = RequestMethod.POST)
@@ -184,7 +179,7 @@ public class VoteUniqueController {
 			@PathVariable(value="idTopic") String idTopic) {
 		request.postGiveVote(idTopic, memberRing);
 			
-		return "redirect:/forum/"+idForum+"/topic/"+idTopic+"/simple";
+		return "redirect:/forum/"+idForum+"/topic/"+idTopic+"/unique";
 	}
 	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique/givenVote/{idGivenVote}" ,params="idOption", method = RequestMethod.POST)
 	public String voteGivenVote(Locale locale, Model model,

@@ -11,7 +11,7 @@
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
-		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/tags.css">
+		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/report.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -20,25 +20,26 @@
 		<jsp:include page="includes/header.jsp" />
 		
 		<div class = "container col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" id= "container">
-				<h1>Reporte</h1>
-				<h2>${topic.title}. </h2>
+				<h2 id= "report">Reporte</h2>
+				<h3 id= "topic">${topic.title}. </h3>
 				<hr>
 				<h4> <b>La modalidad del tema es: </b> ${modality } </h4>
 				<h4> <b>Total de participantes:</b> ${report.totalParticipants }</h4>
 				<hr>
 				<h4> Este tema ha dado como resultados</h4>
 				
-				<table class="table">
-					<tr>
-			  			<th>Opción</th>
-			  			<th>Votos</th>
+				<table class="table table-bordered table-hover" >
+					<tr class ="info">
+			  			<th style="text-align: center;">Opción</th>
+			  			<th style="text-align: center;">Votos</th>
 			  		</tr>
 					<c:forEach var="vote" items="${report.totalVotes}">
 	
 						<tr>
-							<th>${vote.option.option }</th>
-							<th>${vote.total }</th>
+							<td>${vote.option.option}</td>
+							<td>${vote.total }</td>
 						</tr>
+						
 				  	</c:forEach>
 			  	</table>
 		</div>
