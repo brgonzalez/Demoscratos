@@ -34,7 +34,7 @@
 				<div style ="display:${existForum};"class="alert alert-danger" role="alert" >
 				  	<strong>Error!</strong> Ya existe una democracia con este nombre
 				</div>
-				<div style ="display:${success};"class="alert alert-danger" role="alert" >
+				<div style ="display:${success};"class="alert alert-success" role="alert" >
 				  	<strong>Exito!</strong> Se ha creado correctamente la democracia
 				</div>
 							

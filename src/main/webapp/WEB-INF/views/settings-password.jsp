@@ -70,7 +70,7 @@
 
   					<HR width=50% align="center">
 
-	  				<input  id ="button-save"type="submit" class="btn btn-primary" value="Guardar"/>
+  					<button type="submit" class="btn btn-primary btn-success btn-block" >Guardar</button>
 
   					
 

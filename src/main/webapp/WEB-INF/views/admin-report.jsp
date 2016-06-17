@@ -23,6 +23,8 @@
 				<h2 id= "report">Reporte</h2>
 				<h3 id= "topic">${topic.title}. </h3>
 				<hr>
+				<h3>Periodo del tema: ${topic.closingAt} - ${topic.createdAt}. </h3>
+				<hr>
 				<h4> <b>La modalidad del tema es: </b> ${modality } </h4>
 				<h4> <b>Total de participantes:</b> ${report.totalParticipants }</h4>
 				<hr>

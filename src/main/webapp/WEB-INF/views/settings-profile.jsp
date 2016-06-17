@@ -76,7 +76,7 @@
 
   					<HR width=50% align="center">
 
-  					<button type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
+  					<button type="submit" class="btn btn-primary btn-success btn-block" >Guardar</button>
   				</form:form>
 
 			</div>

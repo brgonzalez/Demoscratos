@@ -32,9 +32,13 @@
 		<div class = "container">
 
 			<div class= "col-xs-1 col-sm-1 col-md-2 col-lg-3">
+				<h3>Democracias</h3>
+			
 			</div>
 
-			<div id ="container-forums" class ="container-forums col-xs-10 col-sm-10 col-md-8 col-lg-6">
+			
+			<div id ="container-forums" class ="container-forums col-xs-10 col-sm-10 col-md-8 col-lg-6">				
+				
 				<ul>
 					<c:forEach var="forum" items="${forums}">
 						<li>
