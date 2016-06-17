@@ -122,7 +122,10 @@ public final class DataBaseController {
 	
 	public Report selectReport(String topicId, String type) {
 		connection.connect();
-		String query = "SELECT t2.id, t2.opt, t1.cnt FROM (SELECT opt, count(*) as 'cnt' FROM "+type+"_votes WHERE topic = '"+topicId+"' GROUP BY opt) AS t1, options AS t2 WHERE t2.id = t1.opt";
+		String query = "SELECT t2.id, t2.opt, t1.cnt FROM "
+				+ "(SELECT opt, count(*) AS 'cnt' FROM "
+				+ "(SELECT topic, opt FROM given_votes UNION ALL SELECT topic, opt FROM "+type+"_votes) AS t3 "
+				+ "WHERE topic = '"+topicId+"' GROUP BY opt) AS t1, options AS t2 WHERE t2.id = t1.opt";
 		ResultSet result = connection.executeQuery(query);
 		ArrayList<TotalVotes> totalVotes = new ArrayList<TotalVotes>();
 		String option; int id, cnt, total = 0;
