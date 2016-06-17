@@ -85,7 +85,7 @@
 						</div>
 										
 					</div>
-					<h4 class = "vote-topic">Voto personal</h4>
+					<h3 class = "vote-topic">Voto personal</h3>
 					
 					<div style ="display: ${voted};"class="alert alert-info" role="alert" >
 					  	<strong>Información!</strong> Ya has efectuado el voto o lo has cedido
@@ -102,7 +102,7 @@
 					<div>
 						<c:forEach var="vote" items="${givenVotes}">
 						<hr>
-						<h4 class = "vote-topic">Voto cedido por ${vote.user.name} ${vote.user.lastName}</h4>
+						<h4 style= "color:#8A0886;" class = "vote-topic"> Voto cedido por ${vote.user.name} ${vote.user.lastName} </h4>
 						<div  class ="space-options-votes">
 							<form  action="/demoscratos/forum/${idForum}/topic/${idTopic}/simple/${vote.id}" method="POST" >
 								<button name="idOption" value="1" type="submit" id = "btn-afirmative"  class = "btn btn-options" > <span class = "glyphicon glyphicon-thumbs-up"></span> Afirmativo </button>

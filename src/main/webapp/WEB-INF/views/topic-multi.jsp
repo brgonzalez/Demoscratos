@@ -108,7 +108,7 @@
 							<div class="uniqueVote">
 								
 								<form:form action="/demoscratos/forum/${idForum}/topic/${idTopic}/multiple/givenVote/${vote.id}">
-									<h4>Voto cedido por ${vote.user.name} ${vote.user.lastName}</h4>
+									<h4 style= "color:#8A0886;" class = "vote-topic"> Voto cedido por ${vote.user.name} ${vote.user.lastName} </h4>
 									<h4 class = "description-multi-vote"> ${question} </h4>
 									<div class="checkbox">
 										<c:forEach var="option" items="${options}">

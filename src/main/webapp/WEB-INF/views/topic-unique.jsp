@@ -96,7 +96,7 @@
 								</c:forEach>
 							</div>
 							
-							<input type="submit" id="button-save" class="btn btn-primary button-save">
+							<button type="submit"  class="btn btn-primary btn-success btn-block">Votar</button>
 							
 						</form:form>
 					</div>	
@@ -107,7 +107,7 @@
 							<div class="uniqueVote">
 								
 								<form:form action="/demoscratos/forum/${idForum}/topic/${idTopic}/unique/givenVote/${vote.id}">
-									<h4>Voto cedido por ${vote.user.name} ${vote.user.lastName} </h4>
+									<h4 style= "color:#8A0886;" class = "vote-topic"> Voto cedido por ${vote.user.name} ${vote.user.lastName} </h4>
 									<h4 class = "description-multi-vote"> ${question} </h4>
 									<div class="checkbox">
 										<c:forEach var="option" items="${options}">
@@ -115,7 +115,7 @@
 										</c:forEach>
 									</div>
 								
-									<button type="submit" id="button-save" class="btn btn-primary button-save">Votar</button>
+									<button type="submit"  class="btn btn-primary btn-success btn-block">Votar</button>
 									
 								</form:form>
 							</div>	
