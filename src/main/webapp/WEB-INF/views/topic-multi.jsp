@@ -31,11 +31,6 @@
 
 				<div class ="view-topic">
 				
-					<div style ="display: ${youHaveGivenVote};"class="alert alert-danger" role="alert" >
-					  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					  	<strong>Atención!</strong> No puedes realizar el voto porque lo has cedido o ya has votado
-					</div>
-				
 					<h5><span class = "glyphicon glyphicon-time"></span> ${close}</h5>
 					<h1 class ="name-topic">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>

@@ -148,6 +148,7 @@ public final class FullTopic extends Topic {
 	private ArrayList<VisibleVote> getVisibleVotesSimple() {
 		ArrayList<VisibleVote> votes = new ArrayList<VisibleVote>();
 		Option option;
+		System.out.println("Ring desde getVisibles Full topic "+ringMembers); 
 		for (User user : ringMembers) {
 			if (upvotes.contains(user.getId())) {
 				option = new Option(1, super.getId(), "positivo");

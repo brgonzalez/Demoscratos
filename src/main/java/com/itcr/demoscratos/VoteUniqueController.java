@@ -150,6 +150,8 @@ public class VoteUniqueController {
 		if(!request.doesGivenVoteExist(idTopic) && !isVoted ){
 			request.postUniqueVote(idTopic, Integer.parseInt(idOption));
 			isVoted = true;
+			model.addAttribute("hasRing", "voteGiven");
+
 			if(request.getRing().size() > 0){
 				model.addAttribute("hasRing", "selection-ring");
 				model.addAttribute("members", request.getRing());

@@ -60,12 +60,15 @@ public class VoteSimpleController {
 		}
 
 		if(topic.isSecret()){
+			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
+			
+			model.addAttribute("votes", votes);
 			model.addAttribute("isSecret", "none" );
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
 			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
-			model.addAttribute("votes", votes);
+ 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
 
@@ -124,11 +127,15 @@ public class VoteSimpleController {
 		}
 
 		if(topic.isSecret()){
+			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
+			model.addAttribute("votes", votes);
+
 			model.addAttribute("isSecret", "none" );
 			model.addAttribute("modality", "Privado" );
 		}
 		else{
 			ArrayList<VisibleVote> votes = topic.getVisibleVotes();
+			System.out.println("vista de votos"+votes);
 			model.addAttribute("votes", votes);
 			model.addAttribute("modality", "Semipúblico" );
 		}
@@ -149,6 +156,8 @@ public class VoteSimpleController {
 					break;
 			}
 			isVoted = true;
+			model.addAttribute("hasRing", "voteGiven");
+
 			if(request.getRing().size() > 0){
 				model.addAttribute("hasRing", "selection-ring");
 				model.addAttribute("members", request.getRing());

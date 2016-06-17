@@ -40,7 +40,7 @@ public final class DataBaseController {
 		ResultSet result = connection.executeQuery(query);
 		ArrayList<String> members = new ArrayList<String>();
 		try {
-			if (result.next()) {
+			while (result.next()) {
 				members.add(result.getString("id")); }
 			connection.disconnect(); }
 		catch (SQLException e) { e.printStackTrace(); } 

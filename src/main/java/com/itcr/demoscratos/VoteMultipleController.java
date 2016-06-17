@@ -159,11 +159,14 @@ public class VoteMultipleController {
 			}
 		}
 		//view rings
+		
+		System.out.println("Lo ha cedido :" + request.doesGivenVoteExist(idTopic)+" , lo ha votado "+ isVoted);
 		if(!request.doesGivenVoteExist(idTopic) && !isVoted ){
 			for(String id: idOption){
-				request.postUniqueVote(idTopic, Integer.parseInt(id));
+				request.postMultipleVote(idTopic, Integer.parseInt(id));
 			}
 			isVoted = true;
+			model.addAttribute("hasRing", "voteGiven");
 			if(request.getRing().size() > 0){
 				model.addAttribute("hasRing", "selection-ring");
 				model.addAttribute("members", request.getRing());
