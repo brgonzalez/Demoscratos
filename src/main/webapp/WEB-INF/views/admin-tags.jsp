@@ -23,7 +23,7 @@
 				<form:form href= "/admin/tags" method="POST">
 					<label >Nombre de una nueva etiqueta</label>
 		    		<input name ="tagName"type="text" class="form-control"  placeholder="Etiqueta" >
-					<input  type="submit" class=" form-control btn btn-primary" value ="Crear"/>
+					<input  type="submit" class=" form-control btn btn-success" value ="Crear etiqueta"/>
 				</form:form>
 
 				<div class ="tags-list">

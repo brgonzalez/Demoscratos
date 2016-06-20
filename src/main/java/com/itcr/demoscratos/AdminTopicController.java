@@ -21,8 +21,9 @@ import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.models.VisibleVote;
-import com.itcr.demoscratos.services.Messages;
-import com.itcr.demoscratos.services.ServiceDate;
+import com.itcr.demoscratos.services.MessagesService;
+import com.itcr.demoscratos.services.DateService;
+import com.itcr.demoscratos.services.LaTeXReportService;
 
 /*
  * 			Controlador para admin
@@ -31,10 +32,11 @@ import com.itcr.demoscratos.services.ServiceDate;
 @Controller 
 public class AdminTopicController {
 	
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(AdminTopicController.class);
 	
 	private RequestController request = RequestController.getInstance();
+	private DateService dateService = new DateService();
 		
 
 	@RequestMapping(value = "/admin/forum/{idForum}/topic/{idTopic}/publish" , method = RequestMethod.POST)
@@ -61,10 +63,10 @@ public class AdminTopicController {
 			model.addAttribute("publish", "block");
 		}
 		
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+		DateService serviceDate = new DateService();
+		boolean isClosed = serviceDate.isClose((String) topic.getClosingAt());
 		
-		topic.setClosingAt(serviceDate.getCloseDate());
+		topic.setClosingAt(serviceDate.getCloseDate((String) topic.getClosingAt()));
 		
 		model.addAttribute("user", user );
 		model.addAttribute("topic", topic );
@@ -101,10 +103,10 @@ public class AdminTopicController {
 		model.addAttribute("publishMessage", "none");
 		model.addAttribute("noPublishMessage", "block");
 		
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+		DateService serviceDate = new DateService();
+		boolean isClosed = serviceDate.isClose((String) topic.getClosingAt());
 		
-		topic.setClosingAt(serviceDate.getCloseDate());
+		topic.setClosingAt(serviceDate.getCloseDate((String) topic.getClosingAt()));
 		
 		model.addAttribute("user", user );
 		model.addAttribute("topic", topic );
@@ -136,17 +138,80 @@ public class AdminTopicController {
 		}
 		return "admin-topic";
 	}
-	@RequestMapping(value = {"/admin/forum/{idForum}/topic/{idTopic}/report","/forum/{idForum}/topic/{idTopic}/report" }, method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = {"/admin/forum/{idForum}/topic/{idTopic}/report","/forum/{idForum}/topic/{idTopic}/report" }, method = {RequestMethod.GET})
 	public String report(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
 			@PathVariable(value="idTopic") String idTopic){
 		if(!request.isLoggedIn()){
 			return "redirect:/admin/login";
 		}
+		
+		if(request.getCurrentUser().isAdmin()){
+			model.addAttribute("formReport", "block");
+		}else{
+			model.addAttribute("formReport", "none");
+		}
+		model.addAttribute("generateReport", "none");
+		
 
 		Report report = request.getReport(idTopic);
 		User user = request.getCurrentUser();
 		FullTopic topic = request.getFullTopic(idTopic);
+		
+		topic.setClosingAt(dateService.normalizeDate((String) topic.getClosingAt()));
+		
+		topic.setCreatedAt(dateService.normalizeDate((String) topic.getCreatedAt()));
+
+		
+		model.addAttribute("user", user );
+		model.addAttribute("topic", topic );
+		model.addAttribute("report", report );
+		
+
+		if(request.isTopicApprove(idTopic)){
+			model.addAttribute("unpublish", "block");
+			model.addAttribute("publish", "none");
+		}else{
+			model.addAttribute("unpublish", "none");
+			model.addAttribute("publish", "block");
+		}
+		
+		if(topic.isSecret()){
+			model.addAttribute("modality", "Privado");
+		}else{
+			model.addAttribute("modality", "Semipúblico");
+		}
+		
+		return "admin-report";
+	}
+	
+	@RequestMapping(value = {"/admin/forum/{idForum}/topic/{idTopic}/report","/forum/{idForum}/topic/{idTopic}/report" }, method = RequestMethod.POST)
+	public String reportLatex(Locale locale, Model model,
+			@PathVariable(value="idForum") String idForum,
+			@PathVariable(value="idTopic") String idTopic){
+		if(!request.isLoggedIn()){
+			return "redirect:/admin/login";
+		}
+		
+		if(request.getCurrentUser().isAdmin()){
+			model.addAttribute("formReport", "block");
+			LaTeXReportService reportService = new LaTeXReportService();
+			reportService.generateReport(idTopic);
+			System.out.println("Genera");
+		}else{
+			model.addAttribute("formReport", "none");
+		}
+		
+		model.addAttribute("generateReport", "block");
+
+		Report report = request.getReport(idTopic);
+		User user = request.getCurrentUser();
+		FullTopic topic = request.getFullTopic(idTopic);
+		
+		topic.setClosingAt(dateService.normalizeDate((String) topic.getClosingAt()));
+		
+		topic.setCreatedAt(dateService.normalizeDate((String) topic.getCreatedAt()));
+
 		
 		model.addAttribute("user", user );
 		model.addAttribute("topic", topic );
@@ -192,5 +257,6 @@ public class AdminTopicController {
 		
 		return "redirect:/admin/forum/"+idForum;
 	}
+	
 }
 

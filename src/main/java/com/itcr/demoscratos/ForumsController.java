@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Forum;
 import com.itcr.demoscratos.models.User;
-import com.itcr.demoscratos.services.Messages;
+import com.itcr.demoscratos.services.MessagesService;
 
 /*
  * 			Controlador para la vista forums
@@ -23,7 +23,7 @@ import com.itcr.demoscratos.services.Messages;
 @Controller
 public class ForumsController {
 	
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
 	
 	private RequestController request = RequestController.getInstance();

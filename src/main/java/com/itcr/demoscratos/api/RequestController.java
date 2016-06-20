@@ -2,6 +2,7 @@ package com.itcr.demoscratos.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import org.apache.http.StatusLine;
 import org.json.JSONArray;
@@ -21,6 +22,7 @@ import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.mongodb.ConnectionMongo;
+import com.itcr.demoscratos.properties.FileProperties;
 
 public final class RequestController {
 	
@@ -30,10 +32,10 @@ public final class RequestController {
 	private ConnectionMongo mongodb = new ConnectionMongo();
 	private User currentUser;
 	private String adminEmail = "brgonzalezcr@gmail.com";
-	
+	 
 	private static RequestController instance = null;
 	
-	public RequestController() {
+	public RequestController() { 
 		setClient(new ApacheHttpClient(Resource.PATH.getUrl()));
 		setMapper(new ObjectMapper());
 		setDataBase(new DataBaseController()); }
@@ -42,6 +44,10 @@ public final class RequestController {
 		if (instance == null) {
 			instance = new RequestController(); }
 		return instance; }
+	
+	/*private void setEmailAdmin(String adminEmail){
+		this.adminEmail = adminEmail;
+	}*/
 	
 	public User getCurrentUser(){
 		return currentUser; }

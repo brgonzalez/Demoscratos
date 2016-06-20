@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itcr.demoscratos.api.RequestController;
+import com.itcr.demoscratos.models.Forum;
 import com.itcr.demoscratos.models.FullTopic;
 import com.itcr.demoscratos.models.Option;
 import com.itcr.demoscratos.models.Tag;
@@ -24,13 +26,14 @@ import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.models.VisibleVote;
 import com.itcr.demoscratos.models.Vote;
-import com.itcr.demoscratos.services.Messages;
-import com.itcr.demoscratos.services.ServiceDate;
+import com.itcr.demoscratos.services.MessagesService;
+import com.itcr.demoscratos.services.DateService;
+import com.itcr.demoscratos.services.EmailService;
 
 @Controller
 public class TopicsController {
 		
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(TopicsController.class);
 	private RequestController request = RequestController.getInstance();
 
@@ -48,12 +51,12 @@ public class TopicsController {
 		if(topics.size() > 0){
 			for(Topic topic : topics){
 				
-				ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-				if(serviceDate.isClose()){
+				DateService serviceDate = new DateService();
+				if(serviceDate.isClose((String) topic.getClosingAt())){
 					topic.setClosingAt("Cerrado");
 				}
 				else{
-					topic.setClosingAt(serviceDate.getCloseDate());
+					topic.setClosingAt(serviceDate.getCloseDate((String) topic.getClosingAt()));
 				}
 			}
 			model.addAttribute("topics",topics);
@@ -108,7 +111,10 @@ public class TopicsController {
 		ArrayList<Tag> tags = request.getTags();
 		model.addAttribute("tags",tags);
 		
+		content = content.replaceAll("[\n\r]", " ");
+		
 		model.addAttribute("idForum", idForum);
+		System.out.println(question);
 		
 		boolean simple = Boolean.valueOf(simplex);
 		boolean votable = Boolean.valueOf(votablex);
@@ -118,9 +124,9 @@ public class TopicsController {
 		String[] splitDate = closingAt.split(" ");
 		closingAt = splitDate[0]+"T"+splitDate[1]+".000Z";
 		
-		ServiceDate serviceDate = new ServiceDate(closingAt);
+		DateService serviceDate = new DateService();
 		
-		if(serviceDate.isClose()){
+		if(serviceDate.isClose(closingAt)){
 			model.addAttribute("errorDate", "block");
 			model.addAttribute("successNewTopic", "none");
 
@@ -138,6 +144,19 @@ public class TopicsController {
 		}else{
 			request.postTopic(idForum, title, tag, closingAt, source, content, votable, secret);
 		}
+		
+		List<Forum> forums = request.getForums();
+		String forumName =null;
+		for(Forum forum : forums){
+			if (forum.getId().equals(idForum)){
+				forumName = forum.getTitle();
+				break;
+			}
+		}
+		
+		
+		EmailService emailService = new EmailService();
+		emailService.sendEmail("brgonzalezcr@gmail.com", request.getCurrentUser().getEmail(), forumName, title);
 		
 		model.addAttribute("errorDate", "none");
 		model.addAttribute("successNewTopic", "block");

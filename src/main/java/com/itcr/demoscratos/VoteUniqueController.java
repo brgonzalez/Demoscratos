@@ -17,13 +17,13 @@ import com.itcr.demoscratos.models.FullTopic;
 import com.itcr.demoscratos.models.Option;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.models.VisibleVote;
-import com.itcr.demoscratos.services.Messages;
-import com.itcr.demoscratos.services.ServiceDate;
+import com.itcr.demoscratos.services.MessagesService;
+import com.itcr.demoscratos.services.DateService;
 
 @Controller
 public class VoteUniqueController {
 		
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(VoteUniqueController.class);
 	private RequestController request = RequestController.getInstance();
 
@@ -46,14 +46,14 @@ public class VoteUniqueController {
 		
 		//votos cedidos
 		model.addAttribute("givenVotes", topic.getGivenVotes());
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+		DateService serviceDate = new DateService();
+		boolean isClosed = serviceDate.isClose((String) topic.getClosingAt());
 		
 		if(isClosed){
 			return "redirect:/forum/{idForum}/topic/{idTopic}/report";
 		}
 		else{
-			model.addAttribute("close", serviceDate.getCloseDate());
+			model.addAttribute("close", serviceDate.getCloseDate((String) topic.getClosingAt()));
 		}
 
 		if(topic.isSecret()){
@@ -102,7 +102,7 @@ public class VoteUniqueController {
 	@RequestMapping(value = "forum/{idForum}/topic/{idTopic}/unique" , method = RequestMethod.POST)
 	public String postVoteUnique(Locale locale, Model model,
 			@PathVariable(value="idForum") String idForum,
-			@RequestParam(value="idOption") String idOption,
+			@RequestParam(value="idOption",defaultValue = "null") String idOption,
 			@PathVariable(value="idTopic") String idTopic) {
 		if(!request.isLoggedIn()){
 			logger.info(messages.userLoggedIn(), locale);
@@ -118,14 +118,18 @@ public class VoteUniqueController {
 		
 		//votos cedidos
 		model.addAttribute("givenVotes", topic.getGivenVotes());
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+		DateService serviceDate = new DateService();
+		boolean isClosed = serviceDate.isClose((String) topic.getClosingAt());
+		
+		if(idOption.equals("null")){
+			return "redirect:/forum/"+idForum+"/topic/"+idTopic+"/unique";
+		}
 		
 		if(isClosed){
 			return "redirect:/forum/{idForum}/topic/{idTopic}/report";
 		}
 		else{
-			model.addAttribute("close", serviceDate.getCloseDate());
+			model.addAttribute("close", serviceDate.getCloseDate((String) topic.getClosingAt()));
 		}
 
 		if(topic.isSecret()){
@@ -145,9 +149,11 @@ public class VoteUniqueController {
 				break;
 			}
 		}
+		//Verify if the user does not check a option
 		
 		//view rings
 		if(!request.doesGivenVoteExist(idTopic) && !isVoted ){
+			
 			request.postUniqueVote(idTopic, Integer.parseInt(idOption));
 			isVoted = true;
 			model.addAttribute("hasRing", "voteGiven");

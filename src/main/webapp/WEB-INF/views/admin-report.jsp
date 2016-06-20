@@ -19,11 +19,25 @@
 	<body class="wall">
 		<jsp:include page="includes/header.jsp" />
 		
-		<div class = "container col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3" id= "container">
+		<div class = "container col-xs-12 col-sm-12 col-md-3 col-lg-3">
+			<form:form style="display:${formReport};" action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/report" method="POST">
+				<button class ="btn btn-info form-control" type="submit">Generar documento</button>
+			</form:form>
+		
+		</div>
+		
+		
+		<div class = "container col-xs-12 col-sm-12 col-md-6 col-lg-6" id= "container">
+				<div  style ="display: ${generateReport};"class="alert alert-info" role="alert" >
+				  	<strong>Información!</strong>Se ha generado el documento del reporte de este tema
+				</div>
+		
 				<h2 id= "report">Reporte</h2>
 				<h3 id= "topic">${topic.title}. </h3>
 				<hr>
-				<h3>Periodo del tema: ${topic.closingAt} - ${topic.createdAt}. </h3>
+				<h3>Periodo del tema: </h3>
+				<h4>Inicio: ${topic.closingAt}</h4>
+				<h4>Finalización ${topic.createdAt}. </h4>
 				<hr>
 				<h4> <b>La modalidad del tema es: </b> ${modality } </h4>
 				<h4> <b>Total de participantes:</b> ${report.totalParticipants }</h4>

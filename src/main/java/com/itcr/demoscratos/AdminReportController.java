@@ -20,8 +20,8 @@ import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.models.VisibleVote;
-import com.itcr.demoscratos.services.Messages;
-import com.itcr.demoscratos.services.ServiceDate;
+import com.itcr.demoscratos.services.MessagesService;
+import com.itcr.demoscratos.services.DateService;
 
 /*
  * 			Controlador para admin
@@ -30,7 +30,7 @@ import com.itcr.demoscratos.services.ServiceDate;
 @Controller 
 public class AdminReportController {
 	
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(AdminReportController.class);
 	
 	private RequestController request = RequestController.getInstance();

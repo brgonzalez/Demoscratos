@@ -24,13 +24,13 @@ import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
 import com.itcr.demoscratos.models.VisibleVote;
 import com.itcr.demoscratos.models.Vote;
-import com.itcr.demoscratos.services.Messages;
-import com.itcr.demoscratos.services.ServiceDate;
+import com.itcr.demoscratos.services.MessagesService;
+import com.itcr.demoscratos.services.DateService;
 
 @Controller
 public class VoteSimpleController {
 		
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(VoteSimpleController.class);
 	private RequestController request = RequestController.getInstance();
 
@@ -49,14 +49,14 @@ public class VoteSimpleController {
 		
 		//votos cedidos
 		model.addAttribute("givenVotes", topic.getGivenVotes());
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+		DateService serviceDate = new DateService();
+		boolean isClosed = serviceDate.isClose((String) topic.getClosingAt());
 		
 		if(isClosed){
 			return "redirect:/forum/{idForum}/topic/{idTopic}/report";
 		}
 		else{
-			model.addAttribute("close", serviceDate.getCloseDate());
+			model.addAttribute("close", serviceDate.getCloseDate((String) topic.getClosingAt()));
 		}
 
 		if(topic.isSecret()){
@@ -116,14 +116,14 @@ public class VoteSimpleController {
 		
 		//votos cedidos
 		model.addAttribute("givenVotes", topic.getGivenVotes());
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+		DateService serviceDate = new DateService();
+		boolean isClosed = serviceDate.isClose((String) topic.getClosingAt());
 		
 		if(isClosed){
 			return "redirect:/forum/{idForum}/topic/{idTopic}/report";
 		}
 		else{
-			model.addAttribute("close", serviceDate.getCloseDate());
+			model.addAttribute("close", serviceDate.getCloseDate((String) topic.getClosingAt()));
 		}
 
 		if(topic.isSecret()){

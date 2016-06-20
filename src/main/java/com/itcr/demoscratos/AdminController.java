@@ -16,8 +16,8 @@ import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
-import com.itcr.demoscratos.services.Messages;
-import com.itcr.demoscratos.services.ServiceDate;
+import com.itcr.demoscratos.services.MessagesService;
+import com.itcr.demoscratos.services.DateService;
 
 /*
  * 			Controlador para admin
@@ -26,7 +26,7 @@ import com.itcr.demoscratos.services.ServiceDate;
 @Controller 
 public class AdminController {
 	
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	private RequestController request = RequestController.getInstance();
@@ -52,12 +52,12 @@ public class AdminController {
 		if(topics.size() > 0){
 			for(Topic topic : topics){
 				
-				ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-				if(serviceDate.isClose()){
+				DateService serviceDate = new DateService();
+				if(serviceDate.isClose((String) topic.getClosingAt())){
 					topic.setClosingAt("Cerrado");
 				}
 				else{
-					topic.setClosingAt(serviceDate.getCloseDate());
+					topic.setClosingAt(serviceDate.getCloseDate((String) topic.getClosingAt()));
 				}
 			}
 			model.addAttribute("topics",topics);

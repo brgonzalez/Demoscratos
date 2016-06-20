@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Ring;
 import com.itcr.demoscratos.models.User;
-import com.itcr.demoscratos.services.Messages;
+import com.itcr.demoscratos.services.MessagesService;
 
 
 @Controller
 public class RingController {
 	
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(ForumsController.class);
 	private RequestController request =  RequestController.getInstance();
 

@@ -7,7 +7,6 @@
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
-		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/topics.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="/demoscratos/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -21,19 +20,13 @@
 			</div>
 			
 			<div class = "topics-column col-xs-12 col-sm-12 col-md-6 col-lg-6">
-				<!--<div id = "selected-topics">
-					<ul class="nav nav-tabs">
-						  <li><a href="#">Abiertos</a></li>
-						  <li><a href="#">Cerrados</a></li>
-					</ul>
-				<</div>-->
 				<div>
-					<div class ="topics-list">
+					<div class ="container-forums">
 						<ul style ="list-style:none">			
 						<c:forEach var="topic" items="${topics}">
 							<li>
 								<a  href="/demoscratos/forum/${idForum}/topic/${topic.id}/${topic.type}" method ="POST">
-									<div class= "topic">
+									<div class= "forum-topic black">
 										<h4>${topic.title}</h4>
 										<hr>
 										<h6>${topic.closingAt}</h6>

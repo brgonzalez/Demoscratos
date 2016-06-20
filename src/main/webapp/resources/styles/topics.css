@@ -16,14 +16,20 @@
 	height: auto;
 	padding: 0.5%;
 	color: white;
-		
-	
+}
+
+div:hover{
+	text-decoration: none;
+}
+
+.topic ul li a div{
+	text-decoration: none;
 }
 .topic :hover{
 	text-decoration : none;
 }
 
-a:link :hover{
+div:link :hover{
 	text-decoration : none;
 }
 .topic p{
@@ -79,10 +85,11 @@ Parte de la vista del tema
 .tag-topic{
 	margin-bottom: 10%;
 }
-.space-options-votes{
+#space-options-votes{
 	margin-bottom: 6%;
 	color: white;
 }
+
 
 .own-argument{
 	margin-bottom: 6%;

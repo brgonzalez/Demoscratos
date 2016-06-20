@@ -1,6 +1,6 @@
 package com.itcr.demoscratos.services;
 
-public class Messages {
+public class MessagesService {
 	
 	public String voted(){
 		return "Ya has realizado el voto";

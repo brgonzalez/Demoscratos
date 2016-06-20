@@ -16,7 +16,7 @@ public class Topic {
 		setTitle(json.getString("mediaTitle"));
 		setClosed(json.getBoolean("closed"));
 		setClosingAt(json.get("closingAt"));
-		setCreatedAt("createdAt");
+		setCreatedAt(json.get("createdAt"));
 		setType(type); }
 
 	public String getId() {

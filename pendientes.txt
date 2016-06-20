@@ -1,6 +1,0 @@
-Guardar a
-
-
-Manejar errores con excepciones
-Atrapar el error cuando democracy no este corriendo
-Porcentaje reporte

@@ -44,10 +44,44 @@
 	background-color: #3B0B39;
 }
 
-#none{
-	display:none;
+
+
+/*Forums and topics*/
+
+.forum-topic{
+	height: 120px;
+	padding: 2%;
+	margin:5%;
+	color:white;
+	border-radius: 8px;
+	opacity: 0.9;
 }
 
-.voted{
-	color: #0B610B;
+
+.forum * , .container-forums {
+	color: white;
+	text-align: center;
 }
+
+a:hover{
+	text-decoration: none;
+}
+
+.container-forums ul li a{
+	text-decoration: none;
+}
+.container-forums{
+	text-align: center;
+}
+
+/*Colores*/
+
+.green{
+	
+}
+.black{
+	background-color:#151515 /*#424242*/;
+	
+}
+
+

@@ -1,8 +1,9 @@
 
-.admin{
-	background-color: #2E2E2E;
+.forum-topic{
 	height: 120px;
 	padding: 2%;
 	margin:5%;
 	color:white;
+	border-radius: 8px;
+	opacity: 0.9;
 }

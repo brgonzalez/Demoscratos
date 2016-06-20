@@ -74,7 +74,7 @@
 					<fieldset>
 			            <div class="form-group">
 			                <label>Fecha de cierre</label>
-			                <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="dd MM yyyy- HH:ii p" data-link-field="dtp_input1">
+			                <div class="input-group date form_datetime col-md-5" data-date="2016-06-16T05:25:07Z" data-date-format="dd MM yyyy- HH:ii p" data-link-field="dtp_input1">
 			                    <input class="form-control" size="16" type="text" value="" required>
 			                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -157,7 +157,7 @@
 			        <button onSubmit="alert('Operación existosa.');" type="submit" id="button-save" class="btn btn-primary button-save" >Guardar</button>
 			         
 			        <script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
-					<script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/bootstrap/js/bootstrap.min.js"></script>
+					<!-- <script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/sample in bootstrap v3/bootstrap/js/bootstrap.min.js"></script> -->
 					<script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 					<script type="text/javascript" src="/demoscratos/resources/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 					<script type="text/javascript">

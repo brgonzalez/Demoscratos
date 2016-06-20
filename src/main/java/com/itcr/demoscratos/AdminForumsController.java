@@ -1,6 +1,5 @@
 package com.itcr.demoscratos;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -16,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.itcr.demoscratos.api.RequestController;
 import com.itcr.demoscratos.models.Forum;
 import com.itcr.demoscratos.models.FullTopic;
-import com.itcr.demoscratos.models.Tag;
 import com.itcr.demoscratos.models.Topic;
 import com.itcr.demoscratos.models.User;
-import com.itcr.demoscratos.models.VisibleVote;
-import com.itcr.demoscratos.services.Messages;
-import com.itcr.demoscratos.services.ServiceDate;
+import com.itcr.demoscratos.services.MessagesService;
+import com.itcr.demoscratos.services.DateService;
 
 /*
  * 			Controlador para admin
@@ -30,7 +27,7 @@ import com.itcr.demoscratos.services.ServiceDate;
 @Controller 
 public class AdminForumsController {
 	
-	private Messages messages = new Messages();
+	private MessagesService messages = new MessagesService();
 	private static final Logger logger = LoggerFactory.getLogger(AdminForumsController.class);
 	
 	private RequestController request = RequestController.getInstance();
@@ -76,12 +73,12 @@ public class AdminForumsController {
 		model.addAttribute("idForum",idForum);
 		if(topics.size() > 0){
 			for(Topic topic : topics){
-				ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-				if(serviceDate.isClose()){
+				DateService serviceDate = new DateService();
+				if(serviceDate.isClose((String) topic.getClosingAt())){
 					topic.setClosingAt("Cerrado");
 				}
 				else{
-					topic.setClosingAt(serviceDate.getCloseDate());
+					topic.setClosingAt(serviceDate.getCloseDate((String) topic.getClosingAt()));
 				}
 			}
 			model.addAttribute("topics",topics);
@@ -120,10 +117,10 @@ public class AdminForumsController {
 		FullTopic topic = request.getFullTopic(idTopic);
 		model.addAttribute("topic", topic );
 
-		ServiceDate serviceDate = new ServiceDate((String) topic.getClosingAt());
-		boolean isClosed = serviceDate.isClose();
+		DateService serviceDate = new DateService();
+		boolean isClosed = serviceDate.isClose((String) topic.getClosingAt());
 		
-		topic.setClosingAt(serviceDate.getCloseDate());
+		topic.setClosingAt(serviceDate.getCloseDate((String) topic.getClosingAt()));
 		
 		if(request.isTopicApprove(idTopic)){
 			model.addAttribute("unpublish", "block");
@@ -184,6 +181,7 @@ public class AdminForumsController {
 		String name =title.replaceAll("\\P{L}+", "");
 		name = name.replaceAll("[^\\p{ASCII}]", "");
 		boolean exist = false;
+		description = description.replaceAll("[\n\r]", " ");
 		ArrayList<Forum> forums = request.getForums();
 		for(Forum forum : forums){
 			if(forum.getName().equals(name)){
@@ -198,6 +196,8 @@ public class AdminForumsController {
 
 		}else{
 			model.addAttribute("existForum", "block");
+			model.addAttribute("success", "none");
+
 		}
 		
 

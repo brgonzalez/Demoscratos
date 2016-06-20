@@ -7,9 +7,7 @@
 		<title>Demoscratos</title>
 		<meta charset="UTF-8">
 
-		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/admin.css">
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/header.css">
-		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/home.css">	
 		<link rel="stylesheet" type="text/css" href="/demoscratos/resources/styles/general.css">		
 			
 		
@@ -35,25 +33,25 @@
 					<li>
 						<a href="admin/tags" method ="POST" class ="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								
-							<div class = "admin" style ="background-color: #0B615E;">
+							<div class = "forum-topic" style ="background-color: #0B615E;">
 	
 								<h4>Etiquetas</h4>
 									
 								<hr>
 									
-								<p>Cada tema posee una etiqueta con la que hace referencia a..</p>
+								<p>Clasificación de temas</p>
 	
 							</div>
 						</a>
 						<a href="admin/forums" method ="POST" class ="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								
-							<div class = "admin" style ="background-color: #0B3B0B;">
+							<div class = "forum-topic" style ="background-color: #0B3B0B;">
 	
 								<h4>Gestión de democracias</h4>
 									
 								<hr>
 									
-								<p>En una democracia se puden crear un conjunto de temas relacionados</p>
+								<p> Gestión de democracias y temas</p>>
 	
 							</div>
 						</a>
