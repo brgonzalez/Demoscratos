@@ -21,19 +21,19 @@
 		
 		<div class = "container col-xs-12 col-sm-12 col-md-3 col-lg-3">
 			<form:form style="display:${formReport};" action="/demoscratos/admin/forum/${idForum}/topic/${idTopic}/report" method="POST">
-				<button class ="btn btn-info form-control" type="submit">Generar documento</button>
+				<button class ="btn btn-success form-control" type="submit">Generar documento</button>
 			</form:form>
 		
 		</div>
 		
 		
 		<div class = "container col-xs-12 col-sm-12 col-md-6 col-lg-6" id= "container">
-				<div  style ="display: ${generateReport};"class="alert alert-info" role="alert" >
-				  	<strong>Información!</strong>Se ha generado el documento del reporte de este tema
+				<div  style ="display: ${generateReport};"class="alert alert-success" role="alert" >
+				  	<strong>Información!</strong> Se ha generado el documento del reporte de este tema
 				</div>
 		
-				<h2 id= "report">Reporte</h2>
-				<h3 id= "topic">${topic.title}. </h3>
+				<h2 id= "report" class="purple">Reporte</h2>
+				<h3 class="wpurple">${topic.title}. </h3>
 				<hr>
 				<h3>Periodo del tema: </h3>
 				<h4>Inicio: ${topic.closingAt}</h4>

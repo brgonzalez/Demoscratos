@@ -33,7 +33,7 @@
 					<li>
 						<a href="admin/tags" method ="POST" class ="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								
-							<div class = "forum-topic" style ="background-color: #0B615E;">
+							<div class = "forum-topic gray">
 	
 								<h4>Etiquetas</h4>
 									
@@ -45,7 +45,7 @@
 						</a>
 						<a href="admin/forums" method ="POST" class ="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 								
-							<div class = "forum-topic" style ="background-color: #0B3B0B;">
+							<div class = "forum-topic gray">
 	
 								<h4>Gestión de democracias</h4>
 									

@@ -39,7 +39,7 @@
 					<c:forEach var="topic" items="${topics}">
 						<li>
 							<a href="/demoscratos/admin/forum/${idForum}/topic/${topic.id}" method ="POST">
-								<div class= "forum-topic black">
+								<div class= "forum-topic gray">
 									<h4>${topic.title}</h4>
 									<hr>
 									<h6>${topic.closingAt}</h6>

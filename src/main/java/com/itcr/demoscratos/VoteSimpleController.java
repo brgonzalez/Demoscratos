@@ -86,8 +86,13 @@ public class VoteSimpleController {
 		}else{
 			model.addAttribute("hasRing", "voteGiven");
 		}
-		System.out.println(isVoted);
 		if(isVoted || request.doesGivenVoteExist(idTopic)){
+			if(isVoted){
+				model.addAttribute("messageNoVote", messages.isVoted());
+			}
+			else{
+				model.addAttribute("messageNoVote", messages.isGiven());
+			}
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
 
@@ -95,7 +100,6 @@ public class VoteSimpleController {
 			model.addAttribute("voted", "none");
 			model.addAttribute("displayVote", "block");
 		}
-		
 		return "topic-simple";
 	}
 	
@@ -170,6 +174,12 @@ public class VoteSimpleController {
 		}
 		
 		if(isVoted || request.doesGivenVoteExist(idTopic)){
+			if(isVoted){
+				model.addAttribute("messageNoVote", messages.isVoted());
+			}
+			else{
+				model.addAttribute("messageNoVote", messages.isGiven());
+			}
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
 

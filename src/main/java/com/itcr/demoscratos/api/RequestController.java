@@ -31,7 +31,8 @@ public final class RequestController {
 	private DataBaseController database;
 	private ConnectionMongo mongodb = new ConnectionMongo();
 	private User currentUser;
-	private String adminEmail = "brgonzalezcr@gmail.com";
+	private FileProperties prop= new FileProperties();
+	private String adminEmail =prop.getProperties().getProperty("emailAdmin");
 	 
 	private static RequestController instance = null;
 	

@@ -98,6 +98,12 @@ public class VoteMultipleController {
 		}
 		
 		if(isVoted || request.doesGivenVoteExist(idTopic)){
+			if(isVoted){
+				model.addAttribute("messageNoVote", messages.isVoted());
+			}
+			else{
+				model.addAttribute("messageNoVote", messages.isGiven());
+			}
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
 
@@ -184,6 +190,12 @@ public class VoteMultipleController {
 		}
 		
 		if(isVoted || request.doesGivenVoteExist(idTopic)){
+			if(isVoted){
+				model.addAttribute("messageNoVote", messages.isVoted());
+			}
+			else{
+				model.addAttribute("messageNoVote", messages.isGiven());
+			}
 			model.addAttribute("voted", "block");
 			model.addAttribute("displayVote", "none");
 

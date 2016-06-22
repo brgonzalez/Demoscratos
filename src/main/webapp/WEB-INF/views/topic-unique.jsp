@@ -32,7 +32,7 @@
 				<div class ="view-topic">
 				
 					<h5><span class = "glyphicon glyphicon-time"></span> ${close}</h5>
-					<h1 class ="name-topic">${topic.title}</h1>
+					<h1 class ="name-topic wpurple">${topic.title}</h1>
 					<h4 class = "modality-topic">Modalidad: Semipúblico</h4>
 					<button style="display:${isSecret};" onclick=" $('#vote-ring').show(); $('#button-show-ring').hide(); $('#button-hide-ring').show(); $('#${hasRing}').hide(); $('#btn-s-give-vote').show(); $('#btn-h-give-vote').hide(); " type="submit" id ="button-show-ring"class="btn btn-default">Votos de anillo</button>
 					<button style="display:none;" onclick="$('#vote-ring').hide(); $('#button-hide-ring').hide(); $('#button-show-ring').show(); " type="submit" id ="button-hide-ring"class="btn btn-default">Ocultar votos de anillo</button>
@@ -79,12 +79,12 @@
 					</div>
 					
 					<div id ="voteGiven" style ="display:none;"class="alert alert-warning" role="alert" >
-					  	<strong>Atención!</strong> No puedes ceder el voto, ya has efectuado o has cedido anteriormente
+					  	<strong>Atención!</strong>  No puedes ceder el voto. ${messageNoVote}
 					</div>
-					<h4 class = "vote-topic">Voto personal</h4>
+					<h4 class = "vote-topic wpurple">Voto personal</h4>
 										
 					<div style ="display: ${voted};"class="alert alert-info" role="alert" >
-					  	<strong>Información!</strong> Ya has efectuado el voto o lo has cedido
+					  	<strong>Información!</strong> No puedes votar. ${messageNoVote}
 					</div>
 					
 					<div style="display:${displayVote};" class="uniqueVote">

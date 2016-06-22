@@ -2,9 +2,13 @@ package com.itcr.demoscratos.services;
 
 public class MessagesService {
 	
-	public String voted(){
+	public String isVoted(){
 		return "Ya has realizado el voto";
 	}
+	public String isGiven(){
+		return "Ya has cedido el voto";
+	}
+	
 	public String userLoggedIn(){
 		return "El usuario no está autentificado";
 	}

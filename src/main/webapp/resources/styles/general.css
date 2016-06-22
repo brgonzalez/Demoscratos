@@ -22,7 +22,7 @@
 }
 
 #header{
-	background-color: #3B0B39; 
+	background-color: #610B5E; 
 }
 
 #name-app{
@@ -37,11 +37,11 @@
 }
 
 #user-header:hover {
-	background-color: #3B0B39;
+	background-color: #610B5E;
 }
 
 #user-header:focus{
-	background-color: #3B0B39;
+	background-color: #610B5E;
 }
 
 
@@ -84,4 +84,14 @@ a:hover{
 	
 }
 
+.gray{
+	background-color : #585858;
+}
 
+.purple{
+	background-color : #610B5E;
+}
+
+.wpurple{
+	color:  #610B5E;
+}
